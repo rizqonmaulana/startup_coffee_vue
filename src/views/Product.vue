@@ -1,138 +1,41 @@
 <template>
   <div class="product">
     <Navbar />
-    <div class="centered">
-      <h1>This is Product Page</h1>
+    <main>
       <b-alert :show="alert">{{ isMsg }}</b-alert>
-      <form>
-        <input
-          type="text"
-          v-model="form.productName"
-          placeholder="Product Name ..."
-        />
-        <br />
-        <input
-          type="text"
-          v-model="form.productPrice"
-          placeholder="Product Price ..."
-        />
-        <br />
-        <input
-          type="text"
-          v-model="form.productDesc"
-          placeholder="Product Desc ..."
-        />
-        <br />
-        <input
-          type="text"
-          v-model="form.productStartHour"
-          placeholder="Product Start Hour ..."
-        />
-        <br />
-        <input
-          type="text"
-          v-model="form.productEndHour"
-          placeholder="Product End Hour ..."
-        />
-        <br />
-        <input
-          type="text"
-          v-model="form.productQty"
-          placeholder="Product Qty ..."
-        />
-        <br />
-        <input
-          type="text"
-          v-model="form.categoryId"
-          placeholder="Category Id..."
-        />
-        <br />
-        <input
-          type="text"
-          v-model="form.sizeRegular"
-          placeholder="Size Regular"
-        />
-        <br />
-        <input type="text" v-model="form.sizeLarge" placeholder="Size Large" />
-        <br />
-        <input
-          type="text"
-          v-model="form.sizeExtraLarge"
-          placeholder="Size Extra Large"
-        />
-        <br />
-        <input type="text" v-model="form.size250gr" placeholder="Size 250gr" />
-        <br />
-        <input type="text" v-model="form.size300gr" placeholder="Size 300gr" />
-        <br />
-        <input type="text" v-model="form.size500gr" placeholder="Size 500gr" />
-        <br />
-        <input
-          type="text"
-          v-model="form.deliveryHome"
-          placeholder="Delivery Home"
-        />
-        <br />
-        <input
-          type="text"
-          v-model="form.deliveryDineIn"
-          placeholder="Delivery Dine In"
-        />
-        <br />
-        <input
-          type="text"
-          v-model="form.deliveryTakeAway"
-          placeholder="Delivery Take Away"
-        />
-        <br />
-        <br />
-        <button type="button" @click="postProduct()">Save</button>
-        <button type="button" @click="patchProduct()">Update</button>
-      </form>
-      <b-container class="bv-example-row">
+      <b-container class="product-cust">
         <b-row>
-          <b-col
-            xl="3"
-            lg="4"
-            md="6"
-            sm="12"
-            v-for="(item, index) in products"
-            :key="index"
-          >
-            <b-card
-              :title="item.product_name"
-              img-src="https://picsum.photos/600/300/?image=25"
-              img-alt="Image"
-              img-top
-              tag="article"
-              style="max-width: 20rem;"
-              class="mb-2"
+          <b-col col lg="3" sm="12" class="main-left">
+            <h4 class="mt-4" style="color: #6A4029; font-weight: 700; text-align: center;">Promo for you</h4>
+            <p class="mt-4" style="font-weight: 400; font-size: 12px; text-align: center; font-family: Poppins, sans-serif; color: #000000;">
+              Coupons will be updated every weeks. <br> Check them out! 
+            </p>
+            <CouponCard />
+          </b-col>
+          <b-col col lg="9" sm="12" class="main-right">
+            <NavMenu @setToPageOne="setToPageOne" @selectCategory="getProductByCategory" class="mt-3"/>
+            <div class="product-list ml-lg-4 mt-5 pt-4">
+              <b-row>
+                <ProductCard  
+                  v-for="(item, index) in products" :key="index"
+                  :productId = "item.product_id"
+                  :productName = "item.product_name"
+                  :productPrice = "item.product_price"
+                  class="product-card"/>
+              </b-row>
+            </div>  
+            <b-pagination
+              v-model="currentPage"
+              :total-rows="rows"
+              :per-page="limit"
+              @change="handlePageChange"
+              class="float-right"
             >
-              <b-card-text> Rp {{ item.product_price }} </b-card-text>
-
-              <b-button href="#" variant="primary">Add To Cart</b-button>
-              <b-button href="#" variant="success" @click="setProduct(item)"
-                >Update</b-button
-              >
-              <b-button
-                href="#"
-                variant="danger"
-                @click="deleteProduct(item.product_id)"
-                >Delete</b-button
-              >
-            </b-card>
+            </b-pagination>         
           </b-col>
         </b-row>
-        <b-pagination
-          v-model="currentPage"
-          :total-rows="rows"
-          :per-page="limit"
-          @change="handlePageChange"
-        >
-        </b-pagination>
       </b-container>
-      
-    </div>
+    </main>
     <Footer />
   </div>
  
@@ -142,12 +45,18 @@
 // [1] step pertama
 import Navbar from '../components/_base/Navbar'
 import Footer from '../components/_base/Footer'
+import CouponCard from '../components/_base/CouponCard'
+import ProductCard from '../components/_base/ProductCard'
+import NavMenu from '../components/_base/NavMenu'
 import axios from 'axios'
 
 export default {
   components: {
     Navbar,
-    Footer
+    Footer,
+    CouponCard,
+    ProductCard,
+    NavMenu
   },
   computed: {
     rows() {
@@ -180,13 +89,13 @@ export default {
       productId: '',
       currentPage: 1,
       totalRows: null,
-      limit: 5,
+      limit: 2,
       page: 1,
-      activeNav: 'nav-link active'
+      categoryName: ''
     }
   },
   created() {
-    this.getProduct()
+    this.getProductByCategory('favorite')
   },
   methods: {
     getProduct() {
@@ -203,6 +112,26 @@ export default {
           console.log(error)
         })
     },
+    setToPageOne() {
+      this.page = 1
+      this.currentPage = 1
+      this.handlePageChange(1)
+    },
+    getProductByCategory(categoryName){
+      console.log(categoryName)
+      axios.get(`http://localhost:3000/category/${categoryName}?limit=${this.limit}&page=${this.page}`)
+        .then(response => {
+            this.categoryName = categoryName
+            this.totalRows = response.data.pagination.totalData
+            this.products = response.data.data
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    },
+    // updateCategoryName(categoryName){
+    //   this.categoryName = categoryName
+    // },
     postProduct() {
       console.log(this.form)
       axios
@@ -259,14 +188,24 @@ export default {
     handlePageChange(numberPage) {
       console.log(numberPage)
       this.page = numberPage
-      this.getProduct()
+      this.getProductByCategory(this.categoryName)
     }
   }
 }
 </script>
 
 <style scoped>
-.centered {
-  text-align: center;
+.main-left {
+    border-top: 1px solid lightgrey;
+    border-right: 1px solid lightgrey;
 }
+
+.main-right {
+  border-top: 1px solid lightgrey;
+}
+
+.product-card {
+  margin: 10px 23px 50px;
+}
+
 </style>
