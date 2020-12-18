@@ -1,7 +1,7 @@
 <template>
     <div>
      <footer>
-      <div class="container">
+      <b-container>
         <div class="d-flex flex-row justify-content-center">
           <div class="p-2" style="width: 60vw;">
             <span>
@@ -72,9 +72,9 @@
           <div class="d-flex flex-row justify-content-center">
             <div class="footer-icon-copyright d-block d-sm-">
               <div class="footer-media-icon d-flex flex-row mb-4">
-                <a href="#" class="p-2"><img src="/frontend/images/fb-icon.png"></a>
-                <a href="#" class="p-2"><img src="/frontend/images/tw-icon.png"></a>
-                <a href="#" class="p-2"><img src="/frontend/images/ig-icon.png"></a>
+                <a href="#" class="p-2"><img src="../../assets/fb-icon.png"></a>
+                <a href="#" class="p-2"><img src="../../assets/tw-icon.png"></a>
+                <a href="#" class="p-2"><img src="../../assets/ig-icon.png"></a>
               </div>
               <p style="font-size: 16px; font-weight: 400; color: #AFB5C0;">
                 &copy;2020CoffeeStore
@@ -82,11 +82,46 @@
             </div>
           </div>
         </div>
-      </div>
+      </b-container>
     </footer>
     </div>
 </template>
 
-<style src="@/styles/main.css">
+<style scoped>
+footer {
+  padding: 150px 0 30px 0;
+  background-color: #f8f8f8;
+}
 
+footer img.footer-brand {
+  width: 30px;
+  height: 33px;
+}
+
+.footer-text {
+  font-size: 16px;
+  font-weight: 500;
+  color: #4f5665;
+}
+
+.footer-text-2 {
+  font-size: 16px;
+  font-weight: 400;
+  color: #4f5665;
+  list-style-type: none;
+  padding: unset;
+  line-height: 40px;
+}
+
+.footer-text-section {
+  font-size: 18px;
+  font-weight: 500;
+  color: #4f5665;
+}
+
+.footer-text {
+  font-size: 16px;
+  font-weight: 500;
+  color: #4f5665;
+}
 </style>

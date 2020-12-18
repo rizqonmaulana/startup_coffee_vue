@@ -1,7 +1,7 @@
 <template>
     <div>
     <nav>
-      <div class="container my-4">
+      <b-container class="my-4">
         <div class="d-flex justify-content-between">
           <div class="nav-logo">
             <ul class="navbar-nav">
@@ -65,17 +65,40 @@
             </ul>
           </div>
         </div>
-      </div>
+      </b-container>
     </nav>
     </div>
 </template>
 
-<script>
-export default {
-  name: 'Navbar'
+<style scoped>
+  nav.navbar-brand img {
+  width: 30px;
+  height: 33px;
 }
-</script>
 
-<style src="@/styles/main.css">
+.nav-login {
+  color: pink;
+}
 
+.navbar-nav .active .nav-link,
+.navbar-nav .nav-link.show,
+.navbar-nav .nav-link.active {
+  color: #6a4029;
+}
+
+.navbar-nav .nav-link {
+  color: #4f5665;
+  margin-right: 2vw;
+}
+
+.navbar-nav .nav-link:hover {
+  color: #6a4029;
+  margin-right: 2vw;
+}
+
+.nav-logo,
+.nav-menu,
+.nav-user {
+  width: 33vw;
+}
 </style>
