@@ -6,7 +6,7 @@
             </p>
         </div>
         <div class="product-pic text-center">
-            <img src="../../assets/cold_brew.png" class="rounded-circle mt-5 mb-4 mx-auto" style="width: 250px;">
+            <img src="../../../assets/cold_brew.png" class="rounded-circle mt-5 mb-4 mx-auto" style="width: 250px;">
         </div>
         <div class="product-card mt-5">
             <div class="delivery-time-card">

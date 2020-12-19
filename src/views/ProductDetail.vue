@@ -46,6 +46,8 @@
             <MainRightBottom 
               :productPic="product.product_pic" 
               :productName="product.product_name"
+              :orderQty="orderData.orderDetailQty"
+              :orderSize="orderData.orderDetailSize"
             />
           </b-col>
         </b-row>
@@ -58,10 +60,10 @@
 <script>
 import Navbar from '../components/_base/Navbar'
 import Footer from '../components/_base/Footer'
-import MainLeftTop from '../components/_base/ProductDeliveryAndTime'
-import MainRightTop from '../components/_base/ProductDesc'
-import MainLeftBottom from '../components/_base/ProductSize'
-import MainRightBottom from '../components/_base/ProductCheckoutCard'
+import MainLeftTop from '../components/_base/productDetail/ProductDeliveryAndTime'
+import MainRightTop from '../components/_base/productDetail/ProductDesc'
+import MainLeftBottom from '../components/_base/productDetail/ProductSize'
+import MainRightBottom from '../components/_base/productDetail/ProductCheckoutCard'
 import axios from 'axios'
 
 export default {

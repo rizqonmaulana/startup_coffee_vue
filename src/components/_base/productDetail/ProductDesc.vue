@@ -45,9 +45,23 @@
                 </b-col>
             </b-row>
         </div>
-
+        <b-alert
+          :show="dismissCountDown"
+          dismissible
+          variant="success"
+          @dismissed="dismissCountDown=0"
+          @dismiss-count-down="countDownChanged"
+        >
+          <p> {{productName}} added to cart</p>
+          <b-progress
+            variant="success"
+            :max="dismissSecs"
+            :value="dismissCountDown"
+            height="4px"
+          ></b-progress>
+        </b-alert>
         <div class="btn-add-n-ask poppins">
-        <button @click="addToCart()" class="btn-add mt-3">
+        <button @click="addToCart(); showAlert()" class="btn-add mt-3">
             Add to Cart
         </button>
         <br>
@@ -69,7 +83,10 @@ export default {
   ],
   data() {
       return {
-          productQty : 0
+          productQty : 0,
+          dismissSecs: 3,
+          dismissCountDown: 0,
+          showDismissibleAlert: false
       }
   },
   created() {
@@ -95,6 +112,12 @@ export default {
       },
       addToCart(){
           this.$emit('addToCart')
+      },
+      countDownChanged(dismissCountDown) {
+        this.dismissCountDown = dismissCountDown
+      },
+      showAlert() {
+        this.dismissCountDown = this.dismissSecs
       }
   },
   computed: {

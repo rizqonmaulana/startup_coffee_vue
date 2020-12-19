@@ -2,7 +2,7 @@
     <div>
         <router-link class="card-product-link" :to="{name: 'DetailProduct', params: {id: productId}}" >
             <div class="card card-product shadow rounded">
-            <img class="card-img-top rounded-circle product-item mx-auto" src="../../assets/cold_brew.png" alt="Card image cap">
+            <img class="card-img-top rounded-circle product-item mx-auto" src="../../../assets/cold_brew.png" alt="Card image cap">
             <div class="card-body">
                 <h5 class="card-title poppins text-center">{{ productName }}</h5>
             </div>

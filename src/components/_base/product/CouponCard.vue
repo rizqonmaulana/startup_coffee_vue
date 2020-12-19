@@ -7,7 +7,7 @@
         </div>
 
         <div class="card mt-5 coupon-card justify-content-md-center" style="width: 230px; background-color: #FFCB65;">
-        <img class="card-img-top rounded-circle mx-auto mt-4" src="../../assets/profile.png" style="width: 80px">
+        <img class="card-img-top rounded-circle mx-auto mt-4" src="../../../assets/profile.png" style="width: 80px">
         <div class="card-body text-center">
             <h5 class="card-title" style="font-weight: 700; font-size: 22px; line-height: 35px;">
             Beef Spaghetti

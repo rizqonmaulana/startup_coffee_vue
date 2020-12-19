@@ -3,20 +3,19 @@
         <div class="checkout-card py-2 px-5 poppins d-flex flex-row">
             <div class="d-flex flex-row" style="width:100%">
                 <div class="p-2 pic" style="width:30%">
-                    <img class="rounded-circle" src="../../assets/cold_brew.png">
+                    <img class="rounded-circle" src="../../../assets/cold_brew.png">
                 </div>
                 <div class="p-2 desc my-auto" style="width:40%">
                     <div class="desc-text">
-                        <h5 style="font-weight: 900;">{{productName.toUpperCase()}}</h5>
-                        <p>x1 (Large)</p>
-                        <p>x1 (Regular)</p>
+                        <h5 style="font-weight: 900;">{{productName}}</h5>
+                        <p>x{{orderQty}} ({{orderSize}})</p>
                     </div>
                 </div>
                 <div class="p-2 checkout my-auto" style="width:30%">
                     <span class="ml-2 " style="font-weight: 700; font-size: 20px;">Checkout</span>
                     <a href="payment.html">
                     <button class="btn-checkout rounded-circle">
-                        <img src="../../assets/arrow-checkout.png" style="width: 25px;">
+                        <img src="../../../assets/arrow-checkout.png" style="width: 25px;">
                     </button>
                     </a>
                 </div>
@@ -29,7 +28,9 @@
 export default {
     props : [
         'productPic',
-        'productName'
+        'productName',
+        'orderQty',
+        'orderSize'
     ]
 }
 </script>

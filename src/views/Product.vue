@@ -45,9 +45,9 @@
 // [1] step pertama
 import Navbar from '../components/_base/Navbar'
 import Footer from '../components/_base/Footer'
-import CouponCard from '../components/_base/CouponCard'
-import ProductCard from '../components/_base/ProductCard'
-import NavMenu from '../components/_base/NavMenu'
+import CouponCard from '../components/_base/product/CouponCard'
+import ProductCard from '../components/_base/product/ProductCard'
+import NavMenu from '../components/_base/product/NavMenu'
 import axios from 'axios'
 
 export default {
