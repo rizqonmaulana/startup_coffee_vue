@@ -1,5 +1,5 @@
 <template>
-  <div class="lifecycle">
+  <div>
     <Navbar />
    <div class="centered">
       <h1>This is Lifecycle Page</h1>

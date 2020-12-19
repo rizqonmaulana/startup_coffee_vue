@@ -6,10 +6,10 @@
           <div class="p-2" style="width: 60vw;">
             <span>
               <img class="footer-brand mr-3" src="../../assets/coffee-nav-icon.png">
-              <strong class="coffee-shop">Coffee Shop</strong>
+              <strong class="coffee-shop">StartUp Coffee</strong>
             </span>
             <p class="footer-text mt-3" style="line-height: 30px;">
-              Coffee Shop is a store that sells some good <br> 
+              StartUp Coffee is a store that sells some good <br> 
               meals, and especially coffee. We provide <br>
               high quality beans
             </p>
@@ -37,7 +37,7 @@
           <div class="p-2 d-none d-sm-block" style="width: 20vw;">
             <h5 class="footer-text-section">Engage</h5>
             <ul class="footer-text-2">
-              <li>Coffee Shop ?</li>
+              <li>StartUp Coffee ?</li>
               <li>FAQ</li>
               <li>About Us</li>
               <li>Privacy Policy</li>
@@ -61,7 +61,7 @@
             <div class="p-2" style="width: 30vw;">
               <h5 class="footer-text-section">Engage</h5>
               <ul class="footer-text-2">
-                <li>Coffee Shop ?</li>
+                <li>StartUp Coffee ?</li>
                 <li>FAQ</li>
                 <li>About Us</li>
                 <li>Privacy Policy</li>

@@ -6,7 +6,7 @@
           <div class="nav-logo">
             <ul class="navbar-nav">
               <li>
-                  <a class="navbar-brand" href="#"><img class="mr-3" src="../../assets/coffee-nav-icon.png"><strong style="color: #0B132A;">Coffe Shop</strong></a>
+                  <a class="navbar-brand" href="#"><img class="mr-3" src="../../assets/coffee-nav-icon.png"><strong style="color: #0B132A;">StartUp Coffee</strong></a>
               </li>
             </ul>
           </div>
