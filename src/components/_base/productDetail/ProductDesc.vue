@@ -69,9 +69,11 @@
             Ask a Staff
         </button>
         <br>
-        <button v-if="role === 1" class="btn-ask">
-            Edit Product
-        </button>
+        <router-link :to="{name: 'ProductUpdate', params: {id:productId}}">
+          <button v-if="role === 1" class="btn-ask">
+              Edit Product
+          </button>
+        </router-link>
         <br>
         <button v-if="role === 1" @click="deleteProduct(productId)" class="btn-add mt-3" style="background-color: #000;">
             Delete Product

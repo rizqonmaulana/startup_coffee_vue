@@ -6,7 +6,7 @@
           <div class="nav-logo">
             <ul class="navbar-nav">
               <li>
-                  <a class="navbar-brand" href="#"><img class="mr-3" src="../../assets/coffee-nav-icon.png"><strong style="color: #0B132A;">StartUp Coffee</strong></a>
+                  <router-link class="navbar-brand" to="/"><img class="mr-3" src="../../assets/coffee-nav-icon.png"><strong style="color: #0B132A;">StartUp Coffee</strong></router-link>
               </li>
             </ul>
           </div>
@@ -22,7 +22,7 @@
                 <router-link class="nav-link" to="/lifecycle">Your Cart</router-link>
               </li>
               <li class="nav-item">
-                  <router-link class="nav-link" to="#">History</router-link>
+                  <router-link class="nav-link" to="/history">History</router-link>
               </li>  
             </ul>
           </div>

@@ -3,16 +3,16 @@
         <p class="text-brown">
             Name :
         </p>
-        <input @input="getProductName" class="form-control" type="text" placeholder="Type product name min.50 characters">
+        <input @input="getProductName" v-model="form.productName" class="form-control" type="text" placeholder="Type product name min.50 characters">
 
         <p class="text-brown">
             Price :
         </p>
-        <input @input="getProductPrice"  class="form-control" type="text" placeholder="Type the price">
+        <input @input="getProductPrice" v-model="form.productPrice" class="form-control" type="text" placeholder="Type the price">
         <p class="text-brown">
             Description :
         </p>
-        <input @input="getProductDesc"  class="form-control" type="text" placeholder="Describe your product min.150 characters">
+        <input @input="getProductDesc" v-model="form.productDesc"  class="form-control" type="text" placeholder="Describe your product min.150 characters">
         <p class="text-brown">
             Input product size :
         </p>
@@ -59,17 +59,18 @@
 
 <script>
 export default {
+    props: ['form'],
     data() {
         return {
-            sizeRegular : 0,
-            sizelarge : 0,
-            sizeExtraLarge : 0,
-            size250gr : 0,
-            size300gr : 0,
-            size500gr : 0,
-            deliveryHome: 0,
-            deliveryDineIn: 0,
-            deliveryTakeAway: 0
+            sizeRegular : this.form.sizeRegular,
+            sizelarge : this.form.sizeLarge,
+            sizeExtraLarge : this.form.sizeExtraLarge,
+            size250gr : this.form.size250gr,
+            size300gr : this.form.size300gr,
+            size500gr : this.form.size500gr,
+            deliveryHome: this.form.deliveryHome,
+            deliveryDineIn: this.form.deliveryDineIn,
+            deliveryTakeAway: this.form.deliveryTakeAway
         }
     },
     methods: {

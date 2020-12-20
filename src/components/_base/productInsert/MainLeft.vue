@@ -66,7 +66,7 @@
 
              <span class="mt-5" style="color: #6a4029;"><strong> Select Category : </strong></span>
              <div class="form-group mt-3">
-                <select @input="getCategory" v-model="stock" name="stock" class="form-control input-stock">
+                <select @input="getCategory" :value="form.categoryId" name="stock" class="form-control input-stock">
                     <option disabled selected>Input stock</option>
                     <option value="1">Coffee</option>
                     <option value="2">Non Coffee</option>
@@ -81,11 +81,12 @@
 
 <script>
 export default {
+    props: ['form'],
     data() {
         return {
-            startHour : '',
-            endHour : '',
-            stock : ''
+            startHour : this.form.productStartHour,
+            endHour : this.form.productEndHour,
+            stock : this.form.productQty
         }
     },
     methods: {

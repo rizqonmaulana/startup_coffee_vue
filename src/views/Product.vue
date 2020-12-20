@@ -89,7 +89,7 @@ export default {
       productId: '',
       currentPage: 1,
       totalRows: null,
-      limit: 2,
+      limit: 12,
       page: 1,
       categoryName: ''
     }

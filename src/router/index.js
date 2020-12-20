@@ -6,6 +6,8 @@ import Lifecycle from '../views/Lifecycle.vue'
 import ProductDetail from '../views/ProductDetail.vue'
 import ProductCheckout from '../views/ProductCheckout.vue'
 import ProductInsert from '../views/ProductInsert.vue'
+import ProductUpdate from '../views/ProductUpdate.vue'
+import History from '../views/OrderHistory.vue'
 
 Vue.use(VueRouter)
 
@@ -39,6 +41,16 @@ const routes = [
     path: '/product/add',
     name: 'ProductInsert',
     component: ProductInsert
+  },
+  {
+    path: '/product/update/:id',
+    name: 'ProductUpdate',
+    component: ProductUpdate
+  },
+  {
+    path: '/history',
+    name: 'History',
+    component: History
   }
 ]
 

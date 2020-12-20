@@ -13,8 +13,8 @@
                         />
                     </b-col>
                     <b-col col lg="7" sm="12">
-                        <MainRight
-                            :form="form" 
+                        <MainRight 
+                            :form="form"
                             @getProductName="getProductName"
                             @getProductPrice="getProductPrice"
                             @getProductDesc="getProductDesc"
@@ -68,7 +68,7 @@ export default {
     data() {
         return {
             form: {
-                productName: '',
+                productName: 'nama',
                 productPrice: 0,
                 productDesc: '',
                 productStartHour: '',
@@ -90,13 +90,16 @@ export default {
             showDismissibleAlert: false
         }
     },
+    created() {
+        const id = this.$route.params.id
+        this.getProductDetail(id)
+    },
     methods: {
-        postProduct() {
-            console.log(this.form)
-            axios.post('http://localhost:3000/product', this.form)
+        getProductDetail(id) {
+            axios.get(`http://localhost:3000/product/detail/${id}`)
             .then(response => {
-                console.log(response)
-                this.showAlert()
+                console.log(this.form)
+                this.form = response.data.data[0]
             })
             .catch(error => {
                 console.log(error)
