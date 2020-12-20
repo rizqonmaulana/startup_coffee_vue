@@ -1,7 +1,7 @@
 <template>
-  <div class="product-detail">
+  <div>
     <Navbar />
-    <main>
+    <main class="product-detail">
       <b-container class="product-details">
         <b-row>
           <b-col col lg="6" sm="12">
@@ -132,6 +132,8 @@ export default {
       const data = this.orderData
       const setCart = {
           productId : data.productId,
+          productName : this.product.product_name,
+          productPic : this.product.product_pic,
           orderDetailDelivery : data.orderDetailDelivery,
           orderDetailSize : data.orderDetailSize,
           orderDetailQty : data.orderDetailQty,
