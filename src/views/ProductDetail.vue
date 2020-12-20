@@ -17,14 +17,17 @@
           <b-col col lg="6" sm="12">
             <MainRightTop 
               class="main-right-top" 
+              :productId="product.product_id"
               :productName="product.product_name"
               :productDesc="product.product_desc"
               :productPrice="product.product_price"
               :productStart="product.product_start_hour"
               :productEnd="product.product_end_hour"
+              :role="role"
               @getOrderQty="getOrderQty"
               @getSubTotal="getSubTotal"
               @addToCart="addToCart"
+              @deleteProduct="deleteProduct"
               />
           </b-col>
         </b-row>
@@ -86,7 +89,8 @@ export default {
         orderDetailSize : '',
         orderDetailQty : 1,
         orderDetailPrice : 0
-        }
+      },
+      role : 1
     }
   },
   created() {
@@ -111,6 +115,16 @@ export default {
       .catch(error => {
         console.log(error)
       })
+    },
+    deleteProduct(id) {
+      axios.delete(`http://localhost:3000/product/${id}`)
+        .then(response => {
+          console.log(response)
+          this.$router.push('/product')
+        })
+        .catch(error => {
+          console.log(error)
+        })
     },
     selectDelivery(delivery) {
       this.orderData.orderDetailDelivery = delivery

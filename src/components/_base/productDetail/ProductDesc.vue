@@ -65,8 +65,16 @@
             Add to Cart
         </button>
         <br>
-        <button class="btn-ask mt-3">
+        <button v-if="role === 0" class="btn-ask mt-3">
             Ask a Staff
+        </button>
+        <br>
+        <button v-if="role === 1" class="btn-ask">
+            Edit Product
+        </button>
+        <br>
+        <button v-if="role === 1" @click="deleteProduct(productId)" class="btn-add mt-3" style="background-color: #000;">
+            Delete Product
         </button>
         </div>   
     </div>
@@ -75,11 +83,13 @@
 <script>
 export default {
   props: [
+          'productId',
           'productName',
           'productDesc',
           'productPrice',
           'productStart',
-          'productEnd'
+          'productEnd',
+          'role'
   ],
   data() {
       return {
@@ -94,6 +104,9 @@ export default {
       this.subTotal
   },
   methods: {
+      deleteProduct(id) {
+        this.$emit('deleteProduct', id)
+      },
       counterUp() {
           this.productQty += 1
           this.getSubTotal(this.subTotal)
