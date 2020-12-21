@@ -67,4 +67,11 @@ export default {
   font-weight: 700;
   border-bottom: 3px solid #6a4029;
 }
+
+@media (max-width: 576px) {
+  .flex-row {
+    flex-direction: column !important;
+}
+}
+
 </style>
