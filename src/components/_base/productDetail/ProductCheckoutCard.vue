@@ -13,11 +13,11 @@
                 </div>
                 <div class="p-2 checkout my-auto" style="width:30%">
                     <span class="ml-2 " style="font-weight: 700; font-size: 20px;">Checkout</span>
-                    <a href="payment.html">
-                    <button class="btn-checkout rounded-circle">
-                        <img src="../../../assets/arrow-checkout.png" style="width: 25px;">
-                    </button>
-                    </a>
+                <router-link to="/product/checkout">
+                  <button class="btn-checkout rounded-circle">
+                    <img src="../../../assets/arrow-checkout.png" style="width: 25px;">
+                  </button>
+                </router-link>
                 </div>
             </div>
         </div>
