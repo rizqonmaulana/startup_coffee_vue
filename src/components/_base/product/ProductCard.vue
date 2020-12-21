@@ -55,4 +55,22 @@ export default {
   font-weight: 700;
   color: #6a4029;
 }
+
+@media (max-width: 576px) {
+  .card-product-link .card-product {
+    width: 9rem;
+  }
+}
+
+@media (max-width: 393px) {
+  .card-product-link .card-product {
+    width: 7.6rem;
+  }
+
+  .card-product-link .card-product img.card-img-top {
+    width: 7rem !important;
+  }
+}
+
+
 </style>
