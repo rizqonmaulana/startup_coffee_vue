@@ -19,7 +19,7 @@
                 <router-link class="nav-link" to="/product">Product</router-link>
               </li>
               <li class="nav-item">
-                <router-link class="nav-link" to="/lifecycle">Your Cart</router-link>
+                <router-link class="nav-link" to="/product/checkout">Your Cart</router-link>
               </li>
               <li class="nav-item">
                   <router-link class="nav-link" to="/history">History</router-link>
