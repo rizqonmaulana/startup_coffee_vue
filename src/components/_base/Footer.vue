@@ -89,7 +89,7 @@
 
 <style scoped>
 footer {
-  padding: 150px 0 30px 0;
+  padding: 100px 0 30px 0;
   background-color: #f8f8f8;
 }
 
@@ -123,5 +123,12 @@ footer img.footer-brand {
   font-size: 16px;
   font-weight: 500;
   color: #4f5665;
+}
+
+@media (max-width: 576px) {
+  footer {
+    padding: 50px 0 30px 0;
+    background-color: #f8f8f8;
+  }
 }
 </style>
