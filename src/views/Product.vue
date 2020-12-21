@@ -11,6 +11,9 @@
               Coupons will be updated every weeks. <br> Check them out! 
             </p>
             <CouponCard />
+            <router-link to="/product/add">
+              <button v-if="role === 1" class="btn-add btn-promo">Add new promo</button>
+            </router-link>    
           </b-col>
           <b-col col lg="9" sm="12" class="main-right">
             <NavMenu @setToPageOne="setToPageOne" @selectCategory="getProductByCategory" class="mt-3"/>
@@ -31,7 +34,10 @@
               @change="handlePageChange"
               class="float-right"
             >
-            </b-pagination>         
+            </b-pagination>
+            <router-link to="/product/add">
+              <button v-if="role === 1" class="btn-add">Add new product</button>
+            </router-link>         
           </b-col>
         </b-row>
       </b-container>
@@ -91,7 +97,8 @@ export default {
       totalRows: null,
       limit: 12,
       page: 1,
-      categoryName: ''
+      categoryName: '',
+      role : 1
     }
   },
   created() {
@@ -206,6 +213,37 @@ export default {
 
 .product-card {
   margin: 10px 23px 50px;
+}
+
+.btn-add {
+  background-color: #6A4029;
+  width: 100%;
+  border-radius: 10px;
+  border: unset;
+  line-height: 50px;
+  color: #fff;
+  font-weight: bold;
+}
+
+.btn-promo {
+  margin-top: 355px;
+  background-color: #FFBA33;
+  color: #6A4029;
+}
+
+@media (max-width: 576px) {
+ .main-left {
+    border-top: unset;
+    border-right: unset;
+}
+
+.main-right {
+  border-top: unset;
+} 
+
+.btn-promo {
+  margin-top: 0px;
+}
 }
 
 </style>
