@@ -18,6 +18,13 @@
           <b-col col lg="9" sm="12" class="main-right">
             <NavMenu @setToPageOne="setToPageOne" @selectCategory="getProductByCategory" class="mt-3"/>
             <div class="product-list ml-lg-4 mt-5 pt-4">
+              <input v-on:keyup.enter="searchProduct" v-model="searchKeyword">
+              <select @click="sortProduct" v-model="sortId">
+                <option value="1">A - Z </option>
+                <option value="2">Z - A </option>
+                <option value="3">Dari Termurah </option>
+                <option value="4">Dari Termahal </option>
+              </select>
               <b-row>
                 <ProductCard  
                   v-for="(item, index) in products" :key="index"
@@ -98,7 +105,11 @@ export default {
       limit: 12,
       page: 1,
       categoryName: '',
-      role : 1
+      role : 1,
+      searchKeyword: '',
+      sortId : 0,
+      sortBy : '',
+      sortType : ''
     }
   },
   created() {
@@ -114,6 +125,45 @@ export default {
           console.log(response)
           this.totalRows = response.data.pagination.totalData
           this.products = response.data.data
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    },
+    searchProduct() {
+      axios.get(`http://localhost:3000/product?search=${this.searchKeyword}&limit=${this.limit}&page=${this.page}`)
+      .then(response => {
+        console.log(response)
+        this.totalRows = response.data.pagination.totalData
+        this.products = response.data.data
+      })
+      .catch(error => {
+        console.log(error)
+      })
+    },
+    sortProduct() {
+      console.log(this.sortId)
+      if (this.sortId == 1) {
+        this.sortBy = 'product_name'
+        this.sortType = 'ASC'
+      } else if (this.sortId == 2) {
+        this.sortBy = 'product_name'
+        this.sortType = 'DESC'
+      } else if (this.sortId == 3) {
+        this.sortBy = 'product_price'
+        this.sortType = 'ASC'
+      } else if (this.sortId == 4) {
+        this.sortBy = 'product_price'
+        this.sortType = 'DESC'
+      }
+      console.log(this.sortBy)
+      console.log(this.sortType)
+      axios.get(`http://localhost:3000/product?sortBy=${this.sortBy}&sortType=${this.sortType}&limit=${this.limit}&page=${this.page}`)
+        .then(response => {
+          // console.log(response)
+          this.totalRows = response.data.pagination.totalData
+          this.products = response.data.data
+          // console.log(this.products)
         })
         .catch(error => {
           console.log(error)

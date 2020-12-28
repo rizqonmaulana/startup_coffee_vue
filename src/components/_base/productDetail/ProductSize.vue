@@ -5,12 +5,51 @@
                 <h5>Choose a size</h5>
             </div>
             <div class="btn-size-collection poppins text-center">
-                <button v-if="sizeR !== 0" @click="selectSize('Regular')" class="btn-size rounded-circle mt-2 active">R</button>
-                <button v-if="sizeL !== 0" @click="selectSize('Large')" class="btn-size rounded-circle mt-2">L</button>
-                <button v-if="sizeXL !== 0" @click="selectSize('Extra Large')" class="btn-size rounded-circle mt-2">XL</button>
-                <button v-if="size250gr !== 0" @click="selectSize('250gr')" class="btn-size rounded-circle mt-2" style="font-size:16px">250gr</button>
-                <button v-if="size300gr !== 0" @click="selectSize('300gr')" class="btn-size rounded-circle mt-2" style="font-size:16px">300gr</button>
-                <button v-if="size500gr !== 0" @click="selectSize('500gr')" class="btn-size rounded-circle mt-2" style="font-size:16px">500gr</button>
+                <button 
+                    v-if="sizeR !== 0" 
+                    @click="selectSize('Regular')" 
+                    :class="btnSize === 'Regular' ? 'btn-size rounded-circle mt-2 active' : 'btn-size rounded-circle mt-2'"
+                    >
+                        R
+                </button>
+                <button 
+                    v-if="sizeL !== 0" 
+                    @click="selectSize('Large')" 
+                    :class="btnSize === 'Large' ? 'btn-size rounded-circle mt-2 active' : 'btn-size rounded-circle mt-2'"
+                    >
+                        L
+                </button>
+                <button 
+                    v-if="sizeXL !== 0" 
+                    @click="selectSize('Extra Large')" 
+                    :class="btnSize === 'Extra Large' ? 'btn-size rounded-circle mt-2 active' : 'btn-size rounded-circle mt-2'"
+                    >
+                        XL
+                </button>
+                <button 
+                    v-if="size250gr !== 0" 
+                    @click="selectSize('250gr')" 
+                    :class="btnSize === '250gr' ? 'btn-size rounded-circle mt-2 active' : 'btn-size rounded-circle mt-2'" 
+                    style="font-size:16px"
+                    >
+                        250gr
+                </button>
+                <button 
+                    v-if="size300gr !== 0" 
+                    @click="selectSize('300gr')" 
+                    :class="btnSize === '300gr' ? 'btn-size rounded-circle mt-2 active' : 'btn-size rounded-circle mt-2'" 
+                    style="font-size:16px"
+                    >
+                        300gr
+                </button>
+                <button 
+                    v-if="size500gr !== 0" 
+                    @click="selectSize('500gr')" 
+                    :class="btnSize === '500gr' ? 'btn-size rounded-circle mt-2 active' : 'btn-size rounded-circle mt-2'" 
+                    style="font-size:16px"
+                    >
+                        500gr
+                </button>
             </div>
         </div>
     </div>
@@ -26,8 +65,14 @@ export default {
         'size300gr',
         'size500gr'
     ],
+    data() {
+        return {
+            btnSize: ''
+        }
+    },
     methods: {
         selectSize(size) {
+            this.btnSize = size
             this.$emit('selectSize', size)
         }
     }
@@ -50,6 +95,7 @@ export default {
   border: unset;
   margin-right: 25px;
   background-color: #dfdfdf;
+  outline: none;
 }
 
 .btn-size-collection .btn-size.active {

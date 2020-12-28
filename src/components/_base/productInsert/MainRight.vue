@@ -20,12 +20,42 @@
             Click size you want to user for this product
         </p>
         <div class="btn-size-collection poppins text-center">
-            <button @click="getSizeR()" class="btn-size rounded-circle mt-2 active">R</button>
-            <button @click="getSizeL()" class="btn-size rounded-circle mt-2">L</button>
-            <button @click="getSizeXL()" class="btn-size rounded-circle mt-2">XL</button>
-            <button @click="getSize250gr()" class="btn-size rounded-circle mt-2">250gr</button>
-            <button @click="getSize300gr()" class="btn-size rounded-circle mt-2">300gr</button>
-            <button @click="getSize500gr()" class="btn-size rounded-circle mt-2">500gr</button>
+            <button 
+                @click="getSizeR()" 
+                :class="sizeRegular === 1 ? 'btn-size rounded-circle mt-2 active' : 'btn-size rounded-circle mt-2'"
+                >
+                    R
+            </button>
+            <button 
+                @click="getSizeL()" 
+                :class="sizeLarge === 1 ? 'btn-size rounded-circle mt-2 active' : 'btn-size rounded-circle mt-2'"
+                >
+                    L
+            </button>
+            <button 
+                @click="getSizeXL()" 
+                :class="sizeExtraLarge === 1 ? 'btn-size rounded-circle mt-2 active' : 'btn-size rounded-circle mt-2'"
+                >   
+                    XL
+            </button>
+            <button 
+                @click="getSize250gr()" 
+                :class="size250gr === 1 ? 'btn-size rounded-circle mt-2 active' : 'btn-size rounded-circle mt-2'"
+                >   
+                    250gr
+            </button>
+            <button 
+                @click="getSize300gr()" 
+                :class="size300gr === 1 ? 'btn-size rounded-circle mt-2 active' : 'btn-size rounded-circle mt-2'"
+                >
+                    300gr
+                </button>
+            <button 
+                @click="getSize500gr()" 
+                :class="size500gr === 1 ? 'btn-size rounded-circle mt-2 active' : 'btn-size rounded-circle mt-2'"
+                >
+                    500gr
+            </button>
         </div>
 
         <p class="text-brown">
@@ -34,13 +64,19 @@
         <p class="text-grey">
             Click methods you want to use for this product
         </p>
-        <button @click="getHomeDelivery()" class="btn-delivery mt-3">
+        <button 
+            @click="getHomeDelivery()" 
+            :class="deliveryHome === 1 ? 'btn-delivery mt-3 active' : 'btn-delivery mt-3'">
             Home Delivery
         </button>
-        <button @click="getDineIn()" class="btn-delivery mt-3">
+        <button 
+            @click="getDineIn()" 
+            :class="deliveryDineIn === 1 ? 'btn-delivery mt-3 active' : 'btn-delivery mt-3'">
             Dine in
         </button>
-        <button @click="getTakeAway()" class="btn-delivery mt-3">
+        <button 
+            @click="getTakeAway()" 
+            :class="deliveryTakeAway === 1 ? 'btn-delivery mt-3 active' : 'btn-delivery mt-3'">
             Take away
         </button>
 
@@ -205,6 +241,7 @@ export default {
         border: unset;
         margin-right: 25px;
         background-color: #dfdfdf;
+        outline: none;
     }
 
     .btn-size-collection .btn-size.active {
@@ -218,21 +255,27 @@ export default {
     }
 
     .btn-delivery {
-        background-color: #ffba33;
+        background-color: #dfdfdf;
         margin-right: 5%;
-        color: #6A4029;
+        color: #000;
         width: 25%;
         line-height: 50px;
         font-weight: 700;
         border: unset;
         border-radius: 10px;
+        outline: none;
         -webkit-box-shadow: 0px 10px 20px rgba(137, 85, 55, 0.4);
                 box-shadow: 0px 10px 20px rgba(137, 85, 55, 0.4);
     }
     .btn-delivery:hover {
         background-color: #ffac05;
-        color: #fff;
+        color: #6A4029;
     } 
+
+    .btn-delivery.active {
+        background-color: #ffba33;
+        color: #6A4029;
+    }
 
     .btn-save {
         margin-top: 50px;

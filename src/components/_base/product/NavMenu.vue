@@ -1,20 +1,45 @@
 <template>
     <div>
         <ul class="navbar-nav flex-row d-flex justify-content-between ml-4">
-            <li class="nav-item active">
-            <a class="nav-link" @click="selectCategory('favorite')">Favorite Product</a>
+            <li class="nav-item">
+              <a 
+                :class="category === 'favorite'? 'nav-link active' : 'nav-link'" 
+                @click="selectCategory('favorite')"
+                >
+                  Favorite Product
+              </a>
             </li>
             <li class="nav-item">
-            <a class="nav-link" @click="selectCategory('coffee')">Coffee</a>
+              <a 
+                :class="category === 'coffee'? 'nav-link active' : 'nav-link'" 
+                @click="selectCategory('coffee')"
+                >
+                  Coffee
+              </a>
             </li>
             <li class="nav-item">
-            <a class="nav-link" @click="selectCategory('non-coffee')">Non Coffee</a>
+              <a 
+                :class="category === 'non-coffee'? 'nav-link active' : 'nav-link'" 
+                @click="selectCategory('non-coffee')"
+                >
+                  Non Coffee
+              </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" @click="selectCategory('foods')">Foods</a>
+              <a 
+                :class="category === 'foods'? 'nav-link active' : 'nav-link'" 
+                @click="selectCategory('foods')"
+                >
+                  Foods
+              </a>
             </li>  
             <li class="nav-item">
-            <a class="nav-link" @click="selectCategory('add-on')">Add-on</a>
+              <a 
+                :class="category === 'add-on'? 'nav-link active' : 'nav-link'" 
+                @click="selectCategory('add-on')"
+                >
+                  Add-on
+              </a>
             </li>  
         </ul>
     </div>
@@ -24,11 +49,13 @@
 export default {
   data() {
     return {
-      showMobileMenu: false
+      showMobileMenu: false,
+      category: 'favorite'
     }
   },
     methods: {
         selectCategory(category) {
+            this.category = category
             this.$emit('setToPageOne', 1)
             this.$emit('selectCategory', category)
         }
@@ -62,7 +89,7 @@ export default {
   border-bottom: 3px solid #6a4029;
 }
 
-.navbar-nav li.active a{
+.navbar-nav a.active {
   color: #6a4029;
   font-weight: 700;
   border-bottom: 3px solid #6a4029;

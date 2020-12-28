@@ -12,14 +12,41 @@
             <div class="delivery-time-card">
                 <h5>Delivery and Time</h5>
                 <div class="delivery-btn-collection-1 mt-4">
-                    <button v-if="deliveryDineIn != 0" @click="selectDelivery('Dine In')" class="delivery-btn">Dine In</button>
-                    <button v-if="deliveryHome != 0" @click="selectDelivery('Door Delivery')" class="delivery-btn">Door Deliver</button>
-                    <button v-if="deliveryTakeAway != 0" @click="selectDelivery('Pick Up')" class="delivery-btn pickup-btn">Pick up</button>
+                    <button 
+                        v-if="deliveryDineIn != 0" 
+                        @click="selectDelivery('Dine In')" 
+                        :class="btnDelivery === 'Dine In' ? 'delivery-btn active' : 'delivery-btn' "
+                        >
+                            Dine In
+                        </button>
+                    <button 
+                        v-if="deliveryHome != 0" 
+                        @click="selectDelivery('Door Delivery')" 
+                        :class="btnDelivery === 'Door Delivery' ? 'delivery-btn active' : 'delivery-btn'"
+                        >
+                            Door Deliver
+                        </button>
+                    <button 
+                        v-if="deliveryTakeAway != 0" 
+                        @click="selectDelivery('Pick Up')" 
+                        :class="btnDelivery === 'Pick Up' ? 'delivery-btn active' : 'delivery-btn'">
+                            Pick up
+                        </button>
                 </div>
                     <br>
                     <span class="mr-5">Now</span>
-                    <button class="delivery-btn mr-2">Yes</button>
-                    <button class="delivery-btn">No</button>
+                    <button 
+                        @click="selectNow('yes')"
+                        :class="btnNow === 'yes' ? 'delivery-btn active mr-2' : 'delivery-btn mr-2'"
+                        >
+                            Yes
+                        </button>
+                    <button 
+                        @click="selectNow('no')"
+                         :class="btnNow === 'no' ? 'delivery-btn active' : 'delivery-btn'"
+                        >
+                            No
+                    </button>
                     <br>
                 <div class="set-delivery-time mt-4 mb-4">
                     <span class="mr-4">Set time</span>
@@ -41,12 +68,17 @@ export default {
   ],
   data() {
       return {
-          dineIn : 1
+          btnDelivery: '',
+          btnNow: ''
       }
   },
   methods: {
       selectDelivery(delivery) {
+          this.btnDelivery = delivery
           this.$emit('selectDelivery', delivery)
+      },
+      selectNow(now) {
+         this.btnNow = now
       }
   }
 }
@@ -71,6 +103,7 @@ export default {
   padding: 3px 15px;
   margin-right: 5px;
   border: 1px solid rgba(186, 186, 186, 0.35);
+  outline:none;
 }
 
 .product-card .delivery-btn.active,
