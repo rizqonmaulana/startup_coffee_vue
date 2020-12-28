@@ -18,7 +18,7 @@
             <span class="poppins">Cash on Delivery</span>
         </div>
 
-        <button class="btn-confirm poppins mt-5">
+        <button @click="postOrder()" class="btn-confirm poppins mt-5">
             Confirm and Pay
         </button>
     </div>
@@ -28,8 +28,11 @@
 export default {
     methods: {
         selectPaymentMethod(method) {
-        this.$emit('selectPaymentMethod', method)
-    }
+            this.$emit('selectPaymentMethod', method)
+        },
+        postOrder(){
+            this.$emit('postOrder')
+        }
     }
 }
 </script>

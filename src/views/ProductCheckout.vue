@@ -7,6 +7,7 @@
                         <b-col col lg="6" sm="12" class="pr-lg-5">
                             <OrderSummary 
                                 :orderData="orderData" 
+                                @subTotal="subTotal"
                                 />
                         </b-col>
                         
@@ -14,9 +15,9 @@
                             <AddressCard/>
                             <PaymentCard
                               @selectPaymentMethod="selectPaymentMethod"
+                              @postOrder="postOrder"
                               class="mt-5"/>
                         </b-col>
-                        <button @click="getOrder()">get order</button>
                     </b-row>
                 </b-container>
             </div>
@@ -30,6 +31,7 @@ import Footer from '../components/_base/Footer'
 import OrderSummary from '../components/_base/productCheckout/OrderSummary'
 import AddressCard from '../components/_base/productCheckout/AddressCard'
 import PaymentCard from '../components/_base/productCheckout/PaymentCard'
+import axios from 'axios'
 
 export default {
     name: 'ProductCheckout',
@@ -44,35 +46,38 @@ export default {
         return {
             order : {
                 orderPaymentMethod : "",
-                orderTotal : this.subTotal,
-                customerId : 1,
+                orderTotal : 0,
+                customerId : 2,
                 promoCode : ""
             },
-            orderData : []
+            orderData : [],
+            submitData : []
         }
     },
     created() {
         this.orderData = JSON.parse(localStorage.getItem('cart'))
-        this.subTotal
+
+        // this.subTotal
     },
     methods: {
         getOrder() {
-            console.log(this.order)
+            this.submitData = [this.order, ...this.orderData]
         },
         selectPaymentMethod(method) {
             this.order.orderPaymentMethod = method
-        }
-    },
-    computed: {
-        subTotal() {
-            const dataCount = this.orderData.length
-            console.log(this.orderData)
-            let result = 0
-            for (let i = 0; i < dataCount; i++) {
-                result += this.orderItem[i].orderDetailPrice
-            }
-            console.log(result)
-            return result
+        },
+        subTotal(result) {
+        this.order.orderTotal = result
+        },
+        async postOrder() {
+            await this.getOrder()
+            await axios.post('http://localhost:3000/order', this.submitData)
+            .then(response => {
+                console.log(response)
+            })
+            .catch(error => {
+                console.log(error)
+            })
         }
     }
 }

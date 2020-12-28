@@ -22,6 +22,7 @@
                 <div class="price text-right" style="width: 30%;">
                     IDR {{item.orderDetailPrice}} 
                 </div>
+                <button class="btn-del rounded-circle">x</button>
             </div>
             <hr style="width: 100%">
             <div class="row" style="color: #362115; line-height: 35px;">
@@ -72,6 +73,7 @@ export default {
             for (let i = 0; i < dataCount; i++) {
                 result += this.orderItem[i].orderDetailPrice
             }
+            this.$emit('subTotal', result)
             return result
         }
     }
@@ -85,6 +87,16 @@ export default {
   padding: 60px 30px;
   -webkit-box-shadow: 0px 10px 40px rgba(0, 0, 0, 0.35);
           box-shadow: 0px 10px 40px rgba(0, 0, 0, 0.35);
+}
+.btn-del {
+    color: #fff;
+    font-size: 20px;
+    font-weight: 900;
+    background-color: red;
+    border: unset;
+    line-height: 20px;
+    padding-bottom: 4px;
+    margin-left: 10px;
 }
 
 </style>
