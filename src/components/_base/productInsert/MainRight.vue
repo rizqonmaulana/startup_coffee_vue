@@ -246,10 +246,11 @@ export default {
 
     .btn-size-collection .btn-size.active {
         background-color: #ffba33;
+        -webkit-box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.34);
+                box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.34);
     }
 
     .btn-size-collection .btn-size:hover {
-        background-color: #ffae0c;
         -webkit-box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.34);
                 box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.34);
     }
@@ -264,17 +265,19 @@ export default {
         border: unset;
         border-radius: 10px;
         outline: none;
-        -webkit-box-shadow: 0px 10px 20px rgba(137, 85, 55, 0.4);
-                box-shadow: 0px 10px 20px rgba(137, 85, 55, 0.4);
+        -webkit-box-shadow: 0px 5px 10px rgba(137, 85, 55, 0.4);
+                box-shadow: 0px 5px 10px rgba(137, 85, 55, 0.4);
     }
     .btn-delivery:hover {
-        background-color: #ffac05;
-        color: #6A4029;
+        -webkit-box-shadow: 0px 10px 20px rgba(137, 85, 55, 0.4);
+                box-shadow: 0px 10px 20px rgba(137, 85, 55, 0.4);
     } 
 
     .btn-delivery.active {
         background-color: #ffba33;
         color: #6A4029;
+        -webkit-box-shadow: 0px 10px 20px rgba(137, 85, 55, 0.4);
+            box-shadow: 0px 10px 20px rgba(137, 85, 55, 0.4);
     }
 
     .btn-save {
