@@ -113,7 +113,7 @@ export default {
         this.product = productDetail
       })
       .catch(error => {
-        console.log(error)
+        console.log(error.response)
       })
     },
     deleteProduct(id) {

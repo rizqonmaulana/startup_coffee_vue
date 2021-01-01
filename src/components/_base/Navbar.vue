@@ -24,6 +24,7 @@
               <li class="nav-item">
                   <router-link class="nav-link" to="/history">History</router-link>
               </li>  
+              <button @click="logout">Logout</button>
             </ul>
           </div>
           <div class="nav-user ml-md-auto">
@@ -69,6 +70,21 @@
     </nav>
     </div>
 </template>
+
+<script>
+import{mapActions} from 'vuex'
+
+export default {
+  name: 'Navbar',
+  methods: {
+    ...mapActions(['logout']),
+    // logout() {
+    //   alert.log('anda berhasil logout')
+    //   this.logout()
+    // }
+  }
+}
+</script>
 
 <style scoped>
   nav.navbar-brand img {

@@ -8,6 +8,8 @@ import ProductCheckout from '../views/ProductCheckout.vue'
 import ProductInsert from '../views/ProductInsert.vue'
 import ProductUpdate from '../views/ProductUpdate.vue'
 import History from '../views/OrderHistory.vue'
+import Login from '../views/auth/Login.vue'
+import store from '../store/index'
 
 Vue.use(VueRouter)
 
@@ -30,7 +32,8 @@ const routes = [
   {
     path: '/product/detail/:id',
     name: 'DetailProduct',
-    component: ProductDetail
+    component: ProductDetail,
+    meta: { requiresAuth: true }
   },
   {
     path: '/product/checkout',
@@ -51,6 +54,12 @@ const routes = [
     path: '/history',
     name: 'History',
     component: History
+  },
+    {
+    path: '/login',
+    name: 'Login',
+    component: Login,
+    meta: { requiresVisitor: true }
   }
 ]
 
@@ -59,6 +68,28 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes,
   linkExactActiveClass: 'active' // active class for *exact* links.
+})
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    if (!store.getters.isLogin) {
+      next({
+        path : '/login'
+      })
+    } else {
+      next()
+    }
+  } else if (to.matched.some(record => record.meta.requiresVisitor)) {
+    if (store.getters.isLogin) {
+      next({
+        path : '/product'
+      })
+    } else {
+      next()
+    }
+  } else {
+    next()
+  }
 })
 
 export default router
