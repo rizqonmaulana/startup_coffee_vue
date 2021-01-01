@@ -29,6 +29,14 @@
   background-color: #fff;
 }
 
+h2 {
+  color: #343944;
+}
+
+p {
+  color: #4f5665;
+}
+
 .btn-signup {
   width: 200px;
   line-height: 40px;

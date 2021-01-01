@@ -97,7 +97,7 @@ export default {
 @media (max-width: 576px) {
   .float-card {
     position: static;
-    margin: 50px 0px 20px 40px;
+    margin: 50px 0px 20px 30px;
   }
 }
 </style>
