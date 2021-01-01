@@ -12,6 +12,7 @@ import Login from '../views/auth/Login.vue'
 import Signup from '../views/auth/Signup.vue'
 import store from '../store/index'
 import ForgotPassword from '../views/auth/ForgotPassword.vue'
+import Profile from '../views/Profile.vue'
 
 Vue.use(VueRouter)
 
@@ -74,6 +75,11 @@ const routes = [
     name: 'ForgotPassword',
     component: ForgotPassword
     // meta: { requiresVisitor: true }
+  },
+  {
+    path: '/profile',
+    name: 'Profile',
+    component: Profile
   }
 ]
 

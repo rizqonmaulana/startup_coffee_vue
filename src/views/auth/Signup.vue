@@ -43,13 +43,13 @@ export default {
 
 .float-card {
   position: absolute;
-  margin-top: -10%;
+  margin-top: -8%;
   margin-left: 8.5%;
 }
 
-.signup-row {
+/* .signup-row {
   margin-bottom: 50px;
-}
+} */
 
 @media (max-width: 1200px) {
   .float-card {
