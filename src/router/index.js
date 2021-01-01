@@ -11,6 +11,7 @@ import History from '../views/OrderHistory.vue'
 import Login from '../views/auth/Login.vue'
 import Signup from '../views/auth/Signup.vue'
 import store from '../store/index'
+import ForgotPassword from '../views/auth/ForgotPassword.vue'
 
 Vue.use(VueRouter)
 
@@ -66,6 +67,12 @@ const routes = [
     path: '/signup',
     name: 'Signup',
     component: Signup
+    // meta: { requiresVisitor: true }
+  },
+  {
+    path: '/forgot',
+    name: 'ForgotPassword',
+    component: ForgotPassword
     // meta: { requiresVisitor: true }
   }
 ]
