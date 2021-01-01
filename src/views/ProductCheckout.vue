@@ -85,7 +85,7 @@ export default {
 
 <style scoped>
 .product-checkout {
-    background-image: url('../assets/payment-bg.png');
+    background-image: url('../assets/bg-payment.png');
     background-size: cover;
 }
 

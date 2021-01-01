@@ -5,18 +5,18 @@
       <b-container class="product-details">
         <b-row>
           <b-col col lg="6" sm="12">
-            <MainLeftTop 
+            <MainLeftTop
               :productName="product.product_name"
-              :productPic="product.product_pic" 
+              :productPic="product.product_pic"
               :deliveryDineIn="product.delivery_dine_in"
               :deliveryHome="product.delivery_home"
-              :deliveryTakeAway="product.delivery_take_away" 
+              :deliveryTakeAway="product.delivery_take_away"
               @selectDelivery="selectDelivery"
             />
           </b-col>
           <b-col col lg="6" sm="12">
-            <MainRightTop 
-              class="main-right-top" 
+            <MainRightTop
+              class="main-right-top"
               :productId="product.product_id"
               :productName="product.product_name"
               :productDesc="product.product_desc"
@@ -28,14 +28,14 @@
               @getSubTotal="getSubTotal"
               @addToCart="addToCart"
               @deleteProduct="deleteProduct"
-              />
+            />
           </b-col>
         </b-row>
       </b-container>
       <b-container>
         <b-row class="mt-3">
           <b-col col lg="4" md="12" sm="12" class="mt-3">
-            <MainLeftBottom 
+            <MainLeftBottom
               :sizeR="product.size_regular"
               :sizeL="product.size_large"
               :sizeXL="product.size_extra_large"
@@ -46,8 +46,8 @@
             />
           </b-col>
           <b-col col lg="8" md="12" sm="12" class="mt-3">
-            <MainRightBottom 
-              :productPic="product.product_pic" 
+            <MainRightBottom
+              :productPic="product.product_pic"
               :productName="product.product_name"
               :orderQty="orderData.orderDetailQty"
               :orderSize="orderData.orderDetailSize"
@@ -70,7 +70,7 @@ import MainRightBottom from '../components/_base/productDetail/ProductCheckoutCa
 import axios from 'axios'
 
 export default {
-  components:{
+  components: {
     Navbar,
     Footer,
     MainLeftTop,
@@ -80,17 +80,17 @@ export default {
   },
   data() {
     return {
-      productId : '',
+      productId: '',
       product: [],
       cart: [],
-      orderData : {
-        productId : '',
-        orderDetailDelivery : '',
-        orderDetailSize : '',
-        orderDetailQty : 1,
-        orderDetailPrice : 0
+      orderData: {
+        productId: '',
+        orderDetailDelivery: '',
+        orderDetailSize: '',
+        orderDetailQty: 1,
+        orderDetailPrice: 0
       },
-      role : 1
+      role: 1
     }
   },
   created() {
@@ -107,17 +107,19 @@ export default {
   },
   methods: {
     getProductDetail(id) {
-      axios.get(`http://localhost:3000/product/detail/${id}`)
-      .then(response => {
-        const productDetail = response.data.data[0]
-        this.product = productDetail
-      })
-      .catch(error => {
-        console.log(error.response)
-      })
+      axios
+        .get(`http://localhost:3000/product/detail/${id}`)
+        .then(response => {
+          const productDetail = response.data.data[0]
+          this.product = productDetail
+        })
+        .catch(error => {
+          console.log(error.response)
+        })
     },
     deleteProduct(id) {
-      axios.delete(`http://localhost:3000/product/${id}`)
+      axios
+        .delete(`http://localhost:3000/product/${id}`)
         .then(response => {
           console.log(response)
           this.$router.push('/product')
@@ -136,33 +138,33 @@ export default {
     },
     getOrderQty(qty) {
       this.orderData.orderDetailQty = qty
-      console.log('get order '+qty)
+      console.log('get order ' + qty)
     },
     getSubTotal(subTotal) {
       this.orderData.orderDetailPrice = subTotal
-      console.log('get subtotal '+subTotal)
-   },
-   addToCart() {
+      console.log('get subtotal ' + subTotal)
+    },
+    addToCart() {
       const data = this.orderData
       const setCart = {
-          productId : data.productId,
-          productName : this.product.product_name,
-          productPic : this.product.product_pic,
-          orderDetailDelivery : data.orderDetailDelivery,
-          orderDetailSize : data.orderDetailSize,
-          orderDetailQty : data.orderDetailQty,
-          orderDetailPrice : data.orderDetailPrice
+        productId: data.productId,
+        productName: this.product.product_name,
+        productPic: this.product.product_pic,
+        orderDetailDelivery: data.orderDetailDelivery,
+        orderDetailSize: data.orderDetailSize,
+        orderDetailQty: data.orderDetailQty,
+        orderDetailPrice: data.orderDetailPrice
       }
       this.cart = [...this.cart, setCart]
       localStorage.setItem('cart', JSON.stringify(this.cart))
       console.log(this.cart)
-   }
+    }
   }
 }
 </script>
 
 <style scoped>
-  .main-right-top {
-    margin-top: 85px;
-  }
+.main-right-top {
+  margin-top: 85px;
+}
 </style>

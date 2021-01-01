@@ -9,6 +9,7 @@ import ProductInsert from '../views/ProductInsert.vue'
 import ProductUpdate from '../views/ProductUpdate.vue'
 import History from '../views/OrderHistory.vue'
 import Login from '../views/auth/Login.vue'
+import Signup from '../views/auth/Signup.vue'
 import store from '../store/index'
 
 Vue.use(VueRouter)
@@ -55,11 +56,17 @@ const routes = [
     name: 'History',
     component: History
   },
-    {
+  {
     path: '/login',
     name: 'Login',
     component: Login,
     meta: { requiresVisitor: true }
+  },
+  {
+    path: '/signup',
+    name: 'Signup',
+    component: Signup
+    // meta: { requiresVisitor: true }
   }
 ]
 
@@ -74,7 +81,7 @@ router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)) {
     if (!store.getters.isLogin) {
       next({
-        path : '/login'
+        path: '/login'
       })
     } else {
       next()
@@ -82,7 +89,7 @@ router.beforeEach((to, from, next) => {
   } else if (to.matched.some(record => record.meta.requiresVisitor)) {
     if (store.getters.isLogin) {
       next({
-        path : '/product'
+        path: '/product'
       })
     } else {
       next()

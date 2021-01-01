@@ -72,7 +72,7 @@ export default {
 
 <style scoped>
     .main {
-        background-image: url('../assets/history-bg.png');
+        background-image: url('../assets/bg-history.png');
         background-size: cover;
     }
 
