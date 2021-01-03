@@ -14,6 +14,8 @@ import store from '../store/index'
 import ForgotPassword from '../views/auth/ForgotPassword.vue'
 import Profile from '../views/Profile.vue'
 import Dashboard from '../views/Dashboard.vue'
+import CouponInsert from '../views/CouponInsert.vue'
+import CouponUpdate from '../views/CouponUpdate.vue'
 
 Vue.use(VueRouter)
 
@@ -86,6 +88,16 @@ const routes = [
     path: '/dashboard',
     name: 'Dashboard',
     component: Dashboard
+  },
+  {
+    path: '/coupon',
+    name: 'CouponInsert',
+    component: CouponInsert
+  },
+  {
+    path: '/coupon/update/:id',
+    name: 'CouponUpdate',
+    component: CouponUpdate
   }
 ]
 
