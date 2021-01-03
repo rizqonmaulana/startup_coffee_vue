@@ -139,4 +139,12 @@ input {
   font-weight: 700;
   color: #6a4029;
 }
+
+@media (max-width: 576px) {
+  .form {
+    -webkit-box-shadow: unset;
+    box-shadow: unset;
+    border-bottom: unset;
+  }
+}
 </style>
