@@ -13,6 +13,7 @@ import Signup from '../views/auth/Signup.vue'
 import store from '../store/index'
 import ForgotPassword from '../views/auth/ForgotPassword.vue'
 import Profile from '../views/Profile.vue'
+import Dashboard from '../views/Dashboard.vue'
 
 Vue.use(VueRouter)
 
@@ -80,6 +81,11 @@ const routes = [
     path: '/profile',
     name: 'Profile',
     component: Profile
+  },
+  {
+    path: '/dashboard',
+    name: 'Dashboard',
+    component: Dashboard
   }
 ]
 

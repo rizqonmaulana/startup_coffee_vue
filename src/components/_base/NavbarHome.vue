@@ -2,7 +2,7 @@
   <div>
     <nav>
       <b-container class="my-4">
-        <div class="d-flex justify-content-between">
+        <div class="d-flex justify-content-between ">
           <div class="nav-logo">
             <ul class="navbar-nav">
               <li>
@@ -37,27 +37,25 @@
                   >History</router-link
                 >
               </li>
-              <button @click="logout">Logout</button>
+              <li class="nav-item">
+                <router-link class="nav-link" to="/history"
+                  ><p @click="logout">Logout</p></router-link
+                >
+              </li>
             </ul>
           </div>
           <div class="nav-user ml-md-auto">
             <ul class="navbar-nav mr-auto flex-row">
               <li class="nav-item ml-lg-auto">
                 <a class="nav-link" href="#">
-                  <img
-                    src="../../assets/search-icon.png"
-                    style="width: 30px; height:30px;"
-                  />
+                  <p class="login-text">Login</p>
                 </a>
               </li>
               <li class="nav-item pr-0">
                 <a class="nav-link" href="#">
-                  <img src="../../assets/chat-icon.png" />
-                </a>
-              </li>
-              <li class="nav-item pr-0">
-                <a class="nav-link" href="#">
-                  <img class="rounded-circle" src="../../assets/profile.png" />
+                  <button class="btn-signup">
+                    Sign Up
+                  </button>
                 </a>
               </li>
             </ul>
@@ -132,9 +130,27 @@ nav.navbar-brand img {
   margin-right: 2vw;
 }
 
+.login-text {
+  color: #0b132a;
+  font-weight: 700;
+}
+
+.btn-signup {
+  color: #6a4029;
+  background: #ffba33;
+  outline: unset;
+  border-radius: 10px;
+  font-weight: 700;
+  padding: 2px 17px;
+  border: unset;
+}
+
 .nav-logo,
-.nav-menu,
 .nav-user {
-  width: 33vw;
+  width: 30vw;
+}
+
+.nav-menu {
+  width: 40vw;
 }
 </style>
