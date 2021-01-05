@@ -37,11 +37,27 @@
                   >History</router-link
                 >
               </li>
-              <button @click="logout">Logout</button>
+              <li v-if="user === 1" class="nav-item">
+                <p class="nav-link" @click="resetUser">
+                  Logout
+                </p>
+              </li>
             </ul>
           </div>
           <div class="nav-user ml-md-auto">
-            <ul class="navbar-nav mr-auto flex-row">
+            <ul v-if="user === 0" class="navbar-nav mr-auto flex-row">
+              <li class="nav-item ml-lg-auto">
+                <router-link class="nav-link" to="/login">Login</router-link>
+              </li>
+              <li class="nav-item pr-0">
+                <a class="nav-link" href="#">
+                  <button class="btn-signup">
+                    Sign Up
+                  </button>
+                </a>
+              </li>
+            </ul>
+            <ul v-else class="navbar-nav mr-auto flex-row">
               <li class="nav-item ml-lg-auto">
                 <a class="nav-link" href="#">
                   <img
@@ -96,12 +112,30 @@ import { mapActions } from 'vuex'
 
 export default {
   name: 'Navbar',
+  data() {
+    return {
+      user: 0
+    }
+  },
   methods: {
-    ...mapActions(['logout'])
+    ...mapActions(['logout']),
+    resetUser() {
+      this.user = 0
+      this.logout()
+    }
     // logout() {
     //   alert.log('anda berhasil logout')
     //   this.logout()
     // }
+  },
+  created() {
+    let getUser = localStorage.getItem('vuex')
+    getUser = JSON.parse(getUser)
+    if (getUser.Auth.user.userName) {
+      this.user = 1
+    } else {
+      this.user = 0
+    }
   }
 }
 </script>
@@ -133,8 +167,30 @@ nav.navbar-brand img {
 }
 
 .nav-logo,
-.nav-menu,
 .nav-user {
-  width: 33vw;
+  width: 30vw;
+}
+
+.nav-menu {
+  width: 40vw;
+}
+
+.login-text {
+  color: #0b132a;
+  font-weight: 700;
+}
+
+.btn-signup {
+  color: #6a4029;
+  background: #ffba33;
+  outline: unset;
+  border-radius: 10px;
+  font-weight: 700;
+  padding: 2px 17px;
+  border: unset;
+}
+
+.flex-row {
+  justify-content: center;
 }
 </style>
