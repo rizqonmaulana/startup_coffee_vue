@@ -14,46 +14,78 @@
           class="btn-signup"
           style="line-height: 30px; width: 100px; border-radius: 30px;"
         >
-          Login
+          Sign Up
         </button>
       </div>
     </div>
     <h3 class="text-center header-text mb-3">
-      Sign Up
+      Login
     </h3>
-    <p class="text-form">
-      Email Adress :
-    </p>
-    <input
-      class="form-control"
-      type="email"
-      placeholder="Enter your email address"
-    />
-    <p class="text-form">
-      Password :
-    </p>
-    <input
-      class="form-control"
-      type="password"
-      placeholder="Enter your password"
-    />
-    <p class="text-form">
-      Phone Number :
-    </p>
-    <input
-      class="form-control"
-      type="text"
-      placeholder="Enter your phone number"
-    />
-    <button class="btn-signup mt-5">
-      Sign Up
-    </button>
-    <button class="btn-signup btn-signup-google mt-3">
-      <img src="../../../assets/icon-google.svg" class="google-icon" /> Sign up
-      with Google
-    </button>
+    <b-form @submit.prevent="onSubmit" @reset.prevent="onReset">
+      <p class="text-form">
+        Email Address :
+      </p>
+      <input
+        class="form-control"
+        type="email"
+        v-model="form.userEmail"
+        placeholder="Enter your email address"
+      />
+      <p class="text-form">
+        Password :
+      </p>
+      <input
+        class="form-control"
+        type="password"
+        v-model="form.userPassword"
+        placeholder="Enter your password"
+      />
+      <p class="text-form">
+        <button type="submit" class="btn-signup mt-5">
+          Login
+        </button>
+        <button class="btn-signup btn-signup-google mt-3">
+          <img src="../../../assets/icon-google.svg" class="google-icon" />
+          Login with Google
+        </button>
+      </p>
+    </b-form>
   </div>
 </template>
+
+<script>
+import { mapActions } from 'vuex'
+
+export default {
+  data() {
+    return {
+      form: {
+        userEmail: '',
+        userPassword: ''
+      }
+    }
+  },
+  methods: {
+    ...mapActions(['login']),
+    onSubmit() {
+      this.login(this.form)
+        .then(result => {
+          console.log(result)
+          alert('Success login')
+        })
+        .catch(error => {
+          alert(error.data.msg)
+        })
+    },
+    onReset() {
+      this.form = {
+        userEmail: '',
+        userPassword: ''
+      }
+    }
+  }
+}
+</script>
 
 <style scoped>
 .signup-form {

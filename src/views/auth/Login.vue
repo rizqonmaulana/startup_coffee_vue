@@ -1,60 +1,112 @@
 <template>
-    <div>
-        <h1> halaman login </h1>
-        <h3> {{ dataName }} </h3>
-        <b-form @submit.prevent="onSubmit" @reset.prevent="onReset">
-        <input type="email" v-model="form.userEmail" placeholder="Input Your Email ..."
-        /><br />
-        <input type="password" v-model="form.userPassword" placeholder="Input Your Password ..."/>
-        <br />
-        <button type="submit">Submit</button>
-        <button type="reset">Reset</button>
-        </b-form> 
-    </div>
+  <div class="signup-container">
+    <b-container>
+      <b-row class="signup-row">
+        <b-col
+          class="d-none d-lg-block d-xl-block"
+          col
+          lg="6"
+          sm="12"
+          cols="12"
+        >
+          <img class="bg-auth" src="../../assets/bg-auth.png" />
+        </b-col>
+        <b-col col lg="6" sm="12" cols="12">
+          <LoginForm class="signup-form" />
+        </b-col>
+      </b-row>
+      <FloatCard class="float-card" />
+    </b-container>
+    <Footer />
+  </div>
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import Footer from '../../components/_base/Footer'
+import LoginForm from '../../components/_base/auth/LoginForm'
+import FloatCard from '../../components/_base/auth/FloatCard'
 
 export default {
-    name: 'Login',
-    data() {
-        return {
-            form: {
-                userEmail: '',
-                userPassword: ''
-            }
-        }
-    },
-    computed: {
-        // mapState && mapGetters
-        // cara 1
-        // dataName() {
-        //     return this.$store.state.name
-        // }
-        //  cara 2
-        ...mapState(['name']),
-        ...mapState( { dataName: 'name' } )
-    },
-    methods: {
-        // mapAction && mapMutations
-        ...mapActions(['login']),
-        onSubmit() {
-            this.login(this.form)
-                .then(result => {
-                    console.log(result)
-                    alert('Success login')
-                })
-                .catch(error => {
-                    alert(error.data.msg)
-                })
-        },
-        onReset() {
-            this.form = {
-                userEmail: '',
-                userPassword: ''
-            }
-        }
-    },
+  name: 'Login',
+  components: {
+    Footer,
+    LoginForm,
+    FloatCard
+  },
+  data() {
+    return {
+      form: {
+        userEmail: '',
+        userPassword: ''
+      }
+    }
+  }
 }
 </script>
+
+<style scoped>
+.bg-auth {
+  width: 100%;
+  margin: unset;
+}
+
+.float-card {
+  position: absolute;
+  margin-top: -8%;
+  margin-left: 8.5%;
+}
+
+/* .signup-row {
+  margin-bottom: 50px;
+} */
+
+@media (max-width: 1200px) {
+  .float-card {
+    position: static;
+    margin-top: -5%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .signup-row {
+    margin-bottom: 50px;
+  }
+}
+
+@media (max-width: 992px) {
+  .float-card {
+    position: static;
+    margin: 50px 0px 20px 0px;
+  }
+
+  .signup-row {
+    margin-bottom: -20px;
+  }
+
+  .signup-form {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 1px 20px 20px;
+  }
+
+  .signup-container {
+    background-image: url('../../assets/bg-auth.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+}
+
+@media (max-width: 768px) {
+  .float-card {
+    position: static;
+    margin: 50px 0px 20px 55px;
+  }
+}
+
+@media (max-width: 576px) {
+  .float-card {
+    position: static;
+    margin: 50px 0px 20px 30px;
+  }
+}
+</style>
