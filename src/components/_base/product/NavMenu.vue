@@ -1,51 +1,68 @@
 <template>
-    <div>
-        <ul class="navbar-nav flex-row d-flex justify-content-between ml-4">
-            <li class="nav-item">
-              <a 
-                :class="category === 'favorite'? 'nav-link active' : 'nav-link'" 
-                @click="selectCategory('favorite')"
-                >
-                  Favorite Product
-              </a>
-            </li>
-            <li class="nav-item">
-              <a 
-                :class="category === 'coffee'? 'nav-link active' : 'nav-link'" 
-                @click="selectCategory('coffee')"
-                >
-                  Coffee
-              </a>
-            </li>
-            <li class="nav-item">
-              <a 
-                :class="category === 'non-coffee'? 'nav-link active' : 'nav-link'" 
-                @click="selectCategory('non-coffee')"
-                >
-                  Non Coffee
-              </a>
-            </li>
-            <li class="nav-item">
-              <a 
-                :class="category === 'foods'? 'nav-link active' : 'nav-link'" 
-                @click="selectCategory('foods')"
-                >
-                  Foods
-              </a>
-            </li>  
-            <li class="nav-item">
-              <a 
-                :class="category === 'add-on'? 'nav-link active' : 'nav-link'" 
-                @click="selectCategory('add-on')"
-                >
-                  Add-on
-              </a>
-            </li>  
-        </ul>
-    </div>
+  <div>
+    <ul class="navbar-nav flex-row d-flex justify-content-between ml-4">
+      <li class="nav-item">
+        <a
+          :class="category === 'favorite' ? 'nav-link active' : 'nav-link'"
+          @click="
+            getProductsByCategory('favorite')
+            setCategory('favorite')
+          "
+        >
+          Favorite Product
+        </a>
+      </li>
+      <li class="nav-item">
+        <a
+          :class="category === 'coffee' ? 'nav-link active' : 'nav-link'"
+          @click="
+            getProductsByCategory('coffee')
+            setCategory('coffee')
+          "
+        >
+          Coffee
+        </a>
+      </li>
+      <li class="nav-item">
+        <a
+          :class="category === 'non-coffee' ? 'nav-link active' : 'nav-link'"
+          @click="
+            getProductsByCategory('non-coffee')
+            setCategory('non-coffee')
+          "
+        >
+          Non Coffee
+        </a>
+      </li>
+      <li class="nav-item">
+        <a
+          :class="category === 'foods' ? 'nav-link active' : 'nav-link'"
+          @click="
+            getProductsByCategory('foods')
+            setCategory('foods')
+          "
+        >
+          Foods
+        </a>
+      </li>
+      <li class="nav-item">
+        <a
+          :class="category === 'add-on' ? 'nav-link active' : 'nav-link'"
+          @click="
+            getProductsByCategory('add-on')
+            setCategory('add-on')
+          "
+        >
+          Add-on
+        </a>
+      </li>
+    </ul>
+  </div>
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+
 export default {
   data() {
     return {
@@ -53,13 +70,21 @@ export default {
       category: 'favorite'
     }
   },
-    methods: {
-        selectCategory(category) {
-            this.category = category
-            this.$emit('setToPageOne', 1)
-            this.$emit('selectCategory', category)
-        }
+  mounted() {
+    this.getProductsByCategory('favorite')
+  },
+  methods: {
+    ...mapActions(['getProductsByCategory']),
+    setCategory(category) {
+      this.category = category
+      this.$emit('setToPageOne', 1)
     }
+    // selectCategory(category) {
+    //   this.category = category
+    //   this.$emit('setToPageOne', 1)
+    //   this.$emit('selectCategory', category)
+    // }
+  }
 }
 </script>
 
@@ -98,7 +123,6 @@ export default {
 @media (max-width: 576px) {
   .flex-row {
     flex-direction: column !important;
+  }
 }
-}
-
 </style>
