@@ -6,19 +6,35 @@
       <b-container class="product-cust">
         <b-row>
           <b-col col lg="3" sm="12" class="main-left">
-            <h4 class="mt-4" style="color: #6A4029; font-weight: 700; text-align: center;">Promo for you</h4>
-            <p class="mt-4" style="font-weight: 400; font-size: 12px; text-align: center; font-family: Poppins, sans-serif; color: #000000;">
-              Coupons will be updated every weeks. <br> Check them out! 
+            <h4
+              class="mt-4"
+              style="color: #6A4029; font-weight: 700; text-align: center;"
+            >
+              Promo for you
+            </h4>
+            <p
+              class="mt-4"
+              style="font-weight: 400; font-size: 12px; text-align: center; font-family: Poppins, sans-serif; color: #000000;"
+            >
+              Coupons will be updated every weeks. <br />
+              Check them out!
             </p>
             <CouponCard />
             <router-link to="/product/add">
-              <button v-if="role === 1" class="btn-add btn-promo">Add new promo</button>
-            </router-link>    
+              <button v-if="role === 1" class="btn-add btn-promo">
+                Add new promo
+              </button>
+            </router-link>
           </b-col>
           <b-col col lg="9" sm="12" class="main-right">
-            <NavMenu @setToPageOne="setToPageOne" @selectCategory="getProductByCategory" class="mt-3"/>
+            <!-- <NavMenu
+              @setToPageOne="setToPageOne"
+              @selectCategory="getProductByCategory"
+              class="mt-3"
+            /> -->
+            <NavMenu class="mt-3" @setToPageOne="setToPageOne" />
             <div class="product-list ml-lg-4 mt-5 pt-4">
-              <input v-on:keyup.enter="searchProduct" v-model="searchKeyword">
+              <input v-on:keyup.enter="searchProduct" v-model="searchKeyword" />
               <select @click="sortProduct" v-model="sortId">
                 <option value="1">A - Z </option>
                 <option value="2">Z - A </option>
@@ -26,14 +42,16 @@
                 <option value="4">Dari Termahal </option>
               </select>
               <b-row>
-                <ProductCard  
-                  v-for="(item, index) in products" :key="index"
-                  :productId = "item.product_id"
-                  :productName = "item.product_name"
-                  :productPrice = "item.product_price"
-                  class="product-card"/>
+                <ProductCard
+                  v-for="(item, index) in products"
+                  :key="index"
+                  :productId="item.product_id"
+                  :productName="item.product_name"
+                  :productPrice="item.product_price"
+                  class="product-card"
+                />
               </b-row>
-            </div>  
+            </div>
             <b-pagination
               v-model="currentPage"
               :total-rows="rows"
@@ -44,18 +62,18 @@
             </b-pagination>
             <router-link to="/product/add">
               <button v-if="role === 1" class="btn-add">Add new product</button>
-            </router-link>         
+            </router-link>
           </b-col>
         </b-row>
       </b-container>
     </main>
     <Footer />
   </div>
- 
 </template>
 
 <script>
 // [1] step pertama
+import { mapActions, mapGetters, mapMutations } from 'vuex'
 import Navbar from '../components/_base/Navbar'
 import Footer from '../components/_base/Footer'
 import CouponCard from '../components/_base/product/CouponCard'
@@ -72,13 +90,20 @@ export default {
     NavMenu
   },
   computed: {
-    rows() {
-      return this.totalRows
-    }
+    ...mapGetters({
+      products: 'getDataProduct',
+      page: 'getPageProduct',
+      limit: 'getLimitProduct',
+      rows: 'getTotalRowsProduct',
+      categoryName: 'getCategoryName'
+    })
+    // rows() {
+    //   return this.totalRows
+    // }
   },
   data() {
     return {
-      products: [],
+      // products: [],
       form: {
         productName: '',
         productPrice: '',
@@ -101,21 +126,24 @@ export default {
       isMsg: '',
       productId: '',
       currentPage: 1,
-      totalRows: null,
-      limit: 12,
-      page: 1,
-      categoryName: '',
-      role : 1,
+      // totalRows: null,
+      // limit: 12,
+      // page: 1,
+      // categoryName: '',
+      role: 1,
       searchKeyword: '',
-      sortId : 0,
-      sortBy : '',
-      sortType : ''
+      sortId: 0,
+      sortBy: '',
+      sortType: ''
     }
   },
-  created() {
-    this.getProductByCategory('favorite')
-  },
+  // created() {
+  //   this.getProductsByCategory('favorite')
+  // },
   methods: {
+    ...mapActions(['getProductsByCategory']),
+    ...mapMutations(['changePage']),
+
     getProduct() {
       axios
         .get(
@@ -131,15 +159,18 @@ export default {
         })
     },
     searchProduct() {
-      axios.get(`http://localhost:3000/product?search=${this.searchKeyword}&limit=${this.limit}&page=${this.page}`)
-      .then(response => {
-        console.log(response)
-        this.totalRows = response.data.pagination.totalData
-        this.products = response.data.data
-      })
-      .catch(error => {
-        console.log(error)
-      })
+      axios
+        .get(
+          `http://localhost:3000/product?search=${this.searchKeyword}&limit=${this.limit}&page=${this.page}`
+        )
+        .then(response => {
+          console.log(response)
+          this.totalRows = response.data.pagination.totalData
+          this.products = response.data.data
+        })
+        .catch(error => {
+          console.log(error)
+        })
     },
     sortProduct() {
       console.log(this.sortId)
@@ -158,7 +189,10 @@ export default {
       }
       console.log(this.sortBy)
       console.log(this.sortType)
-      axios.get(`http://localhost:3000/product?sortBy=${this.sortBy}&sortType=${this.sortType}&limit=${this.limit}&page=${this.page}`)
+      axios
+        .get(
+          `http://localhost:3000/product?sortBy=${this.sortBy}&sortType=${this.sortType}&limit=${this.limit}&page=${this.page}`
+        )
         .then(response => {
           // console.log(response)
           this.totalRows = response.data.pagination.totalData
@@ -174,18 +208,21 @@ export default {
       this.currentPage = 1
       this.handlePageChange(1)
     },
-    getProductByCategory(categoryName){
-      console.log(categoryName)
-      axios.get(`http://localhost:3000/category/${categoryName}?limit=${this.limit}&page=${this.page}`)
-        .then(response => {
-            this.categoryName = categoryName
-            this.totalRows = response.data.pagination.totalData
-            this.products = response.data.data
-        })
-        .catch(error => {
-          console.log(error)
-        })
-    },
+    // getProductByCategory(categoryName) {
+    //   console.log(categoryName)
+    // axios
+    //   .get(
+    //     `http://localhost:3000/category/${categoryName}?limit=${this.limit}&page=${this.page}`
+    //   )
+    //   .then(response => {
+    //     this.categoryName = categoryName
+    //     this.totalRows = response.data.pagination.totalData
+    //     this.products = response.data.data
+    //   })
+    //   .catch(error => {
+    //     console.log(error)
+    //   })
+    // },
     // updateCategoryName(categoryName){
     //   this.categoryName = categoryName
     // },
@@ -244,8 +281,10 @@ export default {
     },
     handlePageChange(numberPage) {
       console.log(numberPage)
-      this.page = numberPage
-      this.getProductByCategory(this.categoryName)
+      // this.page = numberPage
+      this.changePage(numberPage)
+      this.getProductsByCategory(this.categoryName)
+      // this.getProductByCategory(this.categoryName)
     }
   }
 }
@@ -253,8 +292,8 @@ export default {
 
 <style scoped>
 .main-left {
-    border-top: 1px solid lightgrey;
-    border-right: 1px solid lightgrey;
+  border-top: 1px solid lightgrey;
+  border-right: 1px solid lightgrey;
 }
 
 .main-right {
@@ -266,7 +305,7 @@ export default {
 }
 
 .btn-add {
-  background-color: #6A4029;
+  background-color: #6a4029;
   width: 100%;
   border-radius: 10px;
   border: unset;
@@ -277,23 +316,22 @@ export default {
 
 .btn-promo {
   margin-top: 355px;
-  background-color: #FFBA33;
-  color: #6A4029;
+  background-color: #ffba33;
+  color: #6a4029;
 }
 
 @media (max-width: 576px) {
- .main-left {
+  .main-left {
     border-top: unset;
     border-right: unset;
-}
+  }
 
-.main-right {
-  border-top: unset;
-} 
+  .main-right {
+    border-top: unset;
+  }
 
-.btn-promo {
-  margin-top: 0px;
+  .btn-promo {
+    margin-top: 0px;
+  }
 }
-}
-
 </style>
