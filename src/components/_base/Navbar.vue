@@ -59,8 +59,16 @@
             </ul>
             <ul v-else class="navbar-nav mr-auto flex-row">
               <li class="nav-item ml-lg-auto">
-                <a class="nav-link" href="#">
+                <a class="nav-link" @click="showSearch" href="#">
+                  <input
+                    v-if="searchInput === 1"
+                    v-on:keyup.enter="searchProduct(searchKeyword)"
+                    v-model="searchKeyword"
+                    class="search-input"
+                    placeholder="search..."
+                  />
                   <img
+                    v-else
                     src="../../assets/search-icon.png"
                     style="width: 30px; height:30px;"
                   />
@@ -114,14 +122,20 @@ export default {
   name: 'Navbar',
   data() {
     return {
-      user: 0
+      user: 0,
+      searchKeyword: '',
+      searchInput: 0
     }
   },
   methods: {
-    ...mapActions(['logout']),
+    ...mapActions(['logout', 'searchProduct']),
     resetUser() {
       this.user = 0
       this.logout()
+    },
+    showSearch() {
+      this.searchInput = 1
+      console.log(this.searchInput)
     }
     // logout() {
     //   alert.log('anda berhasil logout')
@@ -192,5 +206,15 @@ nav.navbar-brand img {
 
 .flex-row {
   justify-content: center;
+}
+
+.search-input {
+  width: 150px;
+  border-top: unset;
+  border-left: unset;
+  border-right: unset;
+  border-bottom: 1px solid grey;
+  outline: unset;
+  font-size: 14px;
 }
 </style>

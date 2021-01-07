@@ -56,6 +56,12 @@
           Add-on
         </a>
       </li>
+      <select @click="sortProduct(sortId)" v-model="sortId">
+        <option value="1">A - Z </option>
+        <option value="2">Z - A </option>
+        <option value="3">Dari Termurah </option>
+        <option value="4">Dari Termahal </option>
+      </select>
     </ul>
   </div>
 </template>
@@ -67,14 +73,15 @@ export default {
   data() {
     return {
       showMobileMenu: false,
-      category: 'favorite'
+      category: 'favorite',
+      sortId: 1
     }
   },
   mounted() {
     this.getProductsByCategory('favorite')
   },
   methods: {
-    ...mapActions(['getProductsByCategory']),
+    ...mapActions(['getProductsByCategory', 'sortProduct']),
     setCategory(category) {
       this.category = category
       this.$emit('setToPageOne', 1)

@@ -6,22 +6,39 @@ export default {
     page: 1,
     products: [],
     totalRows: null,
-    categoryName: 'favorite'
+    categoryName: 'favorite',
+    sortBy: 'product_name',
+    sortType: 'ASC',
+    searchKeyword: ''
   },
   mutations: {
     setProduct(state, payload) {
-      //   payload = response.data
       state.products = payload.data
       state.totalRows = payload.pagination.totalData
     },
     changePage(state, payload) {
-      console.log('ini payload page')
-      // console.log(payload)
       state.page = payload
-      console.log(state.page)
     },
     changeCategory(state, payload) {
       state.categoryName = payload
+    },
+    changeSort(state, payload) {
+      if (payload == 1) {
+        state.sortBy = 'product_name'
+        state.sortType = 'ASC'
+      } else if (payload == 2) {
+        state.sortBy = 'product_name'
+        state.sortType = 'DESC'
+      } else if (payload == 3) {
+        state.sortBy = 'product_price'
+        state.sortType = 'ASC'
+      } else if (payload == 4) {
+        state.sortBy = 'product_price'
+        state.sortType = 'DESC'
+      }
+    },
+    changeSearch(state, payload) {
+      state.searchKeyword = payload
     }
   },
   actions: {
@@ -30,7 +47,7 @@ export default {
         context.commit('changeCategory', data)
         axios
           .get(
-            `http://localhost:3000/category/${context.state.categoryName}?limit=${context.state.limit}&page=${context.state.page}`
+            `http://localhost:3000/category/${data}?sortBy=${context.state.sortBy}&sortType=${context.state.sortType}&limit=${context.state.limit}&page=${context.state.page}`
           )
           .then(response => {
             console.log(response)
@@ -41,8 +58,50 @@ export default {
             // context.state.products = response.data.data
           })
           .catch(error => {
+            reject(error)
+          })
+      })
+    },
+    sortProduct(context, data) {
+      context.commit('changeSort', data)
+      if (context.state.searchKeyword === '') {
+        context.dispatch('getProductsByCategory', context.state.categoryName)
+      } else {
+        context.dispatch('searchProduct', context.state.searchKeyword)
+      }
+    },
+    searchProduct(context, data) {
+      context.commit('changeSearch', data)
+      return new Promise((resolve, reject) => {
+        axios
+          .get(
+            `http://localhost:3000/category/${context.state.categoryName}?search=${context.state.searchKeyword}&sortBy=${context.state.sortBy}&sortType=${context.state.sortType}&limit=${context.state.limit}&page=${context.state.page}`
+          )
+          .then(response => {
+            // this.totalRows = response.data.pagination.totalData
+            // this.products = response.data.data
+            console.log(response)
+            context.commit('setProduct', response.data)
+            resolve(response)
+          })
+          .catch(error => {
             console.log(error)
             reject(error)
+          })
+      })
+    },
+    postProduct(context, data) {
+      return new Promise((resolve, reject) => {
+        axios
+          .post('http://localhost:3000/product', data)
+          .then(result => {
+            console.log(result)
+            resolve(result)
+            // this.showAlert()
+          })
+          .catch(error => {
+            console.log(error.response)
+            reject(error.response)
           })
       })
     }
