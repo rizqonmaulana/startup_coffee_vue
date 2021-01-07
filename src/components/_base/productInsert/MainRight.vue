@@ -4,7 +4,6 @@
       Name :
     </p>
     <input
-      @input="getProductName"
       v-model="form.productName"
       class="form-control"
       type="text"
@@ -15,17 +14,15 @@
       Price :
     </p>
     <input
-      @input="getProductPrice"
       v-model="form.productPrice"
       class="form-control"
-      type="text"
+      type="number"
       placeholder="Type the price"
     />
     <p class="text-brown">
       Description :
     </p>
     <input
-      @input="getProductDesc"
       v-model="form.productDesc"
       class="form-control"
       type="text"
@@ -41,7 +38,7 @@
       <button
         @click="getSizeR()"
         :class="
-          sizeRegular === 1
+          form.sizeRegular === 1
             ? 'btn-size rounded-circle mt-2 active'
             : 'btn-size rounded-circle mt-2'
         "
@@ -51,7 +48,7 @@
       <button
         @click="getSizeL()"
         :class="
-          sizeLarge === 1
+          form.sizeLarge === 1
             ? 'btn-size rounded-circle mt-2 active'
             : 'btn-size rounded-circle mt-2'
         "
@@ -61,7 +58,7 @@
       <button
         @click="getSizeXL()"
         :class="
-          sizeExtraLarge === 1
+          form.sizeExtraLarge === 1
             ? 'btn-size rounded-circle mt-2 active'
             : 'btn-size rounded-circle mt-2'
         "
@@ -71,7 +68,7 @@
       <button
         @click="getSize250gr()"
         :class="
-          size250gr === 1
+          form.size250gr === 1
             ? 'btn-size rounded-circle mt-2 active'
             : 'btn-size rounded-circle mt-2'
         "
@@ -81,7 +78,7 @@
       <button
         @click="getSize300gr()"
         :class="
-          size300gr === 1
+          form.size300gr === 1
             ? 'btn-size rounded-circle mt-2 active'
             : 'btn-size rounded-circle mt-2'
         "
@@ -91,7 +88,7 @@
       <button
         @click="getSize500gr()"
         :class="
-          size500gr === 1
+          form.size500gr === 1
             ? 'btn-size rounded-circle mt-2 active'
             : 'btn-size rounded-circle mt-2'
         "
@@ -109,7 +106,9 @@
     <button
       @click="getHomeDelivery()"
       :class="
-        deliveryHome === 1 ? 'btn-delivery mt-3 active' : 'btn-delivery mt-3'
+        form.deliveryHome === 1
+          ? 'btn-delivery mt-3 active'
+          : 'btn-delivery mt-3'
       "
     >
       Home Delivery
@@ -117,7 +116,9 @@
     <button
       @click="getDineIn()"
       :class="
-        deliveryDineIn === 1 ? 'btn-delivery mt-3 active' : 'btn-delivery mt-3'
+        form.deliveryDineIn === 1
+          ? 'btn-delivery mt-3 active'
+          : 'btn-delivery mt-3'
       "
     >
       Dine in
@@ -125,7 +126,7 @@
     <button
       @click="getTakeAway()"
       :class="
-        deliveryTakeAway === 1
+        form.deliveryTakeAway === 1
           ? 'btn-delivery mt-3 active'
           : 'btn-delivery mt-3'
       "
@@ -135,7 +136,7 @@
 
     <br />
 
-    <button @click="postProduct()" class="btn-save btn-save-save mt-5">
+    <button @click="addProduct()" class="btn-save btn-save-save mt-5">
       Save Product
     </button>
     <br />
@@ -146,117 +147,167 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+
 export default {
   props: ['form'],
-  data() {
-    return {
-      sizeRegular: this.form.sizeRegular,
-      sizeLarge: this.form.sizeLarge,
-      sizeExtraLarge: this.form.sizeExtraLarge,
-      size250gr: this.form.size250gr,
-      size300gr: this.form.size300gr,
-      size500gr: this.form.size500gr,
-      deliveryHome: this.form.deliveryHome,
-      deliveryDineIn: this.form.deliveryDineIn,
-      deliveryTakeAway: this.form.deliveryTakeAway
-    }
-  },
+  // data() {
+  //   return {
+  //     sizeRegular: this.form.sizeRegular,
+  //     sizeLarge: this.form.sizeLarge,
+  //     sizeExtraLarge: this.form.sizeExtraLarge,
+  //     size250gr: this.form.size250gr,
+  //     size300gr: this.form.size300gr,
+  //     size500gr: this.form.size500gr,
+  //     deliveryHome: this.form.deliveryHome,
+  //     deliveryDineIn: this.form.deliveryDineIn,
+  //     deliveryTakeAway: this.form.deliveryTakeAway
+  //   }
+  // },
   methods: {
-    postProduct() {
-      this.$emit('postProduct')
-    },
-    getProductName(event) {
-      const name = event.target.value
-      this.$emit('getProductName', name)
-    },
-    getProductPrice(event) {
-      const price = Number(event.target.value)
-      this.$emit('getProductPrice', price)
-    },
-    getProductDesc(event) {
-      const desc = event.target.value
-      this.$emit('getProductDesc', desc)
+    ...mapActions(['postProduct']),
+    // postProduct() {
+    //   this.$emit('postProduct')
+    // },
+    // getProductName(event) {
+    //   const name = event.target.value
+    //   this.$emit('getProductName', name)
+    // },
+    // getProductPrice(event) {
+    //   const price = Number(event.target.value)
+    //   this.$emit('getProductPrice', price)
+    // },
+    // getProductDesc(event) {
+    //   const desc = event.target.value
+    //   this.$emit('getProductDesc', desc)
+    // },
+    addProduct() {
+      const {
+        productName,
+        productPrice,
+        productDesc,
+        productStartHour,
+        productEndHour,
+        image,
+        productQty,
+        categoryId,
+        sizeRegular,
+        sizeLarge,
+        sizeExtraLarge,
+        size250gr,
+        size300gr,
+        size500gr,
+        deliveryHome,
+        deliveryDineIn,
+        deliveryTakeAway
+      } = this.form
+      const data = new FormData()
+      data.append('productName', productName)
+      data.append('productPrice', productPrice)
+      data.append('productDesc', productDesc)
+      data.append('productStartHour', productStartHour)
+      data.append('productEndHour', productEndHour)
+      data.append('image', image)
+      data.append('productQty', productQty)
+      data.append('categoryId', categoryId)
+      data.append('sizeRegular', sizeRegular)
+      data.append('sizeLarge', sizeLarge)
+      data.append('sizeExtraLarge', sizeExtraLarge)
+      data.append('size250gr', size250gr)
+      data.append('size300gr', size300gr)
+      data.append('size500gr', size500gr)
+      data.append('deliveryHome', deliveryHome)
+      data.append('deliveryDineIn', deliveryDineIn)
+      data.append('deliveryTakeAway', deliveryTakeAway)
+
+      this.postProduct(data)
+        .then(result => {
+          alert(result.data.msg)
+        })
+        .catch(err => {
+          alert(err.data.msg)
+        })
     },
     getHomeDelivery() {
-      if (this.deliveryHome === 0) {
-        this.deliveryHome = 1
+      if (this.form.deliveryHome === 0) {
+        this.form.deliveryHome = 1
       } else {
-        this.deliveryHome = 0
+        this.form.deliveryHome = 0
       }
-      const delivery = this.deliveryHome
-      this.$emit('getHomeDelivery', delivery)
+      // const delivery = this.deliveryHome
+      // this.$emit('getHomeDelivery', delivery)
     },
     getDineIn() {
-      if (this.deliveryDineIn === 0) {
-        this.deliveryDineIn = 1
+      if (this.form.deliveryDineIn === 0) {
+        this.form.deliveryDineIn = 1
       } else {
-        this.deliveryDineIn = 0
+        this.form.deliveryDineIn = 0
       }
-      const delivery = this.deliveryDineIn
-      this.$emit('getDineIn', delivery)
+      // const delivery = this.deliveryDineIn
+      // this.$emit('getDineIn', delivery)
     },
     getTakeAway() {
-      if (this.deliveryTakeAway === 0) {
-        this.deliveryTakeAway = 1
+      if (this.form.deliveryTakeAway === 0) {
+        this.form.deliveryTakeAway = 1
       } else {
-        this.deliveryTakeAway = 0
+        this.form.deliveryTakeAway = 0
       }
-      const delivery = this.deliveryTakeAway
-      this.$emit('getTakeAway', delivery)
+      // const delivery = this.deliveryTakeAway
+      // this.$emit('getTakeAway', delivery)
     },
     getSizeR() {
-      if (this.sizeRegular === 0) {
-        this.sizeRegular = 1
+      if (this.form.sizeRegular === 0) {
+        this.form.sizeRegular = 1
       } else {
-        this.sizeRegular = 0
+        this.form.sizeRegular = 0
       }
-      const size = this.sizeRegular
-      this.$emit('getSizeR', size)
+      // const size = this.sizeRegular
+      // this.$emit('getSizeR', size)
     },
     getSizeL() {
-      if (this.sizeLarge === 0) {
-        this.sizeLarge = 1
+      if (this.form.sizeLarge === 0) {
+        this.form.sizeLarge = 1
       } else {
-        this.sizeLarge = 0
+        this.form.sizeLarge = 0
       }
-      const size = this.sizeLarge
-      this.$emit('getSizeL', size)
+      // const size = this.sizeLarge
+      // this.$emit('getSizeL', size)
     },
     getSizeXL() {
-      if (this.sizeExtraLarge === 0) {
-        this.sizeExtraLarge = 1
+      if (this.form.sizeExtraLarge === 0) {
+        this.form.sizeExtraLarge = 1
       } else {
-        this.sizeExtraLarge = 0
+        this.form.sizeExtraLarge = 0
       }
-      const size = this.sizeExtraLarge
-      this.$emit('getSizeXL', size)
+      // const size = this.sizeExtraLarge
+      // this.$emit('getSizeXL', size)
     },
     getSize250gr() {
-      if (this.size250gr === 0) {
-        this.size250gr = 1
+      if (this.form.size250gr === 0) {
+        this.form.size250gr = 1
       } else {
-        this.size250gr = 0
+        this.form.size250gr = 0
       }
-      const size = this.size250gr
-      this.$emit('getSize250gr', size)
+      // const size = this.size250gr
+      // this.$emit('getSize250gr', size)
     },
     getSize300gr() {
-      if (this.size300gr === 0) {
-        this.size300gr = 1
+      if (this.form.size300gr === 0) {
+        this.form.size300gr = 1
       } else {
-        this.size300gr = 0
+        this.form.size300gr = 0
       }
-      const size = this.size300gr
-      this.$emit('getSize300gr', size)
+      // const size = this.size300gr
+      // this.$emit('getSize300gr', size)
     },
     getSize500gr() {
-      if (this.size500gr === 0) {
-        this.size500gr = 1
+      if (this.form.size500gr === 0) {
+        this.form.size500gr = 1
       } else {
-        this.size500gr = 0
+        this.form.size500gr = 0
       }
-      const size = this.size500gr
-      this.$emit('getSize500gr', size)
+      // const size = this.size500gr
+      // this.$emit('getSize500gr', size)
     }
   }
 }
