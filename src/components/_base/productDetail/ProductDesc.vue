@@ -90,7 +90,11 @@
       <br />
       <button
         v-if="role === 1"
-        @click="deleteProduct(productId)"
+        @click="
+          deleteProduct(productId)
+          showProductId()
+        "
+        onclick="confirm('are you sure want to delete this product ?')"
         class="btn-add mt-3"
         style="background-color: #000;"
       >
@@ -101,6 +105,8 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+
 export default {
   props: [
     'productId',
@@ -124,8 +130,12 @@ export default {
     this.subTotal
   },
   methods: {
-    deleteProduct(id) {
-      this.$emit('deleteProduct', id)
+    ...mapActions(['deleteProduct']),
+    // deleteProduct(id) {
+    //   this.$emit('deleteProduct', id)
+    // },
+    showProductId() {
+      console.log('ini adalah product id ' + this.productId)
     },
     counterUp() {
       this.productQty += 1

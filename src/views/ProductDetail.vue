@@ -117,17 +117,17 @@ export default {
           console.log(error.response)
         })
     },
-    deleteProduct(id) {
-      axios
-        .delete(`http://localhost:3000/product/${id}`)
-        .then(response => {
-          console.log(response)
-          this.$router.push('/product')
-        })
-        .catch(error => {
-          console.log(error)
-        })
-    },
+    // deleteProduct(id) {
+    //   axios
+    //     .delete(`http://localhost:3000/product/${id}`)
+    //     .then(response => {
+    //       console.log(response)
+    //       this.$router.push('/product')
+    //     })
+    //     .catch(error => {
+    //       console.log(error)
+    //     })
+    // },
     selectDelivery(delivery) {
       this.orderData.orderDetailDelivery = delivery
       console.log(this.orderData.orderDetailDelivery)

@@ -1,4 +1,5 @@
 import axios from 'axios'
+import router from '../../router'
 
 export default {
   state: {
@@ -42,12 +43,12 @@ export default {
     }
   },
   actions: {
-    getProductsByCategory(context, data) {
+    getProductsByCategory(context, payload) {
       return new Promise((resolve, reject) => {
-        context.commit('changeCategory', data)
+        context.commit('changeCategory', payload)
         axios
           .get(
-            `http://localhost:3000/category/${data}?sortBy=${context.state.sortBy}&sortType=${context.state.sortType}&limit=${context.state.limit}&page=${context.state.page}`
+            `http://localhost:3000/category/${payload}?sortBy=${context.state.sortBy}&sortType=${context.state.sortType}&limit=${context.state.limit}&page=${context.state.page}`
           )
           .then(response => {
             console.log(response)
@@ -62,16 +63,31 @@ export default {
           })
       })
     },
-    sortProduct(context, data) {
-      context.commit('changeSort', data)
+    getProductById(context, payload) {
+      return new Promise((resolve, reject) => {
+        axios
+          .get(`http://localhost:3000/product/detail/${payload}`)
+          .then(result => {
+            resolve(result)
+            // context.state.categoryName = categoryName
+            // context.state.totalRows = response.data.pagination.totalData
+            // context.state.products = response.data.data
+          })
+          .catch(error => {
+            reject(error.response)
+          })
+      })
+    },
+    sortProduct(context, payload) {
+      context.commit('changeSort', payload)
       if (context.state.searchKeyword === '') {
         context.dispatch('getProductsByCategory', context.state.categoryName)
       } else {
         context.dispatch('searchProduct', context.state.searchKeyword)
       }
     },
-    searchProduct(context, data) {
-      context.commit('changeSearch', data)
+    searchProduct(context, payload) {
+      context.commit('changeSearch', payload)
       return new Promise((resolve, reject) => {
         axios
           .get(
@@ -90,10 +106,10 @@ export default {
           })
       })
     },
-    postProduct(context, data) {
+    postProduct(context, payload) {
       return new Promise((resolve, reject) => {
         axios
-          .post('http://localhost:3000/product', data)
+          .post('http://localhost:3000/product', payload)
           .then(result => {
             console.log(result)
             resolve(result)
@@ -101,6 +117,37 @@ export default {
           })
           .catch(error => {
             console.log(error.response)
+            reject(error.response)
+          })
+      })
+    },
+    patchProduct(_context, payload) {
+      return new Promise((resolve, reject) => {
+        axios
+          .patch(`http://localhost:3000/product/${payload.id}`, payload.dataSet)
+          .then(result => {
+            console.log(result)
+            resolve(result)
+          })
+          .catch(error => {
+            console.log(error.response)
+            reject(error.response)
+          })
+      })
+    },
+    deleteProduct(context, payload) {
+      return new Promise((resolve, reject) => {
+        axios
+          .delete(`http://localhost:3000/product/${payload}`)
+          .then(result => {
+            console.log(result)
+            setTimeout(function() {
+              router.push('/product')
+            }, 1000)
+            resolve(result)
+          })
+          .catch(error => {
+            console.log(error)
             reject(error.response)
           })
       })
