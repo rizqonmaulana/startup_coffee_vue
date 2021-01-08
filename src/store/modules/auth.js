@@ -94,8 +94,7 @@ export default {
             error.response.data.msg ===
               'Your are not allowed to access this page'
           ) {
-            alert(error.response.data.msg)
-            router.push('/product')
+            router.push('/403')
           }
           console.log(error)
           return Promise.reject(error)

@@ -16,6 +16,7 @@ import Profile from '../views/Profile.vue'
 import Dashboard from '../views/Dashboard.vue'
 import CouponInsert from '../views/CouponInsert.vue'
 import CouponUpdate from '../views/CouponUpdate.vue'
+import Forbidden403 from '../views/error/403.vue'
 
 Vue.use(VueRouter)
 
@@ -98,6 +99,11 @@ const routes = [
     path: '/coupon/update/:id',
     name: 'CouponUpdate',
     component: CouponUpdate
+  },
+  {
+    path: '/403',
+    name: 'Forbidden403',
+    component: Forbidden403
   }
 ]
 
