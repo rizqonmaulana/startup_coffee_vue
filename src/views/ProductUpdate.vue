@@ -1,164 +1,132 @@
 <template>
-    <div>
-        <Navbar />
-            <b-container>
-                <b-row>
-                    <b-col col lg="5" sm="12">
-                        <MainLeft 
-                            :form="form"
-                            @getStartHour="getStartHour"
-                            @getEndHour="getEndHour"
-                            @getStock="getStock"
-                            @getCategory="getCategory"
-                        />
-                    </b-col>
-                    <b-col col lg="7" sm="12">
-                        <MainRight 
-                            :form="form"
-                            @getProductName="getProductName"
-                            @getProductPrice="getProductPrice"
-                            @getProductDesc="getProductDesc"
-                            @getSizeR="getSizeR"
-                            @getSizeL="getSizeL"
-                            @getSizeXL="getSizeXL"
-                            @getSize250gr="getSize250gr"
-                            @getSize300gr="getSize300gr"
-                            @getSize500gr="getSize500gr"
-                            @postProduct="postProduct"
-                            @getHomeDelivery="getHomeDelivery"
-                            @getDineIn="getDineIn"
-                            @getTakeAway="getTakeAway"
-                        />
-                    </b-col>
-                </b-row>
-                <b-alert
-                    :show="dismissCountDown"
-                    dismissible
-                    variant="success"
-                    @dismissed="dismissCountDown=0"
-                    @dismiss-count-down="countDownChanged"
-                    class="mt-4">
-                <p> {{productName}} Product successfully added</p>
-                <b-progress
-                    variant="success"
-                    :max="dismissSecs"
-                    :value="dismissCountDown"
-                    height="4px">
-                </b-progress>
-                </b-alert>
-            </b-container>
-        <Footer />
-    </div>
+  <div>
+    <Navbar />
+    <b-container>
+      <b-row>
+        <b-col col lg="5" sm="12">
+          <MainLeft :form="form" />
+        </b-col>
+        <b-col col lg="7" sm="12">
+          <MainRight :form="form" />
+        </b-col>
+      </b-row>
+      <input type="file" @change="handleFile" />
+      <b-alert
+        :show="dismissCountDown"
+        dismissible
+        variant="success"
+        @dismissed="dismissCountDown = 0"
+        @dismiss-count-down="countDownChanged"
+        class="mt-4"
+      >
+        <p>{{ form.productName }} Product successfully added</p>
+        <b-progress
+          variant="success"
+          :max="dismissSecs"
+          :value="dismissCountDown"
+          height="4px"
+        >
+        </b-progress>
+      </b-alert>
+    </b-container>
+    <Footer />
+  </div>
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 import Navbar from '../components/_base/Navbar'
 import Footer from '../components/_base/Footer'
 import MainLeft from '../components/_base/productInsert/MainLeft'
 import MainRight from '../components/_base/productInsert/MainRight'
-import axios from 'axios'
-
+import router from '../router'
 export default {
-    components: {
-        Navbar,
-        Footer,
-        MainLeft,
-        MainRight
-    },
-    data() {
-        return {
-            form: {
-                productName: 'nama',
-                productPrice: 0,
-                productDesc: '',
-                productStartHour: '',
-                productEndHour: '',
-                productQty: 0,
-                categoryId: 0,
-                sizeRegular: 0,
-                sizeLarge: 0,
-                sizeExtraLarge: 0,
-                size250gr: 0,
-                size300gr: 0,
-                size500gr: 0,
-                deliveryHome: 0,
-                deliveryDineIn: 0,
-                deliveryTakeAway: 0
-            },
-            dismissSecs: 5,
-            dismissCountDown: 0,
-            showDismissibleAlert: false
-        }
-    },
-    created() {
-        const id = this.$route.params.id
-        this.getProductDetail(id)
-    },
-    methods: {
-        getProductDetail(id) {
-            axios.get(`http://localhost:3000/product/detail/${id}`)
-            .then(response => {
-                console.log(this.form)
-                this.form = response.data.data[0]
-            })
-            .catch(error => {
-                console.log(error)
-            })
-        },
-        getProductName(name) {
-            this.form.productName = name
-        },
-        getProductPrice(price) {
-            this.form.productPrice = price
-        },
-        getProductDesc(desc) {
-            this.form.productDesc = desc
-        },
-        getStartHour(start) {
-            this.form.productStartHour = start
-        },
-        getEndHour(end) {
-            this.form.productEndHour = end
-        },
-        getStock(stock) {
-            this.form.productQty = stock
-        },
-        getCategory(category) {
-            this.form.categoryId = category
-        },
-        getSizeR(size) {
-            this.form.sizeRegular = size
-        },
-        getSizeL(size) {
-            this.form.sizeLarge = size
-        },
-        getSizeXL(size) {
-            this.form.sizeExtraLarge = size
-        },
-        getSize250gr(size) {
-            this.form.size250gr = size
-        },
-        getSize300gr(size) {
-            this.form.size300gr = size
-        },
-        getSize500gr(size) {
-            this.form.size500gr = size
-        },
-        getHomeDelivery(delivery) {
-            this.form.deliveryHome = delivery
-        },
-        getDineIn(delivery) {
-            this.form.deliveryDineIn = delivery
-        },
-        getTakeAway(delivery) {
-            this.form.deliveryTakeAway = delivery
-        },
-        countDownChanged(dismissCountDown) {
-            this.dismissCountDown = dismissCountDown
-        },
-        showAlert() {
-            this.dismissCountDown = this.dismissSecs
-        }
+  components: {
+    Navbar,
+    Footer,
+    MainLeft,
+    MainRight
+  },
+  data() {
+    return {
+      form: {
+        productName: '',
+        productPrice: '',
+        image: '',
+        productDesc: '',
+        productStartHour: '',
+        productEndHour: '',
+        productQty: '',
+        categoryId: '',
+        sizeId: '',
+        deliveryId: '',
+        sizeRegular: 0,
+        sizeLarge: 0,
+        sizeExtraLarge: 0,
+        size250gr: 0,
+        size300gr: 0,
+        size500gr: 0,
+        deliveryHome: 0,
+        deliveryDineIn: 0,
+        deliveryTakeAway: 0
+      },
+      dismissSecs: 5,
+      dismissCountDown: 0,
+      showDismissibleAlert: false
     }
+  },
+  created() {
+    const id = this.$route.params.id
+    this.getProductById(id)
+      .then(result => {
+        console.log(result)
+        this.form.productName = result.data.data[0].product_name
+        this.form.productPrice = result.data.data[0].product_price
+        this.form.productDesc = result.data.data[0].product_desc
+        this.form.productStartHour = result.data.data[0].product_start_hour
+        this.form.productEndHour = result.data.data[0].product_end_hour
+        this.form.productQty = result.data.data[0].product_qty
+        this.form.categoryId = result.data.data[0].category_id
+        this.form.sizeId = result.data.data[0].size_id
+        this.form.deliveryId = result.data.data[0].delivery_id
+        this.form.sizeRegular = result.data.data[0].size_regular
+        this.form.sizeLarge = result.data.data[0].size_large
+        this.form.sizeExtraLarge = result.data.data[0].size_extra_large
+        this.form.size250gr = result.data.data[0].size_250gr
+        this.form.size300gr = result.data.data[0].size_300gr
+        this.form.size500gr = result.data.data[0].size_500gr
+        this.form.deliveryHome = result.data.data[0].delivery_home
+        this.form.deliveryDineIn = result.data.data[0].delivery_dine_in
+        this.form.deliveryTakeAway = result.data.data[0].delivery_take_away
+      })
+      .catch(error => {
+        alert(error.data.msg)
+        router.push('/product')
+      })
+  },
+  methods: {
+    ...mapActions(['getProductById']),
+    // getProductDetail(id) {
+    //   axios
+    //     .get(`http://localhost:3000/product/detail/${id}`)
+    //     .then(response => {
+    //       console.log(this.form)
+    //       this.form = response.data.data[0]
+    //     })
+    //     .catch(error => {
+    //       console.log(error)
+    //     })
+    // },
+    countDownChanged(dismissCountDown) {
+      this.dismissCountDown = dismissCountDown
+    },
+    showAlert() {
+      this.dismissCountDown = this.dismissSecs
+    },
+    handleFile(event) {
+      console.log(event.target.files[0])
+      this.form.image = event.target.files[0]
+    }
+  }
 }
 </script>

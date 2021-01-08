@@ -151,21 +151,25 @@ import { mapActions } from 'vuex'
 
 export default {
   props: ['form'],
-  // data() {
-  //   return {
-  //     sizeRegular: this.form.sizeRegular,
-  //     sizeLarge: this.form.sizeLarge,
-  //     sizeExtraLarge: this.form.sizeExtraLarge,
-  //     size250gr: this.form.size250gr,
-  //     size300gr: this.form.size300gr,
-  //     size500gr: this.form.size500gr,
-  //     deliveryHome: this.form.deliveryHome,
-  //     deliveryDineIn: this.form.deliveryDineIn,
-  //     deliveryTakeAway: this.form.deliveryTakeAway
-  //   }
-  // },
+  data() {
+    return {
+      id: 0
+      // sizeRegular: this.form.sizeRegular,
+      // sizeLarge: this.form.sizeLarge,
+      // sizeExtraLarge: this.form.sizeExtraLarge,
+      // size250gr: this.form.size250gr,
+      // size300gr: this.form.size300gr,
+      // size500gr: this.form.size500gr,
+      // deliveryHome: this.form.deliveryHome,
+      // deliveryDineIn: this.form.deliveryDineIn,
+      // deliveryTakeAway: this.form.deliveryTakeAway
+    }
+  },
+  created() {
+    this.id = this.$route.params.id
+  },
   methods: {
-    ...mapActions(['postProduct']),
+    ...mapActions(['postProduct', 'patchProduct']),
     // postProduct() {
     //   this.$emit('postProduct')
     // },
@@ -185,12 +189,14 @@ export default {
       const {
         productName,
         productPrice,
+        image,
         productDesc,
         productStartHour,
         productEndHour,
-        image,
         productQty,
         categoryId,
+        sizeId,
+        deliveryId,
         sizeRegular,
         sizeLarge,
         sizeExtraLarge,
@@ -204,12 +210,14 @@ export default {
       const data = new FormData()
       data.append('productName', productName)
       data.append('productPrice', productPrice)
+      data.append('image', image)
       data.append('productDesc', productDesc)
       data.append('productStartHour', productStartHour)
       data.append('productEndHour', productEndHour)
-      data.append('image', image)
       data.append('productQty', productQty)
       data.append('categoryId', categoryId)
+      data.append('sizeId', sizeId)
+      data.append('deliveryId', deliveryId)
       data.append('sizeRegular', sizeRegular)
       data.append('sizeLarge', sizeLarge)
       data.append('sizeExtraLarge', sizeExtraLarge)
@@ -219,14 +227,31 @@ export default {
       data.append('deliveryHome', deliveryHome)
       data.append('deliveryDineIn', deliveryDineIn)
       data.append('deliveryTakeAway', deliveryTakeAway)
+      // for (var pair of data.entries()) {
+      //   console.log(pair[0] + ', ' + pair[1])
+      // }
+      const setData = {
+        dataSet: data,
+        id: this.id
+      }
 
-      this.postProduct(data)
-        .then(result => {
-          alert(result.data.msg)
-        })
-        .catch(err => {
-          alert(err.data.msg)
-        })
+      if (this.id) {
+        this.patchProduct(setData)
+          .then(result => {
+            alert(result.data.msg)
+          })
+          .catch(error => {
+            alert(error.data.msg)
+          })
+      } else {
+        this.postProduct(data)
+          .then(result => {
+            alert(result.data.msg)
+          })
+          .catch(err => {
+            alert(err.data.msg)
+          })
+      }
     },
     getHomeDelivery() {
       if (this.form.deliveryHome === 0) {
