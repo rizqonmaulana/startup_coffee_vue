@@ -44,6 +44,7 @@
               <b-row>
                 <ProductCard
                   v-for="(item, index) in products"
+                  :productPic="item.product_pic"
                   :key="index"
                   :productId="item.product_id"
                   :productName="item.product_name"

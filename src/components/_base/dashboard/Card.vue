@@ -7,7 +7,7 @@
         <p>+{{ increase }}{{ increaseText }}</p>
       </div>
       <div class="align-self-center ml-auto">
-        <img :src="image" class="card-img" />
+        <img :src="'http://localhost:3000/assets/' + image" class="card-img" />
       </div>
     </div>
   </div>

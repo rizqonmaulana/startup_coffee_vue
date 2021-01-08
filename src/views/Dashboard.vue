@@ -72,7 +72,7 @@ export default {
         increase: 2,
         increaseText: '% Yesterday',
         style: 'background-image: linear-gradient(to right, #adff94, #ceffbf)',
-        image: 'img/icon-income-1.7a20ef17.jpg'
+        image: 'icon-income-1.jpg'
       },
       week: {
         title: 'This Week Orders',
@@ -80,7 +80,7 @@ export default {
         increase: 10,
         increaseText: '% Last Week',
         style: 'background-image: linear-gradient(to right, #fcd68d, #ffe7ba)',
-        image: 'img/icon-income-2.e70d0ef1.jpg'
+        image: 'icon-income-2.jpg'
       },
       year: {
         title: "This Year's Income",
@@ -89,7 +89,7 @@ export default {
         increase: 7,
         increaseText: '% Last Year',
         style: 'background-image: linear-gradient(to right, #abe0ed, #b9e1eb)',
-        image: 'img/icon-income-3.d5420a16.jpg'
+        image: 'icon-income-3.jpg'
       }
     }
   }
