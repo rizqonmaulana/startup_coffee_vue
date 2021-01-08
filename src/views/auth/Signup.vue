@@ -1,22 +1,15 @@
 <template>
-  <div class="signup-container">
-    <b-container>
-      <b-row class="signup-row">
-        <b-col
-          class="d-none d-lg-block d-xl-block"
-          col
-          lg="6"
-          sm="12"
-          cols="12"
-        >
-          <img class="bg-auth" src="../../assets/bg-auth.png" />
-        </b-col>
-        <b-col col lg="6" sm="12" cols="12">
-          <SignupForm class="signup-form" />
-        </b-col>
-      </b-row>
+  <div>
+    <div class="main">
+      <b-container class="signup-container">
+        <b-row class="signup-row">
+          <b-col col="12">
+            <SignupForm class="signup-form" />
+          </b-col>
+        </b-row>
+      </b-container>
       <FloatCard class="float-card" />
-    </b-container>
+    </div>
     <Footer />
   </div>
 </template>
@@ -36,68 +29,37 @@ export default {
 </script>
 
 <style scoped>
+.main {
+  background-image: url('../../assets/bg-auth.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+.signup-container {
+  background-color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 100px;
+  padding-bottom: 50px;
+  border-radius: 10px;
+}
+
 .bg-auth {
   width: 100%;
   margin: unset;
 }
 
 .float-card {
-  position: absolute;
-  margin-top: -8%;
-  margin-left: 8.5%;
-}
-
-/* .signup-row {
-  margin-bottom: 50px;
-} */
-
-@media (max-width: 1200px) {
-  .float-card {
-    position: static;
-    margin-top: -5%;
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  .signup-row {
-    margin-bottom: 50px;
-  }
-}
-
-@media (max-width: 992px) {
-  .float-card {
-    position: static;
-    margin: 50px 0px 20px 0px;
-  }
-
-  .signup-row {
-    margin-bottom: -20px;
-  }
-
-  .signup-form {
-    background-color: #fff;
-    border-radius: 10px;
-    padding: 1px 20px 20px;
-  }
-
-  .signup-container {
-    background-image: url('../../assets/bg-auth.png');
-    background-repeat: no-repeat;
-    background-size: cover;
-  }
-}
-
-@media (max-width: 768px) {
-  .float-card {
-    position: static;
-    margin: 50px 0px 20px 55px;
-  }
+  margin-right: auto;
+  margin-left: auto;
+  left: 0;
+  right: 0;
+  margin-top: -50px;
 }
 
 @media (max-width: 576px) {
-  .float-card {
-    position: static;
-    margin: 50px 0px 20px 30px;
+  .main {
+    padding: 10px;
   }
 }
 </style>

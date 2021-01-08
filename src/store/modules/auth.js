@@ -40,6 +40,20 @@ export default {
       context.commit('delUser')
       router.push('/login')
     },
+    registerUser(context, payload) {
+      return new Promise((resolve, reject) => {
+        axios
+          .post('http://localhost:3000/user/register', payload)
+          .then(result => {
+            console.log(result)
+            resolve(result)
+          })
+          .catch(error => {
+            console.log(error)
+            reject(error.response)
+          })
+      })
+    },
     interceptorRequest(context) {
       console.log('interceptor Request work !')
       axios.interceptors.request.use(
