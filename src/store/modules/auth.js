@@ -69,34 +69,31 @@ export default {
       )
     },
     interceptorResponse(context) {
-      console.log('interceptor Response work !')
       axios.interceptors.response.use(
         function(response) {
-          // Any status code that lie within the range of 2xx cause this function to trigger
-          // Do something with response data
           return response
         },
         function(error) {
-          // Any status codes that falls outside the range of 2xx cause this function to trigger
-          // Do something with response error
           if (
             error.response.data.status === 403 &&
-            (error.response.data.msg === 'invalid token' ||
-              error.reponse.data.msg === 'jwt expired' ||
-              error.reponse.data.msg === 'invalid signature' ||
-              error.reponse.data.msg === 'jwt malformed')
+            error.response.data.msg === 'jwt expired'
           ) {
             context.dispatch('logout')
-            console.log(error.response)
-            alert(error.response.data.msg)
+            alert('Sorry Your token is Expired !')
           } else if (
-            error.response.data.status === 400 &&
-            error.response.data.msg ===
-              'Your are not allowed to access this page'
+            error.response.data.status === 403 &&
+            error.response.data.msg === 'jwt malformed'
           ) {
-            router.push('/403')
+            context.dispatch('logout')
+            alert('Sorry Your token is not valid !')
+          } else if (
+            error.response.data.status === 403 &&
+            error.response.data.msg === 'jwt invalid'
+          ) {
+            context.dispatch('logout')
+            alert('Sorry Your token is not valid !')
           }
-          console.log(error)
+
           return Promise.reject(error)
         }
       )
