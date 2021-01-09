@@ -27,12 +27,22 @@
                   >Product</router-link
                 >
               </li>
-              <li class="nav-item">
+              <li v-if="userRole === 1" class="nav-item">
+                <router-link class="nav-link" to="/admin/orders">
+                  Orders
+                </router-link>
+              </li>
+              <li v-else class="nav-item">
                 <router-link class="nav-link" to="/product/checkout"
                   >Your Cart</router-link
                 >
               </li>
-              <li class="nav-item">
+              <li v-if="userRole === 1" class="nav-item">
+                <router-link class="nav-link" to="/admin/dashboard"
+                  >Dashboard</router-link
+                >
+              </li>
+              <li v-else class="nav-item">
                 <router-link class="nav-link" to="/history"
                   >History</router-link
                 >
@@ -123,6 +133,7 @@ export default {
   data() {
     return {
       user: 0,
+      userRole: 0,
       searchKeyword: '',
       searchInput: 0
     }
@@ -147,6 +158,7 @@ export default {
     getUser = JSON.parse(getUser)
     if (getUser.Auth.user.userName) {
       this.user = 1
+      this.userRole = getUser.Auth.user.userRole
     } else {
       this.user = 0
     }

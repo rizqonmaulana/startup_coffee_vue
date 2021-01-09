@@ -86,7 +86,7 @@ const routes = [
     component: Profile
   },
   {
-    path: '/dashboard',
+    path: '/admin/dashboard',
     name: 'Dashboard',
     component: Dashboard
   },
