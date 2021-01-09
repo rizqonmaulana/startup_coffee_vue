@@ -1,13 +1,16 @@
 <template>
   <div>
-    <div class="card d-flex flex-row" :style="color">
+    <div class="card d-flex flex-row" :style="data.style">
       <div>
-        <p>{{ title }}</p>
-        <h3>{{ currency }} {{ count }}</h3>
-        <p>+{{ increase }}{{ increaseText }}</p>
+        <p>{{ data.title }}</p>
+        <h3>{{ data.currency }} {{ income }}</h3>
+        <p>+{{ data.increase }}{{ data.increaseText }}</p>
       </div>
       <div class="align-self-center ml-auto">
-        <img :src="'http://localhost:3000/assets/' + image" class="card-img" />
+        <img
+          :src="'http://localhost:3000/assets/' + data.image"
+          class="card-img"
+        />
       </div>
     </div>
   </div>
@@ -15,15 +18,7 @@
 
 <script>
 export default {
-  props: [
-    'title',
-    'count',
-    'currency',
-    'increase',
-    'increaseText',
-    'color',
-    'image'
-  ],
+  props: ['data', 'income'],
   methods: {
     showTitle() {
       console.log(this.title)

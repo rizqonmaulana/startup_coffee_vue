@@ -8,36 +8,13 @@
         </div>
         <b-row class="mb-5">
           <b-col col lg="4" cols="12" class="dashboard-card">
-            <Card
-              :title="today.title"
-              :currency="today.currency"
-              :count="today.count"
-              :increase="today.increase"
-              :increaseText="today.increaseText"
-              :color="today.style"
-              :image="today.image"
-            />
+            <Card :data="today" :income="todayIncome.data[0].total_price" />
           </b-col>
           <b-col col lg="4" cols="12" class="dashboard-card">
-            <Card
-              :title="week.title"
-              :count="week.count"
-              :increase="week.increase"
-              :increaseText="week.increaseText"
-              :color="week.style"
-              :image="week.image"
-            />
+            <Card :data="week" :income="weekOrders.data[0].weekOrder" />
           </b-col>
           <b-col col lg="4" cols="12" class="dashboard-card">
-            <Card
-              :title="year.title"
-              :currency="year.currency"
-              :count="year.count"
-              :increase="year.increase"
-              :increaseText="year.increaseText"
-              :color="year.style"
-              :image="year.image"
-            />
+            <Card :data="year" :income="yearIncome.data[0].total_price" />
           </b-col>
         </b-row>
         <Chart class="mb-5" />
@@ -49,6 +26,7 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex'
 import Navbar from '../components/_base/Navbar'
 import Footer from '../components/_base/Footer'
 import Card from '../components/_base/dashboard/Card'
@@ -63,12 +41,28 @@ export default {
     Chart,
     Button
   },
+  computed: {
+    ...mapGetters({
+      yearIncome: 'getYearIncome',
+      weekOrders: 'getWeekOrders',
+      todayIncome: 'getTodayIncome'
+    })
+  },
+  methods: {
+    ...mapActions(['getYearIncome', 'getWeekOrders', 'getTodayIncome'])
+  },
+  created() {
+    this.getYearIncome()
+    this.getWeekOrders()
+    console.log(this.weekOrders)
+    console.log('^ that is week orders')
+    this.getTodayIncome()
+  },
   data() {
     return {
       today: {
         title: "Today's Income",
         currency: 'Rp',
-        count: 1000000,
         increase: 2,
         increaseText: '% Yesterday',
         style: 'background-image: linear-gradient(to right, #adff94, #ceffbf)',
@@ -76,7 +70,6 @@ export default {
       },
       week: {
         title: 'This Week Orders',
-        count: 358,
         increase: 10,
         increaseText: '% Last Week',
         style: 'background-image: linear-gradient(to right, #fcd68d, #ffe7ba)',
@@ -85,7 +78,6 @@ export default {
       year: {
         title: "This Year's Income",
         currency: 'Rp',
-        count: 158000000,
         increase: 7,
         increaseText: '% Last Year',
         style: 'background-image: linear-gradient(to right, #abe0ed, #b9e1eb)',
