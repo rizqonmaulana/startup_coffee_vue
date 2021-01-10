@@ -4,7 +4,6 @@
       <div>
         <p>{{ data.title }}</p>
         <h3>{{ data.currency }} {{ income }}</h3>
-        <p>+{{ data.increase }}{{ data.increaseText }}</p>
       </div>
       <div class="align-self-center ml-auto">
         <img
@@ -31,6 +30,7 @@ export default {
 .card {
   padding: 20px;
   border-radius: 10px;
+  height: 120px;
   border: unset;
   -webkit-box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.4);
   box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.4);

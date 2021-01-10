@@ -28,7 +28,7 @@
                 >
               </li>
               <li v-if="userRole === 1" class="nav-item">
-                <router-link class="nav-link" to="/admin/orders">
+                <router-link class="nav-link" to="/admin/order">
                   Orders
                 </router-link>
               </li>
