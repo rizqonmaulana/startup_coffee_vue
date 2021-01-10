@@ -4,6 +4,7 @@ import router from '../../router/index'
 export default {
   state: {
     user: {},
+    userProfile: {},
     token: localStorage.getItem('token') || null
   },
   mutations: {
@@ -16,6 +17,9 @@ export default {
     delUser(state) {
       state.user = {}
       state.token = null
+    },
+    setUserProfile(state, payload) {
+      state.userProfile = payload
     }
   },
   actions: {
@@ -44,6 +48,40 @@ export default {
       return new Promise((resolve, reject) => {
         axios
           .post('http://localhost:3000/user/register', payload)
+          .then(result => {
+            console.log(result)
+            resolve(result)
+          })
+          .catch(error => {
+            console.log(error)
+            reject(error.response)
+          })
+      })
+    },
+    getUserProfile(context, payload) {
+      return new Promise((resolve, reject) => {
+        axios
+          .get(`http://localhost:3000/user/${payload}`)
+          .then(result => {
+            console.log(result.data.data[0])
+            console.log('^ ini payload get user profile')
+            context.commit('setUserProfile', result.data.data[0])
+            resolve(result)
+          })
+          .catch(error => {
+            console.log(error)
+            reject(error.response)
+          })
+      })
+    },
+    patchUserProfile(context, payload) {
+      return new Promise((resolve, reject) => {
+        console.log(payload.dataSet)
+        axios
+          .patch(
+            `http://localhost:3000/user/update/${payload.email}`,
+            payload.dataSet
+          )
           .then(result => {
             console.log(result)
             resolve(result)
@@ -102,6 +140,9 @@ export default {
   getters: {
     isLogin(state) {
       return state.token !== null
+    },
+    getUserProfile(state) {
+      return state.userProfile
     }
   }
 }

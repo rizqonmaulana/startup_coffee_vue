@@ -33,10 +33,12 @@ export default {
       })
     },
     getWeekOrders(context) {
+      console.log('masukk get week orders')
       return new Promise((resolve, reject) => {
         axios
           .get('http://localhost:3000/order/admin/week-order')
           .then(result => {
+            console.log(result)
             context.commit('setWeekOrders', result.data)
             resolve(result)
           })

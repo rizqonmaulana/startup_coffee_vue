@@ -11,12 +11,13 @@
         <div class="profile-container">
           <b-row>
             <b-col col lg="4" sm="12" cols="12" style="padding: unset;">
-              <MainLeft />
+              <MainLeft :profile="profile" />
             </b-col>
             <b-col col lg="8" sm="12" cols="12" class="profile-form">
-              <ProfileForm />
+              <ProfileForm :profile="profile" />
             </b-col>
           </b-row>
+          <button @click="showComputed">show computed</button>
         </div>
       </b-container>
     </div>
@@ -25,13 +26,34 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex'
 import Navbar from '../components/_base/Navbar'
 import Footer from '../components/_base/Footer'
 import MainLeft from '../components/_base/profile/MainLeft'
 import ProfileForm from '../components/_base/profile/ProfileForm'
 
 export default {
-  components: { Navbar, Footer, MainLeft, ProfileForm }
+  components: { Navbar, Footer, MainLeft, ProfileForm },
+  computed: {
+    ...mapGetters({
+      profile: 'getUserProfile'
+    })
+  },
+  methods: {
+    ...mapActions(['getUserProfile']),
+    showComputed() {
+      console.log(this.profile)
+    }
+  },
+  mounted() {
+    this.profile.user_dob = this.profile.user_dob.substring(0, 10)
+  },
+  created() {
+    let getUserEmail = localStorage.getItem('vuex')
+    getUserEmail = JSON.parse(getUserEmail)
+    getUserEmail = getUserEmail.Auth.user.userEmail
+    this.getUserProfile(getUserEmail)
+  }
 }
 </script>
 

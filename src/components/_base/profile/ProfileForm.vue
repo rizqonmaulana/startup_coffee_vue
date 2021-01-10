@@ -13,7 +13,13 @@
             Email address:
           </label>
           <br />
-          <input type="text" name="email" />
+          <input
+            type="text"
+            v-model="profile.user_email"
+            name="email"
+            disabled
+          />
+          <p class="note">*email can't update</p>
         </div>
         <div class="col-1"></div>
         <div class="col-lg-4">
@@ -21,7 +27,7 @@
             Mobile number:
           </label>
           <br />
-          <input type="text" name="phone" />
+          <input type="text" v-model="profile.user_phone" name="phone" />
         </div>
       </div>
       <div class="row mt-2">
@@ -30,7 +36,7 @@
             Delivery address
           </label>
           <br />
-          <input type="text" name="address" />
+          <input type="text" v-model="profile.user_address" name="address" />
         </div>
       </div>
       <h5 class="mt-5 mb-5 poppins">Details</h5>
@@ -40,7 +46,7 @@
             Display name:
           </label>
           <br />
-          <input type="text" name="display-name" />
+          <input type="text" v-model="profile.user_name" name="display-name" />
         </div>
         <div class="col-1"></div>
         <div class="col-lg-4">
@@ -48,7 +54,14 @@
             DD/MM/YY
           </label>
           <br />
-          <input type="date" name="dob" value="2021-12-01" />
+          <input
+            type="date"
+            v-model="userBirthday"
+            @change="dateFormat"
+            name="dob"
+          />
+
+          <!-- {{ userBirthday }} -->
         </div>
       </div>
       <div class="row mb-5">
@@ -57,7 +70,11 @@
             First name :
           </label>
           <br />
-          <input type="text" name="first-name" />
+          <input
+            type="text"
+            v-model="profile.user_first_name"
+            name="first-name"
+          />
         </div>
       </div>
       <div class="row mb-5  ">
@@ -66,25 +83,39 @@
             Last name :
           </label>
           <br />
-          <input type="text" name="last-name" />
+          <input
+            type="text"
+            v-model="profile.user_last_name"
+            name="last-name"
+          />
         </div>
       </div>
       <div class="row my-3 gender-radio">
         <div class="col text-center">
-          <input type="radio" name="gender" value="male" />
-          <label class="ml-3 gender-label mr-5" for="gender">Male</label>
+          <input
+            type="radio"
+            name="gender"
+            value="male"
+            v-model="profile.user_gender"
+          />
+          <label
+            class="ml-3 gender-label mr-5"
+            :class="profile.user_gender === 'male' ? 'active' : ''"
+            for="gender"
+            >Male</label
+          >
 
           <input
             class="ml-5"
             type="radio"
             name="gender"
             value="female"
-            checked
+            v-model="profile.user_gender"
           />
           <label
-            class="ml-3 gender-label active poppins"
+            class="ml-3 gender-label poppins"
+            :class="profile.user_gender === 'female' ? 'active' : ''"
             for="gender"
-            style="color:#6a4029; font-weight: 700;"
           >
             Female
           </label>
@@ -93,6 +124,22 @@
     </div>
   </div>
 </template>
+
+<script>
+export default {
+  props: ['profile'],
+  computed: {
+    userBirthday() {
+      return this.profile.user_dob.substring(0, 10)
+    }
+  },
+  methods: {
+    dateFormat(event) {
+      this.profile.user_dob = event.target.value
+    }
+  }
+}
+</script>
 
 <style scoped>
 input {
@@ -138,6 +185,16 @@ input {
 .form .row .row.my-3.gender-radio .text-center label.gender-label.active {
   font-weight: 700;
   color: #6a4029;
+}
+
+.active {
+  color: #6a4029;
+  font-weight: 700;
+}
+
+.note {
+  color: rgb(182, 182, 182);
+  font-size: 12px;
 }
 
 @media (max-width: 576px) {

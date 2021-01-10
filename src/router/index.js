@@ -13,10 +13,11 @@ import Signup from '../views/auth/Signup.vue'
 import store from '../store/index'
 import ForgotPassword from '../views/auth/ForgotPassword.vue'
 import Profile from '../views/Profile.vue'
-import Dashboard from '../views/Dashboard.vue'
+import Dashboard from '../views/admin/Dashboard.vue'
 import CouponInsert from '../views/CouponInsert.vue'
 import CouponUpdate from '../views/CouponUpdate.vue'
 import Forbidden403 from '../views/error/403.vue'
+import OrderList from '../views/admin/OrderList.vue'
 
 Vue.use(VueRouter)
 
@@ -104,6 +105,11 @@ const routes = [
     path: '/403',
     name: 'Forbidden403',
     component: Forbidden403
+  },
+  {
+    path: '/admin/order',
+    name: 'OrderList',
+    component: OrderList
   }
 ]
 
