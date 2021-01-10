@@ -1,5 +1,9 @@
 <template>
   <div class="main-right">
+    <div v-if="errors.length > 0" class="error-warn">
+      <p>Error : {{ errors }}</p>
+    </div>
+
     <p class="text-brown">
       Name :
     </p>
@@ -153,16 +157,8 @@ export default {
   props: ['form'],
   data() {
     return {
-      id: 0
-      // sizeRegular: this.form.sizeRegular,
-      // sizeLarge: this.form.sizeLarge,
-      // sizeExtraLarge: this.form.sizeExtraLarge,
-      // size250gr: this.form.size250gr,
-      // size300gr: this.form.size300gr,
-      // size500gr: this.form.size500gr,
-      // deliveryHome: this.form.deliveryHome,
-      // deliveryDineIn: this.form.deliveryDineIn,
-      // deliveryTakeAway: this.form.deliveryTakeAway
+      id: 0,
+      errors: []
     }
   },
   created() {
@@ -170,87 +166,101 @@ export default {
   },
   methods: {
     ...mapActions(['postProduct', 'patchProduct']),
-    // postProduct() {
-    //   this.$emit('postProduct')
-    // },
-    // getProductName(event) {
-    //   const name = event.target.value
-    //   this.$emit('getProductName', name)
-    // },
-    // getProductPrice(event) {
-    //   const price = Number(event.target.value)
-    //   this.$emit('getProductPrice', price)
-    // },
-    // getProductDesc(event) {
-    //   const desc = event.target.value
-    //   this.$emit('getProductDesc', desc)
-    // },
     addProduct() {
-      const {
-        productName,
-        productPrice,
-        image,
-        productDesc,
-        productStartHour,
-        productEndHour,
-        productQty,
-        categoryId,
-        sizeId,
-        deliveryId,
-        sizeRegular,
-        sizeLarge,
-        sizeExtraLarge,
-        size250gr,
-        size300gr,
-        size500gr,
-        deliveryHome,
-        deliveryDineIn,
-        deliveryTakeAway
-      } = this.form
-      const data = new FormData()
-      data.append('productName', productName)
-      data.append('productPrice', productPrice)
-      data.append('image', image)
-      data.append('productDesc', productDesc)
-      data.append('productStartHour', productStartHour)
-      data.append('productEndHour', productEndHour)
-      data.append('productQty', productQty)
-      data.append('categoryId', categoryId)
-      data.append('sizeId', sizeId)
-      data.append('deliveryId', deliveryId)
-      data.append('sizeRegular', sizeRegular)
-      data.append('sizeLarge', sizeLarge)
-      data.append('sizeExtraLarge', sizeExtraLarge)
-      data.append('size250gr', size250gr)
-      data.append('size300gr', size300gr)
-      data.append('size500gr', size500gr)
-      data.append('deliveryHome', deliveryHome)
-      data.append('deliveryDineIn', deliveryDineIn)
-      data.append('deliveryTakeAway', deliveryTakeAway)
-      // for (var pair of data.entries()) {
-      //   console.log(pair[0] + ', ' + pair[1])
-      // }
-      const setData = {
-        dataSet: data,
-        id: this.id
+      this.errors = []
+      if (!this.form.productName) {
+        this.errors.push('Product name required.')
+      }
+      if (!this.form.productPrice) {
+        this.errors.push('Price required.')
+      }
+      if (!this.form.image) {
+        this.errors.push('Product image required.')
+      }
+      if (!this.form.productDesc) {
+        this.errors.push('Product description required.')
+      }
+      if (!this.form.productStartHour) {
+        this.errors.push('Product start hour required.')
+      }
+      if (!this.form.productEndHour) {
+        this.errors.push('Product end hour required.')
+      }
+      if (!this.form.productQty) {
+        this.errors.push('Product quantity required.')
+      }
+      if (!this.form.categoryId) {
+        this.errors.push('Product category required.')
       }
 
-      if (this.id) {
-        this.patchProduct(setData)
-          .then(result => {
-            alert(result.data.msg)
-          })
-          .catch(error => {
-            alert(error.data.msg)
-          })
-      } else {
-        this.postProduct(data)
-          .then(result => {
-            alert(result.data.msg)
-          })
-          .catch(err => {
-            alert(err.data.msg)
-          })
+      if (this.errors.length === 0) {
+        const {
+          productName,
+          productPrice,
+          image,
+          productDesc,
+          productStartHour,
+          productEndHour,
+          productQty,
+          categoryId,
+          sizeId,
+          deliveryId,
+          sizeRegular,
+          sizeLarge,
+          sizeExtraLarge,
+          size250gr,
+          size300gr,
+          size500gr,
+          deliveryHome,
+          deliveryDineIn,
+          deliveryTakeAway
+        } = this.form
+        const data = new FormData()
+        data.append('productName', productName)
+        data.append('productPrice', productPrice)
+        data.append('image', image)
+        data.append('productDesc', productDesc)
+        data.append('productStartHour', productStartHour)
+        data.append('productEndHour', productEndHour)
+        data.append('productQty', productQty)
+        data.append('categoryId', categoryId)
+        data.append('sizeId', sizeId)
+        data.append('deliveryId', deliveryId)
+        data.append('sizeRegular', sizeRegular)
+        data.append('sizeLarge', sizeLarge)
+        data.append('sizeExtraLarge', sizeExtraLarge)
+        data.append('size250gr', size250gr)
+        data.append('size300gr', size300gr)
+        data.append('size500gr', size500gr)
+        data.append('deliveryHome', deliveryHome)
+        data.append('deliveryDineIn', deliveryDineIn)
+        data.append('deliveryTakeAway', deliveryTakeAway)
+        // for (var pair of data.entries()) {
+        //   console.log(pair[0] + ', ' + pair[1])
+        // }
+        const setData = {
+          dataSet: data,
+          id: this.id
+        }
+
+        if (this.id) {
+          this.patchProduct(setData)
+            .then(result => {
+              alert(result.data.msg)
+            })
+            .catch(error => {
+              alert(error.data.msg)
+            })
+        } else {
+          this.postProduct(data)
+            .then(result => {
+              alert(result.data.msg)
+            })
+            .catch(err => {
+              alert(err.data.msg)
+            })
+        }
+        this.form = []
       }
     },
     getHomeDelivery() {
@@ -259,8 +269,6 @@ export default {
       } else {
         this.form.deliveryHome = 0
       }
-      // const delivery = this.deliveryHome
-      // this.$emit('getHomeDelivery', delivery)
     },
     getDineIn() {
       if (this.form.deliveryDineIn === 0) {
@@ -268,8 +276,6 @@ export default {
       } else {
         this.form.deliveryDineIn = 0
       }
-      // const delivery = this.deliveryDineIn
-      // this.$emit('getDineIn', delivery)
     },
     getTakeAway() {
       if (this.form.deliveryTakeAway === 0) {
@@ -277,8 +283,6 @@ export default {
       } else {
         this.form.deliveryTakeAway = 0
       }
-      // const delivery = this.deliveryTakeAway
-      // this.$emit('getTakeAway', delivery)
     },
     getSizeR() {
       if (this.form.sizeRegular === 0) {
@@ -286,8 +290,6 @@ export default {
       } else {
         this.form.sizeRegular = 0
       }
-      // const size = this.sizeRegular
-      // this.$emit('getSizeR', size)
     },
     getSizeL() {
       if (this.form.sizeLarge === 0) {
@@ -295,8 +297,6 @@ export default {
       } else {
         this.form.sizeLarge = 0
       }
-      // const size = this.sizeLarge
-      // this.$emit('getSizeL', size)
     },
     getSizeXL() {
       if (this.form.sizeExtraLarge === 0) {
@@ -304,8 +304,6 @@ export default {
       } else {
         this.form.sizeExtraLarge = 0
       }
-      // const size = this.sizeExtraLarge
-      // this.$emit('getSizeXL', size)
     },
     getSize250gr() {
       if (this.form.size250gr === 0) {
@@ -313,8 +311,6 @@ export default {
       } else {
         this.form.size250gr = 0
       }
-      // const size = this.size250gr
-      // this.$emit('getSize250gr', size)
     },
     getSize300gr() {
       if (this.form.size300gr === 0) {
@@ -322,8 +318,6 @@ export default {
       } else {
         this.form.size300gr = 0
       }
-      // const size = this.size300gr
-      // this.$emit('getSize300gr', size)
     },
     getSize500gr() {
       if (this.form.size500gr === 0) {
@@ -331,8 +325,6 @@ export default {
       } else {
         this.form.size500gr = 0
       }
-      // const size = this.size500gr
-      // this.$emit('getSize500gr', size)
     }
   }
 }
@@ -425,6 +417,12 @@ export default {
 .btn-save-cancel {
   background: rgba(186, 186, 186, 0.35);
   color: #4f5665;
+}
+
+.error-warn {
+  background: rgba(245, 25, 25, 0.35);
+  border-radius: 10px;
+  padding: 15px;
 }
 
 @media (max-width: 576px) {
