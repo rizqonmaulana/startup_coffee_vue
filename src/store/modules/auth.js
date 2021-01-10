@@ -5,12 +5,11 @@ export default {
   state: {
     user: {},
     userProfile: {},
-    token: localStorage.getItem('token') || null
+    token: localStorage.getItem('token') || null,
+    msg: ''
   },
   mutations: {
     setUser(state, payload) {
-      console.log(payload)
-      console.log('ini payload ^')
       state.user = payload
       state.token = payload.token
     },
@@ -20,6 +19,9 @@ export default {
     },
     setUserProfile(state, payload) {
       state.userProfile = payload
+    },
+    setMsg(state, payload) {
+      state.msg = payload
     }
   },
   actions: {
@@ -49,11 +51,9 @@ export default {
         axios
           .post('http://localhost:3000/user/register', payload)
           .then(result => {
-            console.log(result)
             resolve(result)
           })
           .catch(error => {
-            console.log(error)
             reject(error.response)
           })
       })
@@ -63,31 +63,41 @@ export default {
         axios
           .get(`http://localhost:3000/user/${payload}`)
           .then(result => {
-            console.log(result.data.data[0])
-            console.log('^ ini payload get user profile')
             context.commit('setUserProfile', result.data.data[0])
             resolve(result)
           })
           .catch(error => {
-            console.log(error)
             reject(error.response)
           })
       })
     },
     patchUserProfile(context, payload) {
       return new Promise((resolve, reject) => {
-        console.log(payload.dataSet)
         axios
           .patch(
             `http://localhost:3000/user/update/${payload.email}`,
             payload.dataSet
           )
           .then(result => {
-            console.log(result)
             resolve(result)
           })
           .catch(error => {
-            console.log(error)
+            reject(error.response)
+          })
+      })
+    },
+    patchUserPassword(context, payload) {
+      return new Promise((resolve, reject) => {
+        axios
+          .patch(
+            `http://localhost:3000/user/update/password/${payload.email}`,
+            payload
+          )
+          .then(result => {
+            context.commit('setMsg', result.data.msg)
+            resolve(result)
+          })
+          .catch(error => {
             reject(error.response)
           })
       })
@@ -107,6 +117,7 @@ export default {
       )
     },
     interceptorResponse(context) {
+      console.log('interceptor Response work !')
       axios.interceptors.response.use(
         function(response) {
           return response
@@ -143,6 +154,9 @@ export default {
     },
     getUserProfile(state) {
       return state.userProfile
+    },
+    getMsg(state) {
+      return state.msg
     }
   }
 }

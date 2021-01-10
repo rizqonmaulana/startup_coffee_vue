@@ -32,11 +32,29 @@
       Remove photo
     </button>
     <button
+      v-b-modal.modal-1
       class="btn-white-brown mt-5 py-3 poppins"
       style="width: 100%; border: 2px solid #9f9f9f;"
     >
       Edit Password
     </button>
+    <div>
+      <b-modal id="modal-1" title="Change Password">
+        <div class="text-center">
+          <input
+            class="form-group"
+            type="password"
+            v-model="userPassword"
+            placeholder="Input your new password"
+          />
+          <button class="btn btn-primary ml-2" @click="updatePassword">
+            Save
+          </button>
+          <p>{{ msg }}</p>
+        </div>
+      </b-modal>
+    </div>
+
     <p
       class="my-5 poppins"
       style="font-weight: 700; color: #6A4029; font-size: 20px;"
@@ -67,17 +85,21 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
   props: ['profile'],
   data() {
     return {
-      url: ''
+      url: '',
+      userPassword: ''
     }
   },
+  computed: {
+    ...mapGetters({ msg: 'getMsg' })
+  },
   methods: {
-    ...mapActions(['patchUserProfile']),
+    ...mapActions(['patchUserProfile', 'patchUserPassword']),
     updateUser() {
       const {
         user_address,
@@ -108,6 +130,13 @@ export default {
       }
 
       this.patchUserProfile(setData)
+    },
+    updatePassword() {
+      const setData = {
+        email: this.profile.user_email,
+        userPassword: this.userPassword
+      }
+      this.patchUserPassword(setData)
     },
     chooseFiles() {
       document.getElementById('fileUpload').click()

@@ -17,7 +17,6 @@
               <ProfileForm :profile="profile" />
             </b-col>
           </b-row>
-          <button @click="showComputed">show computed</button>
         </div>
       </b-container>
     </div>
@@ -40,10 +39,7 @@ export default {
     })
   },
   methods: {
-    ...mapActions(['getUserProfile']),
-    showComputed() {
-      console.log(this.profile)
-    }
+    ...mapActions(['getUserProfile'])
   },
   mounted() {
     this.profile.user_dob = this.profile.user_dob.substring(0, 10)
