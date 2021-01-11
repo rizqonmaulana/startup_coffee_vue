@@ -55,8 +55,10 @@
 
 <script>
 import { mapActions } from 'vuex'
+import { alertMixin } from '../../../mixins/alertMixin'
 
 export default {
+  mixins: [alertMixin],
   data() {
     return {
       form: {
@@ -71,10 +73,10 @@ export default {
       this.login(this.form)
         .then(result => {
           console.log(result)
-          alert('Success login')
+          this.successLogin()
         })
         .catch(error => {
-          alert(error.data.msg)
+          this.errorAlert(error.data.msg)
         })
     },
     onReset() {
