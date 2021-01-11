@@ -10,7 +10,8 @@ export default {
     categoryName: 'favorite',
     sortBy: 'product_name',
     sortType: 'ASC',
-    searchKeyword: ''
+    searchKeyword: '',
+    productPrice: ''
   },
   mutations: {
     setProduct(state, payload) {
@@ -40,9 +41,41 @@ export default {
     },
     changeSearch(state, payload) {
       state.searchKeyword = payload
+    },
+    setPrice(state, payload) {
+      state.productPrice = payload
     }
   },
   actions: {
+    getAllProduct(context) {
+      return new Promise((resolve, reject) => {
+        axios
+          .get('http://localhost:3000/product')
+          .then(response => {
+            console.log(response.data.data)
+            context.commit('setProduct', response.data)
+            resolve(response)
+          })
+          .catch(error => {
+            reject(error)
+          })
+      })
+    },
+    getProductPrice(context, payload) {
+      return new Promise((resolve, reject) => {
+        axios
+          .get(`http://localhost:3000/product?id=${payload}`)
+          .then(response => {
+            console.log('masuk product price')
+            console.log(response.data.data[0].product_price)
+            context.commit('setPrice', response.data.data[0].product_price)
+            resolve(response)
+          })
+          .catch(error => {
+            reject(error)
+          })
+      })
+    },
     getProductsByCategory(context, payload) {
       return new Promise((resolve, reject) => {
         context.commit('changeCategory', payload)
@@ -54,9 +87,6 @@ export default {
             console.log(response)
             context.commit('setProduct', response.data)
             resolve(response)
-            // context.state.categoryName = categoryName
-            // context.state.totalRows = response.data.pagination.totalData
-            // context.state.products = response.data.data
           })
           .catch(error => {
             reject(error)
@@ -168,6 +198,9 @@ export default {
     },
     getCategoryName(state) {
       return state.categoryName
+    },
+    getProductPrice(state) {
+      return state.productPrice
     }
   }
 }

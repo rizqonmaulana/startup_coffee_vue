@@ -61,7 +61,7 @@
               class="float-right"
             >
             </b-pagination>
-            <router-link to="/product/add">
+            <router-link to="/coupon">
               <button v-if="role === 1" class="btn-add">Add new product</button>
             </router-link>
           </b-col>

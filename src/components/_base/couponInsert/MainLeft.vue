@@ -24,27 +24,53 @@
         ><strong> Enter the discount : </strong></span
       >
       <div class="form-group mt-3 mb-5">
-        <select name="start-hour" class="form-control start-hour mt-3">
-          <option disabled selected>Input Discount</option>
+        <select
+          name="start-hour"
+          v-model="form.couponDiscount"
+          class="form-control start-hour mt-3"
+        >
+          <option value="" disabled selected>Input Discount</option>
+          <option value="10">10%</option>
+          <option value="20">20%</option>
+          <option value="30">30%</option>
+          <option value="40">40%</option>
+          <option value="50">50%</option>
+          <option value="60">60%</option>
+          <option value="70">70%</option>
+          <option value="80">80%</option>
+          <option value="90">90%</option>
+          <option value="100">100%</option>
         </select>
       </div>
       <span style="color: #6a4029;"><strong> Expire Date : </strong></span>
       <div class="form-group mt-3">
-        <select name="start-hour" class="form-control start-hour mt-3">
-          <option disabled selected>Select start date</option>
-        </select>
+        <input
+          v-model="form.couponStartDate"
+          type="date"
+          name="start-hour"
+          class="form-control start-hour mt-3"
+          placeholder="Select start date"
+        />
       </div>
       <div class="form-group mt-4 mb-5">
-        <select name="end-hour" class="form-control end-hour">
-          <option disabled selected>Select end date</option>
-        </select>
+        <input
+          v-model="form.couponEndDate"
+          type="date"
+          name="end-hour"
+          class="form-control end-hour"
+          placeholder="Select end date"
+        />
       </div>
 
       <span class="mt-5" style="color: #6a4029;"
         ><strong> Input Coupon Code : </strong></span
       >
       <div class="form-group mt-3 mb-4">
-        <input type="text" class="form-control input-stock" />
+        <input
+          v-model="form.couponCode"
+          type="text"
+          class="form-control input-stock"
+        />
       </div>
     </div>
   </div>

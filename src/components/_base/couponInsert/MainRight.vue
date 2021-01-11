@@ -4,21 +4,23 @@
       Name :
     </p>
     <select
-      @input="getProductName"
-      v-model="form.productName"
+      v-model="form.productId"
+      @click="handlePrice()"
       class="form-control"
     >
-      <option value="">product 1</option>
-      <option value="">product 2</option>
-      <option value="">product 3</option>
+      <option
+        v-for="(item, index) in productData"
+        :key="index"
+        :value="item.product_id"
+        >{{ item.product_name }}</option
+      >
     </select>
     <p class="text-brown">
       Normal Price :
     </p>
     <input
-      @input="getProductPrice"
-      v-model="form.productPrice"
       class="form-control"
+      v-model="productPrice"
       type="text"
       placeholder="Type the price"
     />
@@ -26,23 +28,21 @@
       Description :
     </p>
     <input
-      @input="getProductDesc"
-      v-model="form.productDesc"
+      v-model="form.couponDesc"
       class="form-control"
       type="text"
       placeholder="Describe your product min.150 characters"
     />
     <p class="text-brown">
-      Input product size :
+      Product size :
     </p>
     <p class="text-grey">
       Click size you want to user for this product
     </p>
     <div class="btn-size-collection poppins text-center">
       <button
-        @click="getSizeR()"
         :class="
-          sizeRegular === 1
+          activeButton.sizeRegular === 1
             ? 'btn-size rounded-circle mt-2 active'
             : 'btn-size rounded-circle mt-2'
         "
@@ -50,9 +50,8 @@
         R
       </button>
       <button
-        @click="getSizeL()"
         :class="
-          sizeLarge === 1
+          activeButton.sizeLarge === 1
             ? 'btn-size rounded-circle mt-2 active'
             : 'btn-size rounded-circle mt-2'
         "
@@ -60,9 +59,8 @@
         L
       </button>
       <button
-        @click="getSizeXL()"
         :class="
-          sizeExtraLarge === 1
+          activeButton.sizeExtraLarge === 1
             ? 'btn-size rounded-circle mt-2 active'
             : 'btn-size rounded-circle mt-2'
         "
@@ -70,9 +68,8 @@
         XL
       </button>
       <button
-        @click="getSize250gr()"
         :class="
-          size250gr === 1
+          activeButton.size250gr === 1
             ? 'btn-size rounded-circle mt-2 active'
             : 'btn-size rounded-circle mt-2'
         "
@@ -80,9 +77,8 @@
         250gr
       </button>
       <button
-        @click="getSize300gr()"
         :class="
-          size300gr === 1
+          activeButton.size300gr === 1
             ? 'btn-size rounded-circle mt-2 active'
             : 'btn-size rounded-circle mt-2'
         "
@@ -90,9 +86,8 @@
         300gr
       </button>
       <button
-        @click="getSize500gr()"
         :class="
-          size500gr === 1
+          activeButton.size500gr === 1
             ? 'btn-size rounded-circle mt-2 active'
             : 'btn-size rounded-circle mt-2'
         "
@@ -108,25 +103,26 @@
       Click methods you want to use for this product
     </p>
     <button
-      @click="getHomeDelivery()"
       :class="
-        deliveryHome === 1 ? 'btn-delivery mt-3 active' : 'btn-delivery mt-3'
+        activeButton.deliveryHome === 1
+          ? 'btn-delivery mt-3 active'
+          : 'btn-delivery mt-3'
       "
     >
       Home Delivery
     </button>
     <button
-      @click="getDineIn()"
       :class="
-        deliveryDineIn === 1 ? 'btn-delivery mt-3 active' : 'btn-delivery mt-3'
+        activeButton.deliveryDineIn === 1
+          ? 'btn-delivery mt-3 active'
+          : 'btn-delivery mt-3'
       "
     >
       Dine in
     </button>
     <button
-      @click="getTakeAway()"
       :class="
-        deliveryTakeAway === 1
+        activeButton.deliveryTakeAway === 1
           ? 'btn-delivery mt-3 active'
           : 'btn-delivery mt-3'
       "
@@ -136,10 +132,13 @@
 
     <br />
 
-    <button @click="postProduct()" class="btn-save btn-save-save mt-5">
+    <button @click="addCoupon()" class="btn-save btn-save-save mt-5">
       Save Promo
     </button>
+    <button @click="showData">show data</button>
+    {{ productData[0] }}
     <br />
+    {{ productPrice }}
     <button class="btn-save btn-save-cancel mt-4">
       Cancel
     </button>
@@ -147,117 +146,46 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex'
+
 export default {
   props: ['form'],
   data() {
     return {
-      sizeRegular: this.form.sizeRegular,
-      sizelarge: this.form.sizeLarge,
-      sizeExtraLarge: this.form.sizeExtraLarge,
-      size250gr: this.form.size250gr,
-      size300gr: this.form.size300gr,
-      size500gr: this.form.size500gr,
-      deliveryHome: this.form.deliveryHome,
-      deliveryDineIn: this.form.deliveryDineIn,
-      deliveryTakeAway: this.form.deliveryTakeAway
+      activeButton: {
+        deliveryHome: 1,
+        deliveryDineIn: 1,
+        deliveryTakeAway: 1,
+        sizeRegular: 1,
+        sizeLarge: 1,
+        sizeExtraLarge: 1,
+        size250gr: 1,
+        size300gr: 1,
+        size500gr: 1
+      }
     }
   },
+  computed: {
+    ...mapGetters({
+      productData: 'getDataProduct',
+      productPrice: 'getProductPrice'
+    })
+  },
+  created() {
+    this.getAllProduct()
+  },
   methods: {
-    postProduct() {
-      this.$emit('postProduct')
+    ...mapActions(['getAllProduct', 'getProductPrice', 'postCoupon']),
+    showData() {
+      console.log(this.form)
     },
-    getProductName(event) {
-      const name = event.target.value
-      this.$emit('getProductName', name)
+    handlePrice() {
+      this.getProductPrice(this.form.productId)
+      console.log(this.productPrice)
+      console.log('^^^ product price le')
     },
-    getProductPrice(event) {
-      const price = Number(event.target.value)
-      this.$emit('getProductPrice', price)
-    },
-    getProductDesc(event) {
-      const desc = event.target.value
-      this.$emit('getProductDesc', desc)
-    },
-    getHomeDelivery() {
-      if (this.deliveryHome === 0) {
-        this.deliveryHome = 1
-      } else {
-        this.deliveryHome = 0
-      }
-      const delivery = this.deliveryHome
-      this.$emit('getHomeDelivery', delivery)
-    },
-    getDineIn() {
-      if (this.deliveryDineIn === 0) {
-        this.deliveryDineIn = 1
-      } else {
-        this.deliveryDineIn = 0
-      }
-      const delivery = this.deliveryDineIn
-      this.$emit('getDineIn', delivery)
-    },
-    getTakeAway() {
-      if (this.deliveryTakeAway === 0) {
-        this.deliveryTakeAway = 1
-      } else {
-        this.deliveryTakeAway = 0
-      }
-      const delivery = this.deliveryTakeAway
-      this.$emit('getTakeAway', delivery)
-    },
-    getSizeR() {
-      if (this.sizeRegular === 0) {
-        this.sizeRegular = 1
-      } else {
-        this.sizeRegular = 0
-      }
-      const size = this.sizeRegular
-      this.$emit('getSizeR', size)
-    },
-    getSizeL() {
-      if (this.sizeLarge === 0) {
-        this.sizeLarge = 1
-      } else {
-        this.sizeLarge = 0
-      }
-      const size = this.sizeLarge
-      this.$emit('getSizeL', size)
-    },
-    getSizeXL() {
-      if (this.sizeExtraLarge === 0) {
-        this.sizeExtraLarge = 1
-      } else {
-        this.sizeExtraLarge = 0
-      }
-      const size = this.sizeExtraLarge
-      this.$emit('getSizeXL', size)
-    },
-    getSize250gr() {
-      if (this.size250gr === 0) {
-        this.size250gr = 1
-      } else {
-        this.size250gr = 0
-      }
-      const size = this.size250gr
-      this.$emit('getSize250gr', size)
-    },
-    getSize300gr() {
-      if (this.size300gr === 0) {
-        this.size300gr = 1
-      } else {
-        this.size300gr = 0
-      }
-      const size = this.size300gr
-      this.$emit('getSize300gr', size)
-    },
-    getSize500gr() {
-      if (this.size500gr === 0) {
-        this.size500gr = 1
-      } else {
-        this.size500gr = 0
-      }
-      const size = this.size500gr
-      this.$emit('getSize500gr', size)
+    addCoupon() {
+      this.postCoupon(this.form)
     }
   }
 }
