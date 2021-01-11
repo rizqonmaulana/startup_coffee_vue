@@ -26,6 +26,7 @@
         Email Address :
       </p>
       <input
+        v-focus
         class="form-control"
         type="email"
         v-model="form.userEmail"

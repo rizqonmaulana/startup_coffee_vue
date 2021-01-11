@@ -14,6 +14,7 @@
           </label>
           <br />
           <input
+            v-focus
             type="text"
             v-model="profile.user_email"
             name="email"

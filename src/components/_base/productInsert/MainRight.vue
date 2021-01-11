@@ -8,6 +8,7 @@
       Name :
     </p>
     <input
+      v-focus
       v-model="form.productName"
       class="form-control"
       type="text"
