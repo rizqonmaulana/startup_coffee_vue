@@ -86,8 +86,10 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
+import { alertMixin } from '../../../mixins/alertMixin'
 
 export default {
+  mixins: [alertMixin],
   props: ['profile'],
   data() {
     return {
@@ -130,6 +132,12 @@ export default {
       }
 
       this.patchUserProfile(setData)
+        .then(result => {
+          this.successLogin(result.data.msg)
+        })
+        .catch(error => {
+          this.errorAlert(error.data.msg)
+        })
     },
     updatePassword() {
       const setData = {
@@ -137,6 +145,12 @@ export default {
         userPassword: this.userPassword
       }
       this.patchUserPassword(setData)
+        .then(result => {
+          this.successLogin(result.data.msg)
+        })
+        .catch(error => {
+          this.errorAlert(error.data.msg)
+        })
     },
     chooseFiles() {
       document.getElementById('fileUpload').click()

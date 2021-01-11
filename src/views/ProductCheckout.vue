@@ -1,28 +1,26 @@
 <template>
-    <div>
-        <Navbar />
-            <div class="product-checkout pb-5">
-                <b-container>
-                    <b-row>
-                        <b-col col lg="6" sm="12" class="pr-lg-5">
-                            <OrderSummary 
-                                :orderData="orderData" 
-                                @subTotal="subTotal"
-                                />
-                        </b-col>
-                        
-                        <b-col col lg="6" sm="12"   class="pl-lg-4 main-right">
-                            <AddressCard/>
-                            <PaymentCard
-                              @selectPaymentMethod="selectPaymentMethod"
-                              @postOrder="postOrder"
-                              class="mt-5"/>
-                        </b-col>
-                    </b-row>
-                </b-container>
-            </div>
-        <Footer class="mt-5"/>
+  <div>
+    <Navbar />
+    <div class="product-checkout pb-5">
+      <b-container>
+        <b-row>
+          <b-col col lg="6" sm="12" class="pr-lg-5">
+            <OrderSummary :orderData="orderData" @subTotal="subTotal" />
+          </b-col>
+
+          <b-col col lg="6" sm="12" class="pl-lg-4 main-right">
+            <AddressCard />
+            <PaymentCard
+              @selectPaymentMethod="selectPaymentMethod"
+              @postOrder="postOrder"
+              class="mt-5"
+            />
+          </b-col>
+        </b-row>
+      </b-container>
     </div>
+    <Footer class="mt-5" />
+  </div>
 </template>
 
 <script>
@@ -32,65 +30,68 @@ import OrderSummary from '../components/_base/productCheckout/OrderSummary'
 import AddressCard from '../components/_base/productCheckout/AddressCard'
 import PaymentCard from '../components/_base/productCheckout/PaymentCard'
 import axios from 'axios'
+import { alertMixin } from '../mixins/alertMixin'
 
 export default {
-    name: 'ProductCheckout',
-    components : {
-        Navbar,
-        Footer,
-        OrderSummary,
-        AddressCard,
-        PaymentCard
-    },
-    data() {
-        return {
-            order : {
-                orderPaymentMethod : "",
-                orderTotal : 0,
-                customerId : 2,
-                promoCode : ""
-            },
-            orderData : [],
-            submitData : []
-        }
-    },
-    created() {
-        this.orderData = JSON.parse(localStorage.getItem('cart'))
-
-        // this.subTotal
-    },
-    methods: {
-        getOrder() {
-            this.submitData = [this.order, ...this.orderData]
-        },
-        selectPaymentMethod(method) {
-            this.order.orderPaymentMethod = method
-        },
-        subTotal(result) {
-        this.order.orderTotal = result
-        },
-        async postOrder() {
-            await this.getOrder()
-            await axios.post('http://localhost:3000/order', this.submitData)
-            .then(response => {
-                console.log(response)
-            })
-            .catch(error => {
-                console.log(error)
-            })
-        }
+  mixins: [alertMixin],
+  name: 'ProductCheckout',
+  components: {
+    Navbar,
+    Footer,
+    OrderSummary,
+    AddressCard,
+    PaymentCard
+  },
+  data() {
+    return {
+      order: {
+        orderPaymentMethod: '',
+        orderTotal: 0,
+        customerId: 2,
+        promoCode: ''
+      },
+      orderData: [],
+      submitData: []
     }
+  },
+  created() {
+    this.orderData = JSON.parse(localStorage.getItem('cart'))
+
+    // this.subTotal
+  },
+  methods: {
+    getOrder() {
+      this.submitData = [this.order, ...this.orderData]
+    },
+    selectPaymentMethod(method) {
+      this.order.orderPaymentMethod = method
+    },
+    subTotal(result) {
+      this.order.orderTotal = result
+    },
+    async postOrder() {
+      await this.getOrder()
+      await axios
+        .post('http://localhost:3000/order', this.submitData)
+        .then(result => {
+          this.successLogin(result.data.msg)
+        })
+        .catch(error => {
+          this.errorAlert(error.data.msg)
+        })
+    }
+  }
 }
 </script>
 
 <style scoped>
 .product-checkout {
-    background-image: url('../assets/bg-payment.png');
-    background-size: cover;
+  background-image: url('../assets/bg-payment.png');
+  background-size: cover;
 }
 
-.main-right{
-    margin-top: 12%;
+.main-right {
+  margin-top: 12%;
 }
 
 /* @media (max-width: 576px) { 

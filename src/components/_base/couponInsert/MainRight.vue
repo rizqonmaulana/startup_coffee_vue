@@ -150,7 +150,9 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
+import { alertMixin } from '../../../mixins/alertMixin'
 export default {
+  mixins: [alertMixin],
   props: ['form'],
   data() {
     return {
@@ -200,6 +202,12 @@ export default {
     },
     addCoupon() {
       this.postCoupon(this.form)
+        .then(result => {
+          this.successLogin(result.data.msg)
+        })
+        .catch(error => {
+          this.errorAlert(error.data.msg)
+        })
       this.getActiveCoupon()
     },
     updateCoupon() {
@@ -215,6 +223,12 @@ export default {
         }
       }
       this.patchCoupon(setData)
+        .then(result => {
+          this.successLogin(result.data.msg)
+        })
+        .catch(error => {
+          this.errorAlert(error.data.msg)
+        })
       this.getActiveCoupon()
     }
   }

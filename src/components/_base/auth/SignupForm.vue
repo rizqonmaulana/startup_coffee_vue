@@ -135,8 +135,10 @@
 
 <script>
 import { mapActions } from 'vuex'
+import { alertMixin } from '../../../mixins/alertMixin'
 
 export default {
+  mixins: [alertMixin],
   data() {
     return {
       form: {
@@ -185,6 +187,12 @@ export default {
       }
 
       this.registerUser(data)
+        .then(result => {
+          this.successAlert(result.data.msg)
+        })
+        .catch(error => {
+          this.errorAlert(error.data.msg)
+        })
     },
     handleFile(event) {
       console.log(event.target.files[0])

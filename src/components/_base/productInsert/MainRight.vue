@@ -153,8 +153,10 @@
 
 <script>
 import { mapActions } from 'vuex'
+import { alertMixin } from '../../../mixins/alertMixin'
 
 export default {
+  mixins: [alertMixin],
   props: ['form'],
   data() {
     return {
@@ -247,18 +249,18 @@ export default {
         if (this.id) {
           this.patchProduct(setData)
             .then(result => {
-              alert(result.data.msg)
+              this.successAlert(result.data.msg)
             })
             .catch(error => {
-              alert(error.data.msg)
+              this.errorAlert(error.data.msg)
             })
         } else {
           this.postProduct(data)
             .then(result => {
-              alert(result.data.msg)
+              this.successAlert(result.data.msg)
             })
-            .catch(err => {
-              alert(err.data.msg)
+            .catch(error => {
+              this.errorAlert(error.data.msg)
             })
         }
         this.form = []
