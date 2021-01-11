@@ -87,8 +87,6 @@ export default {
   created() {
     this.getOrderList()
     this.cards = this.orderList
-    console.log(this.cards)
-    console.log('^ini this.cards')
   },
   computed: {
     ...mapGetters({

@@ -117,32 +117,17 @@ export default {
           console.log(error.response)
         })
     },
-    // deleteProduct(id) {
-    //   axios
-    //     .delete(`http://localhost:3000/product/${id}`)
-    //     .then(response => {
-    //       console.log(response)
-    //       this.$router.push('/product')
-    //     })
-    //     .catch(error => {
-    //       console.log(error)
-    //     })
-    // },
     selectDelivery(delivery) {
-      this.orderData.orderDetailDelivery = delivery
-      console.log(this.orderData.orderDetailDelivery)
+      this.orderData.orderDetailDelivery = orderDetailDelivery
     },
     selectSize(size) {
       this.orderData.orderDetailSize = size
-      console.log(this.orderData.orderDetailSize)
     },
     getOrderQty(qty) {
       this.orderData.orderDetailQty = qty
-      console.log('get order ' + qty)
     },
     getSubTotal(subTotal) {
       this.orderData.orderDetailPrice = subTotal
-      console.log('get subtotal ' + subTotal)
     },
     addToCart() {
       const data = this.orderData
@@ -157,7 +142,6 @@ export default {
       }
       this.cart = [...this.cart, setCart]
       localStorage.setItem('cart', JSON.stringify(this.cart))
-      console.log(this.cart)
     }
   }
 }

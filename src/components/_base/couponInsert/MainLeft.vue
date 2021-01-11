@@ -74,7 +74,6 @@
           class="form-control input-stock"
         />
       </div>
-      <button @click="showData">show</button>
     </div>
   </div>
 </template>
@@ -91,11 +90,6 @@ export default {
     }
   },
   methods: {
-    showData() {
-      console.log(this.startDate)
-      console.log(this.endDate)
-      console.log('^ computed cuy')
-    },
     startDateFormat(event) {
       this.form.couponStartDate = event.target.value
     },

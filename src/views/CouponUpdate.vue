@@ -10,23 +10,6 @@
           <MainRight :form="form" />
         </b-col>
       </b-row>
-      <b-alert
-        :show="dismissCountDown"
-        dismissible
-        variant="success"
-        @dismissed="dismissCountDown = 0"
-        @dismiss-count-down="countDownChanged"
-        class="mt-4"
-      >
-        <p>{{ productName }} Product successfully added</p>
-        <b-progress
-          variant="success"
-          :max="dismissSecs"
-          :value="dismissCountDown"
-          height="4px"
-        >
-        </b-progress>
-      </b-alert>
     </b-container>
     <Footer />
   </div>
@@ -63,16 +46,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['getActiveCouponById']),
-    countDownChanged(dismissCountDown) {
-      this.dismissCountDown = dismissCountDown
-    },
-    showAlert() {
-      this.dismissCountDown = this.dismissSecs
-    },
-    showData() {
-      console.log(this.coupon)
-    }
+    ...mapActions(['getActiveCouponById'])
   },
   created() {
     this.getActiveCouponById(this.$route.params.id)

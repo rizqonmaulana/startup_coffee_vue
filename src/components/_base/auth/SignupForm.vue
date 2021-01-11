@@ -182,9 +182,6 @@ export default {
       data.append('userLastName', userLastName)
       data.append('userDob', userDob)
       data.append('userGender', userGender)
-      for (var pair of data.entries()) {
-        console.log(pair[0] + ', ' + pair[1])
-      }
 
       this.registerUser(data)
         .then(result => {
@@ -195,7 +192,6 @@ export default {
         })
     },
     handleFile(event) {
-      console.log(event.target.files[0])
       this.form.image = event.target.files[0]
     }
   }

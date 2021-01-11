@@ -238,9 +238,6 @@ export default {
         data.append('deliveryHome', deliveryHome)
         data.append('deliveryDineIn', deliveryDineIn)
         data.append('deliveryTakeAway', deliveryTakeAway)
-        // for (var pair of data.entries()) {
-        //   console.log(pair[0] + ', ' + pair[1])
-        // }
         const setData = {
           dataSet: data,
           id: this.id

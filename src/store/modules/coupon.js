@@ -16,7 +16,6 @@ export default {
         axios
           .get(`${context.state.VUE_APP_ROOT_URL}/coupon/active`)
           .then(response => {
-            console.log(response)
             context.commit('setCoupon', response.data.data)
             resolve(response)
           })
@@ -30,7 +29,6 @@ export default {
         axios
           .get(`${context.state.VUE_APP_ROOT_URL}/coupon/active/${payload}`)
           .then(response => {
-            console.log(response)
             context.commit('setCoupon', response.data.data[0])
             resolve(response)
           })
@@ -44,18 +42,14 @@ export default {
         axios
           .post(`${context.state.VUE_APP_ROOT_URL}/coupon`, payload)
           .then(result => {
-            console.log(result)
             resolve(result)
           })
           .catch(error => {
-            console.log(error.response)
             reject(error.response)
           })
       })
     },
     patchCoupon(context, payload) {
-      console.log(payload)
-      console.log('^ ini payload patch coupon')
       return new Promise((resolve, reject) => {
         axios
           .patch(
@@ -63,27 +57,22 @@ export default {
             payload.data
           )
           .then(result => {
-            console.log(result)
             resolve(result)
           })
           .catch(error => {
-            console.log(error.response)
             reject(error.response)
           })
       })
     },
     deleteCoupon(context, payload) {
-      console.log(payload)
       return new Promise((resolve, reject) => {
         axios
           .delete(`${context.state.VUE_APP_ROOT_URL}/coupon/${payload}`)
           .then(result => {
-            console.log(result)
             context.dispatch('getActiveCoupon')
             resolve(result)
           })
           .catch(error => {
-            console.log(error.response)
             reject(error.response)
           })
       })
@@ -91,8 +80,6 @@ export default {
   },
   getters: {
     getActiveCoupon(state) {
-      console.log(state.coupon)
-      console.log('^ coupon cuy')
       return state.coupon
     }
   }

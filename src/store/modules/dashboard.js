@@ -28,23 +28,19 @@ export default {
             resolve(result)
           })
           .catch(error => {
-            console.log(error)
             reject(error.response)
           })
       })
     },
     getWeekOrders(context) {
-      console.log('masukk get week orders')
       return new Promise((resolve, reject) => {
         axios
           .get(`${context.state.VUE_APP_ROOT_URL}/order/admin/week-order`)
           .then(result => {
-            console.log(result)
             context.commit('setWeekOrders', result.data)
             resolve(result)
           })
           .catch(error => {
-            console.log(error)
             reject(error.response)
           })
       })
@@ -58,7 +54,6 @@ export default {
             resolve(result)
           })
           .catch(error => {
-            console.log(error)
             reject(error.response)
           })
       })

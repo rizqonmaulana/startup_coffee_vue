@@ -20,7 +20,6 @@ export default {
         axios
           .get(`${context.state.VUE_APP_ROOT_URL}/order/admin/list`)
           .then(result => {
-            console.log(result)
             context.commit('setOrderList', result.data)
             resolve(result)
           })
@@ -36,7 +35,6 @@ export default {
             `${context.state.VUE_APP_ROOT_URL}/order/admin/list/detail?orderId=${payload}`
           )
           .then(result => {
-            console.log(result)
             context.commit('setOrderDetailList', result.data)
             resolve(result)
           })

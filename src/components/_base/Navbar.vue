@@ -146,12 +146,7 @@ export default {
     },
     showSearch() {
       this.searchInput = 1
-      console.log(this.searchInput)
     }
-    // logout() {
-    //   alert.log('anda berhasil logout')
-    //   this.logout()
-    // }
   },
   created() {
     let getUser = localStorage.getItem('vuex')

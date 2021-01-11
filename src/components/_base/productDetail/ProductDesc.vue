@@ -52,21 +52,6 @@
         </b-col>
       </b-row>
     </div>
-    <b-alert
-      :show="dismissCountDown"
-      dismissible
-      variant="success"
-      @dismissed="dismissCountDown = 0"
-      @dismiss-count-down="countDownChanged"
-    >
-      <p>{{ productName }} added to cart</p>
-      <b-progress
-        variant="success"
-        :max="dismissSecs"
-        :value="dismissCountDown"
-        height="4px"
-      ></b-progress>
-    </b-alert>
     <div class="btn-add-n-ask poppins">
       <button
         @click="
@@ -90,10 +75,7 @@
       <br />
       <button
         v-if="role === 1"
-        @click="
-          deleteProduct(productId)
-          showProductId()
-        "
+        @click="deleteProduct(productId)"
         onclick="confirm('are you sure want to delete this product ?')"
         class="btn-add mt-3"
         style="background-color: #000;"
@@ -119,10 +101,7 @@ export default {
   ],
   data() {
     return {
-      productQty: 0,
-      dismissSecs: 3,
-      dismissCountDown: 0,
-      showDismissibleAlert: false
+      productQty: 0
     }
   },
   created() {
@@ -131,12 +110,6 @@ export default {
   },
   methods: {
     ...mapActions(['deleteProduct']),
-    // deleteProduct(id) {
-    //   this.$emit('deleteProduct', id)
-    // },
-    showProductId() {
-      console.log('ini adalah product id ' + this.productId)
-    },
     counterUp() {
       this.productQty += 1
       this.getSubTotal(this.subTotal)

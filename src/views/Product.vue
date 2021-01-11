@@ -2,7 +2,6 @@
   <div class="product">
     <Navbar />
     <main>
-      <b-alert :show="alert">{{ isMsg }}</b-alert>
       <b-container class="product-cust">
         <b-row>
           <b-col col lg="3" sm="12" class="main-left">

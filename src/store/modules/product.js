@@ -52,7 +52,6 @@ export default {
         axios
           .get('http://localhost:3000/product')
           .then(response => {
-            console.log(response)
             context.commit('setProduct', response.data)
             resolve(response)
           })
@@ -66,7 +65,6 @@ export default {
         axios
           .get(`http://localhost:3000/product?id=${payload}`)
           .then(response => {
-            console.log(response)
             context.commit('setPrice', response.data.data[0].product_price)
             resolve(response)
           })
@@ -83,7 +81,6 @@ export default {
             `http://localhost:3000/category/${payload}?sortBy=${context.state.sortBy}&sortType=${context.state.sortType}&limit=${context.state.limit}&page=${context.state.page}`
           )
           .then(response => {
-            console.log(response)
             context.commit('setProduct', response.data)
             resolve(response)
           })
@@ -123,14 +120,10 @@ export default {
             `http://localhost:3000/category/${context.state.categoryName}?search=${context.state.searchKeyword}&sortBy=${context.state.sortBy}&sortType=${context.state.sortType}&limit=${context.state.limit}&page=${context.state.page}`
           )
           .then(response => {
-            // this.totalRows = response.data.pagination.totalData
-            // this.products = response.data.data
-            console.log(response)
             context.commit('setProduct', response.data)
             resolve(response)
           })
           .catch(error => {
-            console.log(error)
             reject(error)
           })
       })
@@ -140,12 +133,9 @@ export default {
         axios
           .post('http://localhost:3000/product', payload)
           .then(result => {
-            console.log(result)
             resolve(result)
-            // this.showAlert()
           })
           .catch(error => {
-            console.log(error.response)
             reject(error.response)
           })
       })
@@ -155,11 +145,9 @@ export default {
         axios
           .patch(`http://localhost:3000/product/${payload.id}`, payload.dataSet)
           .then(result => {
-            console.log(result)
             resolve(result)
           })
           .catch(error => {
-            console.log(error.response)
             reject(error.response)
           })
       })
@@ -169,14 +157,12 @@ export default {
         axios
           .delete(`http://localhost:3000/product/${payload}`)
           .then(result => {
-            console.log(result)
             setTimeout(function() {
               router.push('/product')
             }, 1000)
             resolve(result)
           })
           .catch(error => {
-            console.log(error)
             reject(error.response)
           })
       })

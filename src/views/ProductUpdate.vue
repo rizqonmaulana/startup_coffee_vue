@@ -11,23 +11,6 @@
         </b-col>
       </b-row>
       <input type="file" @change="handleFile" />
-      <b-alert
-        :show="dismissCountDown"
-        dismissible
-        variant="success"
-        @dismissed="dismissCountDown = 0"
-        @dismiss-count-down="countDownChanged"
-        class="mt-4"
-      >
-        <p>{{ form.productName }} Product successfully added</p>
-        <b-progress
-          variant="success"
-          :max="dismissSecs"
-          :value="dismissCountDown"
-          height="4px"
-        >
-        </b-progress>
-      </b-alert>
     </b-container>
     <Footer />
   </div>
@@ -69,17 +52,13 @@ export default {
         deliveryHome: 0,
         deliveryDineIn: 0,
         deliveryTakeAway: 0
-      },
-      dismissSecs: 5,
-      dismissCountDown: 0,
-      showDismissibleAlert: false
+      }
     }
   },
   created() {
     const id = this.$route.params.id
     this.getProductById(id)
       .then(result => {
-        console.log(result)
         this.form.productName = result.data.data[0].product_name
         this.form.productPrice = result.data.data[0].product_price
         this.form.productDesc = result.data.data[0].product_desc
@@ -106,25 +85,7 @@ export default {
   },
   methods: {
     ...mapActions(['getProductById']),
-    // getProductDetail(id) {
-    //   axios
-    //     .get(`http://localhost:3000/product/detail/${id}`)
-    //     .then(response => {
-    //       console.log(this.form)
-    //       this.form = response.data.data[0]
-    //     })
-    //     .catch(error => {
-    //       console.log(error)
-    //     })
-    // },
-    countDownChanged(dismissCountDown) {
-      this.dismissCountDown = dismissCountDown
-    },
-    showAlert() {
-      this.dismissCountDown = this.dismissSecs
-    },
     handleFile(event) {
-      console.log(event.target.files[0])
       this.form.image = event.target.files[0]
     }
   }

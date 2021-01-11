@@ -18,11 +18,7 @@
 <script>
 export default {
   props: ['data', 'income'],
-  methods: {
-    showTitle() {
-      console.log(this.title)
-    }
-  }
+  methods: {}
 }
 </script>
 

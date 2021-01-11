@@ -138,7 +138,6 @@
     >
       Save Promo
     </button>
-    <button @click="showData">show data</button>
     {{ productData[0] }}
     <br />
     {{ productPrice }}
@@ -193,10 +192,6 @@ export default {
       'postCoupon',
       'patchCoupon'
     ]),
-    showData() {
-      console.log(this.form)
-      console.log('ini id cuy :' + this.id)
-    },
     handlePrice() {
       this.getProductPrice(this.form.productId)
     },
