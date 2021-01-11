@@ -4,7 +4,8 @@ export default {
   state: {
     yearIncome: '',
     weekOrders: '',
-    todayIncome: ''
+    todayIncome: '',
+    VUE_APP_ROOT_URL: process.env.VUE_APP_ROOT_URL
   },
   mutations: {
     setYearIncome(state, payload) {
@@ -21,7 +22,7 @@ export default {
     getYearIncome(context) {
       return new Promise((resolve, reject) => {
         axios
-          .get('http://localhost:3000/order/admin/year-income')
+          .get(`${context.state.VUE_APP_ROOT_URL}/order/admin/year-income`)
           .then(result => {
             context.commit('setYearIncome', result.data)
             resolve(result)
@@ -36,7 +37,7 @@ export default {
       console.log('masukk get week orders')
       return new Promise((resolve, reject) => {
         axios
-          .get('http://localhost:3000/order/admin/week-order')
+          .get(`${context.state.VUE_APP_ROOT_URL}/order/admin/week-order`)
           .then(result => {
             console.log(result)
             context.commit('setWeekOrders', result.data)
@@ -51,7 +52,7 @@ export default {
     getTodayIncome(context) {
       return new Promise((resolve, reject) => {
         axios
-          .get('http://localhost:3000/order/admin/daily-income')
+          .get(`${context.state.VUE_APP_ROOT_URL}/order/admin/daily-income`)
           .then(result => {
             context.commit('setTodayIncome', result.data)
             resolve(result)

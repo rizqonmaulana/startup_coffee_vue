@@ -3,7 +3,8 @@ import axios from 'axios'
 export default {
   state: {
     orderList: [],
-    orderDetailList: []
+    orderDetailList: [],
+    VUE_APP_ROOT_URL: process.env.VUE_APP_ROOT_URL
   },
   mutations: {
     setOrderList(state, payload) {
@@ -17,7 +18,7 @@ export default {
     getOrderList(context) {
       return new Promise((resolve, reject) => {
         axios
-          .get('http://localhost:3000/order/admin/list')
+          .get(`${context.state.VUE_APP_ROOT_URL}/order/admin/list`)
           .then(result => {
             console.log(result)
             context.commit('setOrderList', result.data)
@@ -32,7 +33,7 @@ export default {
       return new Promise((resolve, reject) => {
         axios
           .get(
-            `http://localhost:3000/order/admin/list/detail?orderId=${payload}`
+            `${context.state.VUE_APP_ROOT_URL}/order/admin/list/detail?orderId=${payload}`
           )
           .then(result => {
             console.log(result)

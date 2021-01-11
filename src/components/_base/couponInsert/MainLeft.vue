@@ -45,7 +45,8 @@
       <span style="color: #6a4029;"><strong> Expire Date : </strong></span>
       <div class="form-group mt-3">
         <input
-          v-model="form.couponStartDate"
+          v-model="startDate"
+          @change="startDateFormat"
           type="date"
           name="start-hour"
           class="form-control start-hour mt-3"
@@ -54,7 +55,8 @@
       </div>
       <div class="form-group mt-4 mb-5">
         <input
-          v-model="form.couponEndDate"
+          v-model="endDate"
+          @change="endDateFormat"
           type="date"
           name="end-hour"
           class="form-control end-hour"
@@ -72,6 +74,7 @@
           class="form-control input-stock"
         />
       </div>
+      <button @click="showData">show</button>
     </div>
   </div>
 </template>
@@ -79,27 +82,25 @@
 <script>
 export default {
   props: ['form'],
-  data() {
-    return {
-      startHour: this.form.productStartHour,
-      endHour: this.form.productEndHour,
-      stock: this.form.productQty
+  computed: {
+    startDate() {
+      return this.form.couponStartDate.substring(0, 10)
+    },
+    endDate() {
+      return this.form.couponEndDate.substring(0, 10)
     }
   },
   methods: {
-    getStartHour(start) {
-      this.$emit('getStartHour', start)
+    showData() {
+      console.log(this.startDate)
+      console.log(this.endDate)
+      console.log('^ computed cuy')
     },
-    getEndHour(end) {
-      this.$emit('getEndHour', end)
+    startDateFormat(event) {
+      this.form.couponStartDate = event.target.value
     },
-    getStock(qty) {
-      const stock = Number(qty)
-      this.$emit('getStock', stock)
-    },
-    getCategory(event) {
-      const category = Number(event.target.value)
-      this.$emit('getCategory', category)
+    endDateFormat(event) {
+      this.form.couponEndDate = event.target.value
     }
   }
 }

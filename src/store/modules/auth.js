@@ -6,7 +6,8 @@ export default {
     user: {},
     userProfile: {},
     token: localStorage.getItem('token') || null,
-    msg: ''
+    msg: '',
+    VUE_APP_ROOT_URL: process.env.VUE_APP_ROOT_URL
   },
   mutations: {
     setUser(state, payload) {
@@ -28,7 +29,7 @@ export default {
     login(context, payload) {
       return new Promise((resolve, reject) => {
         axios
-          .post('http://localhost:3000/user/login', payload)
+          .post(`${context.state.VUE_APP_ROOT_URL}/user/login`, payload)
           .then(result => {
             context.commit('setUser', result.data.data)
             localStorage.setItem('token', result.data.data.token)
@@ -49,7 +50,7 @@ export default {
     registerUser(context, payload) {
       return new Promise((resolve, reject) => {
         axios
-          .post('http://localhost:3000/user/register', payload)
+          .post(`${context.state.VUE_APP_ROOT_URL}/user/register`, payload)
           .then(result => {
             resolve(result)
           })
@@ -61,7 +62,7 @@ export default {
     getUserProfile(context, payload) {
       return new Promise((resolve, reject) => {
         axios
-          .get(`http://localhost:3000/user/${payload}`)
+          .get(`${context.state.VUE_APP_ROOT_URL}/user/${payload}`)
           .then(result => {
             context.commit('setUserProfile', result.data.data[0])
             resolve(result)
@@ -75,7 +76,7 @@ export default {
       return new Promise((resolve, reject) => {
         axios
           .patch(
-            `http://localhost:3000/user/update/${payload.email}`,
+            `${context.state.VUE_APP_ROOT_URL}/user/update/${payload.email}`,
             payload.dataSet
           )
           .then(result => {
@@ -90,7 +91,7 @@ export default {
       return new Promise((resolve, reject) => {
         axios
           .patch(
-            `http://localhost:3000/user/update/password/${payload.email}`,
+            `${context.state.VUE_APP_ROOT_URL}/user/update/password/${payload.email}`,
             payload
           )
           .then(result => {

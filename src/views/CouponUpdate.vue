@@ -4,31 +4,10 @@
     <b-container>
       <b-row>
         <b-col col lg="5" sm="12">
-          <MainLeft
-            :form="form"
-            @getStartHour="getStartHour"
-            @getEndHour="getEndHour"
-            @getStock="getStock"
-            @getCategory="getCategory"
-          />
+          <MainLeft :form="form" />
         </b-col>
         <b-col col lg="7" sm="12">
-          <MainRight
-            :form="form"
-            @getProductName="getProductName"
-            @getProductPrice="getProductPrice"
-            @getProductDesc="getProductDesc"
-            @getSizeR="getSizeR"
-            @getSizeL="getSizeL"
-            @getSizeXL="getSizeXL"
-            @getSize250gr="getSize250gr"
-            @getSize300gr="getSize300gr"
-            @getSize500gr="getSize500gr"
-            @postProduct="postProduct"
-            @getHomeDelivery="getHomeDelivery"
-            @getDineIn="getDineIn"
-            @getTakeAway="getTakeAway"
-          />
+          <MainRight :form="form" />
         </b-col>
       </b-row>
       <b-alert
@@ -54,11 +33,12 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 import Navbar from '../components/_base/Navbar'
 import Footer from '../components/_base/Footer'
-import MainLeft from '../components/_base/couponUpdate/MainLeft'
-import MainRight from '../components/_base/couponUpdate/MainRight'
-import axios from 'axios'
+import MainLeft from '../components/_base/couponInsert/MainLeft'
+import MainRight from '../components/_base/couponInsert/MainRight'
+// import axios from 'axios'
 
 export default {
   components: {
@@ -70,22 +50,12 @@ export default {
   data() {
     return {
       form: {
-        productName: '',
-        productPrice: 0,
-        productDesc: '',
-        productStartHour: '',
-        productEndHour: '',
-        productQty: 0,
-        categoryId: 0,
-        sizeRegular: 0,
-        sizeLarge: 0,
-        sizeExtraLarge: 0,
-        size250gr: 0,
-        size300gr: 0,
-        size500gr: 0,
-        deliveryHome: 0,
-        deliveryDineIn: 0,
-        deliveryTakeAway: 0
+        productId: '',
+        couponCode: '',
+        couponDiscount: '',
+        couponDesc: '',
+        couponStartDate: '',
+        couponEndDate: ''
       },
       dismissSecs: 5,
       dismissCountDown: 0,
@@ -93,72 +63,30 @@ export default {
     }
   },
   methods: {
-    postProduct() {
-      console.log(this.form)
-      axios
-        .post('http://localhost:3000/product', this.form)
-        .then(response => {
-          console.log(response)
-          this.showAlert()
-        })
-        .catch(error => {
-          console.log(error)
-        })
-    },
-    getProductName(name) {
-      this.form.productName = name
-    },
-    getProductPrice(price) {
-      this.form.productPrice = price
-    },
-    getProductDesc(desc) {
-      this.form.productDesc = desc
-    },
-    getStartHour(start) {
-      this.form.productStartHour = start
-    },
-    getEndHour(end) {
-      this.form.productEndHour = end
-    },
-    getStock(stock) {
-      this.form.productQty = stock
-    },
-    getCategory(category) {
-      this.form.categoryId = category
-    },
-    getSizeR(size) {
-      this.form.sizeRegular = size
-    },
-    getSizeL(size) {
-      this.form.sizeLarge = size
-    },
-    getSizeXL(size) {
-      this.form.sizeExtraLarge = size
-    },
-    getSize250gr(size) {
-      this.form.size250gr = size
-    },
-    getSize300gr(size) {
-      this.form.size300gr = size
-    },
-    getSize500gr(size) {
-      this.form.size500gr = size
-    },
-    getHomeDelivery(delivery) {
-      this.form.deliveryHome = delivery
-    },
-    getDineIn(delivery) {
-      this.form.deliveryDineIn = delivery
-    },
-    getTakeAway(delivery) {
-      this.form.deliveryTakeAway = delivery
-    },
+    ...mapActions(['getActiveCouponById']),
     countDownChanged(dismissCountDown) {
       this.dismissCountDown = dismissCountDown
     },
     showAlert() {
       this.dismissCountDown = this.dismissSecs
+    },
+    showData() {
+      console.log(this.coupon)
     }
+  },
+  created() {
+    this.getActiveCouponById(this.$route.params.id)
+      .then(result => {
+        this.form.productId = result.data.data[0].product_id
+        this.form.couponCode = result.data.data[0].coupon_code
+        this.form.couponDiscount = result.data.data[0].coupon_discount
+        this.form.couponDesc = result.data.data[0].coupon_desc
+        this.form.couponStartDate = result.data.data[0].coupon_start_date
+        this.form.couponEndDate = result.data.data[0].coupon_end_date
+      })
+      .catch(error => {
+        console.log(error.data.msg)
+      })
   }
 }
 </script>

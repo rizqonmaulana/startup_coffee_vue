@@ -52,7 +52,7 @@ export default {
         axios
           .get('http://localhost:3000/product')
           .then(response => {
-            console.log(response.data.data)
+            console.log(response)
             context.commit('setProduct', response.data)
             resolve(response)
           })
@@ -66,8 +66,7 @@ export default {
         axios
           .get(`http://localhost:3000/product?id=${payload}`)
           .then(response => {
-            console.log('masuk product price')
-            console.log(response.data.data[0].product_price)
+            console.log(response)
             context.commit('setPrice', response.data.data[0].product_price)
             resolve(response)
           })

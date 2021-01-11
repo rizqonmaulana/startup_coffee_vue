@@ -132,7 +132,10 @@
 
     <br />
 
-    <button @click="addCoupon()" class="btn-save btn-save-save mt-5">
+    <button
+      @click="id === 0 ? addCoupon() : updateCoupon()"
+      class="btn-save btn-save-save mt-5"
+    >
       Save Promo
     </button>
     <button @click="showData">show data</button>
@@ -147,11 +150,11 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
-
 export default {
   props: ['form'],
   data() {
     return {
+      id: 0,
       activeButton: {
         deliveryHome: 1,
         deliveryDineIn: 1,
@@ -172,20 +175,47 @@ export default {
     })
   },
   created() {
+    if (this.$route.params.id) {
+      this.id = this.$route.params.id
+    }
     this.getAllProduct()
+    setTimeout(() => {
+      this.handlePrice()
+    }, 1000)
   },
   methods: {
-    ...mapActions(['getAllProduct', 'getProductPrice', 'postCoupon']),
+    ...mapActions([
+      'getAllProduct',
+      'getProductPrice',
+      'getActiveCoupon',
+      'postCoupon',
+      'patchCoupon'
+    ]),
     showData() {
       console.log(this.form)
+      console.log('ini id cuy :' + this.id)
     },
     handlePrice() {
       this.getProductPrice(this.form.productId)
-      console.log(this.productPrice)
-      console.log('^^^ product price le')
     },
     addCoupon() {
       this.postCoupon(this.form)
+      this.getActiveCoupon()
+    },
+    updateCoupon() {
+      const setData = {
+        id: this.id,
+        data: {
+          productId: this.form.productId,
+          couponCode: this.form.couponCode,
+          couponDiscount: this.form.couponDiscount,
+          couponDesc: this.form.couponDesc,
+          couponStartDate: this.form.couponStartDate.substring(0, 10),
+          couponEndDate: this.form.couponEndDate.substring(0, 10)
+        }
+      }
+      this.patchCoupon(setData)
+      this.getActiveCoupon()
     }
   }
 }
@@ -195,24 +225,20 @@ export default {
 .main-right {
   padding: 30px 25px 0px 70px;
 }
-
 .text-brown {
   color: #6a4029;
   margin: 40px 0px 20px;
   font-weight: bold;
 }
-
 .text-grey {
   color: #9f9f9f;
   font-size: 12px;
 }
-
 .form-control {
   border-top: unset;
   border-right: unset;
   border-left: unset;
 }
-
 .btn-size-collection .btn-size {
   font-weight: 700;
   font-size: 20px;
@@ -223,18 +249,15 @@ export default {
   background-color: #dfdfdf;
   outline: none;
 }
-
 .btn-size-collection .btn-size.active {
   background-color: #ffba33;
   -webkit-box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.34);
   box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.34);
 }
-
 .btn-size-collection .btn-size:hover {
   -webkit-box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.34);
   box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.34);
 }
-
 .btn-delivery {
   background-color: #dfdfdf;
   margin-right: 5%;
@@ -252,14 +275,12 @@ export default {
   -webkit-box-shadow: 0px 10px 20px rgba(137, 85, 55, 0.4);
   box-shadow: 0px 10px 20px rgba(137, 85, 55, 0.4);
 }
-
 .btn-delivery.active {
   background-color: #ffba33;
   color: #6a4029;
   -webkit-box-shadow: 0px 10px 20px rgba(137, 85, 55, 0.4);
   box-shadow: 0px 10px 20px rgba(137, 85, 55, 0.4);
 }
-
 .btn-save {
   margin-top: 50px;
   width: 100%;
@@ -269,17 +290,14 @@ export default {
   border-radius: 10px;
   border: unset;
 }
-
 .btn-save-save {
   background: #6a4029;
   color: #fff;
 }
-
 .btn-save-cancel {
   background: rgba(186, 186, 186, 0.35);
   color: #4f5665;
 }
-
 @media (max-width: 576px) {
   .main-right {
     padding: 0 25px 0;

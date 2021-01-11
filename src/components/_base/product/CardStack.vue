@@ -23,10 +23,17 @@
             style="margin-top: -12px; margin-right:-10px;"
           >
             <router-link
-              :to="{ name: 'CouponUpdate', params: { id: card.product_id } }"
+              :to="{ name: 'CouponUpdate', params: { id: card.coupon_id } }"
             >
               <img src="../../../assets/edit-icon.png" style="width: 30px" />
             </router-link>
+            <img
+              class="btn-del"
+              src="../../../assets/icon-delete.png"
+              @click="destroyCoupon(card.coupon_id)"
+              onclick="confirm('are you sure want to delete this coupon ?')"
+              style="width: 30px; cursor: pointer;"
+            />
           </div>
           <br />
           <img
@@ -107,7 +114,11 @@ export default {
     })
   },
   methods: {
-    ...mapActions(['getActiveCoupon'])
+    ...mapActions(['getActiveCoupon', 'deleteCoupon']),
+    destroyCoupon(id) {
+      this.deleteCoupon(id)
+      this.getActiveCoupon()
+    }
   },
   created() {
     this.getActiveCoupon()
