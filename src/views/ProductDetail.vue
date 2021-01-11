@@ -118,7 +118,7 @@ export default {
         })
     },
     selectDelivery(delivery) {
-      this.orderData.orderDetailDelivery = orderDetailDelivery
+      this.orderData.orderDetailDelivery = delivery
     },
     selectSize(size) {
       this.orderData.orderDetailSize = size

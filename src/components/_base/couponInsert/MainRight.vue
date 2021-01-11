@@ -138,9 +138,6 @@
     >
       Save Promo
     </button>
-    {{ productData[0] }}
-    <br />
-    {{ productPrice }}
     <button class="btn-save btn-save-cancel mt-4">
       Cancel
     </button>
