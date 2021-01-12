@@ -89,11 +89,21 @@
                   <img src="../../assets/chat-icon.png" />
                 </a>
               </li>
-              <li class="nav-item pr-0">
+              <router-link to="/Profile" class="nav-item pr-0">
                 <a class="nav-link" href="#">
-                  <img class="rounded-circle" src="../../assets/profile.png" />
+                  <img
+                    v-if="!userPic"
+                    class="rounded-circle"
+                    src="../../assets/profile.png"
+                  />
+
+                  <img
+                    v-else
+                    :src="'http://localhost:3000/' + userPic"
+                    class="rounded-circle"
+                  />
                 </a>
-              </li>
+              </router-link>
             </ul>
           </div>
         </div>
@@ -110,7 +120,7 @@
                 >
               </li>
               <li class="nav-item">
-                <router-link class="nav-link" to="/lifecycle"
+                <router-link class="nav-link" to="/product/checkout"
                   >Your Cart</router-link
                 >
               </li>
@@ -133,13 +143,15 @@ export default {
   data() {
     return {
       user: 0,
+      userEmail: '',
+      userPic: '',
       userRole: 0,
       searchKeyword: '',
       searchInput: 0
     }
   },
   methods: {
-    ...mapActions(['logout', 'searchProduct']),
+    ...mapActions(['logout', 'searchProduct', 'getUserProfile']),
     resetUser() {
       this.user = 0
       this.logout()
@@ -154,6 +166,16 @@ export default {
     if (getUser.Auth.user.userName) {
       this.user = 1
       this.userRole = getUser.Auth.user.userRole
+      this.userEmail = getUser.Auth.user.userEmail
+      this.getUserProfile(this.userEmail)
+        .then(result => {
+          console.log(result)
+          this.userPic = result.data.data[0].user_pic
+          console.log(result)
+        })
+        .catch(error => {
+          console.log(error)
+        })
     } else {
       this.user = 0
     }
@@ -180,6 +202,11 @@ nav.navbar-brand img {
 .navbar-nav .nav-link {
   color: #4f5665;
   margin-right: 2vw;
+}
+
+.navbar-nav .nav-link .rounded-circle {
+  width: 30px;
+  height: 30px;
 }
 
 .navbar-nav .nav-link:hover {
