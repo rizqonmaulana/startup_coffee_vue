@@ -5,20 +5,27 @@
       <span style="color: #6a4029;"><strong> > Add new product </strong></span>
     </p>
     <div class="add-pic">
-      <div class="rounded-circle text-center cam-icon-container">
+      <div v-if="!url" class="rounded-circle text-center cam-icon-container">
         <img
           class="cam-icon-pic"
           src="../../../assets/cam-icon.png"
           style="width:80px"
         />
       </div>
+      <img
+        v-else
+        class="rounded-circle"
+        :src="url"
+        style="width: 210px; height: 210px;"
+      />
     </div>
     <button class="btn-add btn-add-pic mt-5">
       Take a picture
     </button>
-    <button class="btn-add btn-gallery mt-5">
+    <button @click="chooseFiles()" class="btn-add btn-gallery mt-5">
       Choose from gallery
     </button>
+    <input id="fileUpload" type="file" @change="handleFile" hidden />
     <div class="mt-5 pt-4">
       <span style="color: #6a4029;"><strong> Delivery Hour : </strong></span>
       <div class="form-group mt-3">
@@ -106,30 +113,22 @@
 
 <script>
 export default {
-  props: ['form']
-  // data() {
-  //     return {
-  //         startHour : this.form.productStartHour,
-  //         endHour : this.form.productEndHour,
-  //         stock : this.form.productQty
-  //     }
-  // },
-  // methods: {
-  //     getStartHour(start){
-  //         this.$emit('getStartHour', start)
-  //     },
-  //     getEndHour(end){
-  //         this.$emit('getEndHour', end)
-  //     },
-  //     getStock(qty){
-  //         const stock = Number(qty)
-  //         this.$emit('getStock', stock)
-  //     },
-  //     getCategory(event) {
-  //         const category = Number(event.target.value)
-  //         this.$emit('getCategory', category)
-  //     }
-  // }
+  props: ['form'],
+  data() {
+    return {
+      url: ''
+    }
+  },
+  methods: {
+    handleFile(event) {
+      const file = event.target.files[0]
+      this.url = URL.createObjectURL(file)
+      this.form.image = event.target.files[0]
+    },
+    chooseFiles() {
+      document.getElementById('fileUpload').click()
+    }
+  }
 }
 </script>
 
@@ -155,6 +154,7 @@ export default {
   font-weight: 700;
   color: #fff;
   border: unset;
+  outline: unset;
   border-radius: 10px;
   -webkit-box-shadow: 0px 10px 20px rgba(137, 85, 55, 0.4);
   box-shadow: 0px 10px 20px rgba(137, 85, 55, 0.4);

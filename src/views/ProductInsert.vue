@@ -11,7 +11,7 @@
         </b-col>
       </b-row>
       <!-- test upload file -->
-      <input type="file" @change="handleFile" />
+
       <!-- test upload file -->
     </b-container>
     <Footer />
@@ -53,11 +53,6 @@ export default {
         deliveryDineIn: 0,
         deliveryTakeAway: 0
       }
-    }
-  },
-  methods: {
-    handleFile(event) {
-      this.form.image = event.target.files[0]
     }
   }
 }

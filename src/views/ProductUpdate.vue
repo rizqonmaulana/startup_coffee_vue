@@ -10,7 +10,6 @@
           <MainRight :form="form" />
         </b-col>
       </b-row>
-      <input type="file" @change="handleFile" />
     </b-container>
     <Footer />
   </div>
@@ -84,10 +83,7 @@ export default {
       })
   },
   methods: {
-    ...mapActions(['getProductById']),
-    handleFile(event) {
-      this.form.image = event.target.files[0]
-    }
+    ...mapActions(['getProductById'])
   }
 }
 </script>
