@@ -28,8 +28,8 @@
 
       <MapStore />
       <Partner />
-      <Testimonial style="background-color:brown; height:400px;" />
-      <PromoCheck style="background-color:pink; height:150px;" />
+      <Testimonial class="testimonial" />
+      <PromoCheck class="float-card" />
     </b-container>
     <Footer />
   </div>
@@ -74,13 +74,57 @@ export default {
   position: absolute;
   z-index: 9999;
 }
+
 .favorite-text {
   margin: 50px 0 80px;
+}
+
+.float-card {
+  position: absolute;
+  margin-top: -8%;
+  margin-left: 8.5%;
+}
+
+.testimonial {
+  margin-bottom: 180px;
+}
+
+@media (max-width: 1200px) {
+  .float-card {
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+@media (max-width: 992px) {
+  .float-card {
+    position: static;
+    margin: 50px 0px 20px 0px;
+  }
+  .testimonial {
+    margin-bottom: 0px;
+  }
 }
 
 @media (max-width: 768px) {
   .stats {
     width: 90%;
+  }
+
+  .float-card {
+    position: static;
+    margin: 50px 0px 20px 55px;
+  }
+
+  .favorite-text {
+    margin: 50px 0 30px;
+  }
+}
+
+@media (max-width: 576px) {
+  .float-card {
+    position: static;
+    margin: 50px 0px 20px 30px;
   }
 }
 </style>
