@@ -52,7 +52,6 @@
             />
           </b-col>
         </b-row>
-        {{ productDetail }}
       </b-container>
     </main>
     <Footer />

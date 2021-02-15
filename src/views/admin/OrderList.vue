@@ -4,7 +4,7 @@
     <div class="product-checkout pb-5">
       <b-container>
         <b-row>
-          <b-col col lg="6" sm="12" class="pr-lg-5 pb-5">
+          <b-col col lg="6" sm="12" class="pr-lg-5 cardstack">
             <CardStack />
             <!-- <OrderSummary :orderData="orderData" @subTotal="subTotal" /> -->
           </b-col>
@@ -84,6 +84,10 @@ export default {
 </script>
 
 <style scoped>
+.cardstack {
+  margin-top: 130px;
+}
+
 .product-checkout {
   background-image: url('../../assets/bg-payment.png');
   background-size: cover;
@@ -92,10 +96,4 @@ export default {
 .main-right {
   margin-top: 12%;
 }
-
-/* @media (max-width: 576px) { 
-    .main-right{
-        margin-top: 250px !important;
-    }
-} */
 </style>

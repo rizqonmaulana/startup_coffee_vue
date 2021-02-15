@@ -17,6 +17,7 @@ import CouponInsert from '../views/CouponInsert.vue'
 import CouponUpdate from '../views/CouponUpdate.vue'
 import Forbidden403 from '../views/error/403.vue'
 import OrderList from '../views/admin/OrderList.vue'
+import ActiveAccount from '../views/auth/ActiveAccount.vue'
 
 Vue.use(VueRouter)
 
@@ -104,6 +105,11 @@ const routes = [
     path: '/admin/order',
     name: 'OrderList',
     component: OrderList
+  },
+  {
+    path: '/active/:key',
+    name: 'ActiveAccount',
+    component: ActiveAccount
   }
 ]
 

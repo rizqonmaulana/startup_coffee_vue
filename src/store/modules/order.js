@@ -89,6 +89,18 @@ export default {
             reject(error)
           })
       })
+    },
+    patchOrderStatus(context, payload) {
+      return new Promise((resolve, reject) => {
+        axios
+          .patch(`${context.state.VUE_APP_ROOT_URL}/order`, payload)
+          .then(result => {
+            resolve(result)
+          })
+          .catch(error => {
+            reject(error)
+          })
+      })
     }
   },
   getters: {

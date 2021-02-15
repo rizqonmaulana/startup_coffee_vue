@@ -103,6 +103,48 @@ export default {
           })
       })
     },
+    activateUser(context, payload) {
+      return new Promise((resolve, reject) => {
+        axios
+          .patch(`${context.state.VUE_APP_ROOT_URL}/user/active`, payload)
+          .then(result => {
+            console.log(result)
+            resolve(result)
+          })
+          .catch(error => {
+            console.log(error)
+            reject(error.response)
+          })
+      })
+    },
+    forgotPassword(context, payload) {
+      return new Promise((resolve, reject) => {
+        axios
+          .patch(`${context.state.VUE_APP_ROOT_URL}/user/forgot`, payload)
+          .then(result => {
+            console.log(result)
+            resolve(result)
+          })
+          .catch(error => {
+            console.log(error)
+            reject(error.response)
+          })
+      })
+    },
+    resetPassword(context, payload) {
+      return new Promise((resolve, reject) => {
+        axios
+          .patch(`${context.state.VUE_APP_ROOT_URL}/user/reset`, payload)
+          .then(result => {
+            console.log(result)
+            resolve(result)
+          })
+          .catch(error => {
+            console.log(error)
+            reject(error.response)
+          })
+      })
+    },
     interceptorRequest(context) {
       console.log('interceptor Request work !')
       axios.interceptors.request.use(

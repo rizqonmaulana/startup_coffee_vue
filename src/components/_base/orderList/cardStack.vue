@@ -1,6 +1,11 @@
 <template>
   <div>
-    <vue-card-stack :cards="cards" :stack-width="360" :card-width="280">
+    <vue-card-stack
+      v-if="show"
+      :cards="cards"
+      :stack-width="360"
+      :card-width="280"
+    >
       <template v-slot:card="{ card }">
         <div
           class="card"
@@ -16,21 +21,10 @@
             <h2>Delivery Order</h2>
             <p>for {{ card.user_name }}</p>
             <div class="order-item mb-3 d-flex flex-row align-items-center">
-              <div class="pic" style="width: 25%;">
-                <img
-                  src="../../../assets/product-3.png"
-                  style="height: 70px; width: 62px; border-radius: 20px;"
-                />
-              </div>
-              <div class="text mr-3" style="width: 45%;">
-                <!-- {{ item.productName }} -->
-                <br />
-                <!-- x{{ item.orderDetailQty }} -->
-                <br />
-                <!-- {{ item.orderDetailSize }} -->
-              </div>
               <div class="price text-right text-nowrap" style="width: 30%;">
-                IDR {{ card.order_total }}
+                Invoice : {{ card.order_invoice }} <br />
+                Payment :
+                {{ card.order_payment_method }} <br />
               </div>
             </div>
             <hr style="width: 100%" />
@@ -49,52 +43,104 @@
                   IDR {{ card.order_total }}
                 </strong>
               </div>
+              <button
+                class="btn btn-warning mt-5 mx-auto"
+                @click="patchOrder(card.order_invoice)"
+              >
+                Mark as done
+              </button>
             </div>
           </div>
-          <!-- <h5>{{ card.name }}</h5> -->
         </div>
       </template>
 
       <template v-slot:nav="{ activeCardIndex, onNext, onPrevious }">
-        <nav class="nav">
-          <div class="counter">
-            {{ activeCardIndex + 1 }}/{{ cards.length }}
+        <div class="d-flex justify-content-center arrow-nav">
+          <div>
+            <button v-on:click="onPrevious" class="button-arrow">
+              <span class="arrow">&#8592;</span>
+            </button>
           </div>
-          <button v-on:click="onPrevious" class="button">
-            <span class="chevron left"> </span>
-          </button>
-          <button v-on:click="onNext" class="button">
-            <span class="chevron right"> > </span>
-          </button>
-        </nav>
+          <div class="align-self-center">
+            <div class="counter">
+              {{ activeCardIndex + 1 }}/{{ cards.length }}
+            </div>
+          </div>
+          <div>
+            <button v-on:click="onNext" class="button-arrow">
+              <span class="arrow">&#8594;</span>
+            </button>
+          </div>
+        </div>
       </template>
     </vue-card-stack>
   </div>
 </template>
 <script>
+import { alertMixin } from '../../../mixins/alertMixin'
 import { mapActions, mapGetters } from 'vuex'
 import VueCardStack from 'vue-card-stack'
 
 export default {
+  mixins: [alertMixin],
+  data() {
+    return {
+      show: false
+    }
+  },
   components: {
     VueCardStack
   },
-  data() {
-    return {
-      cards: []
-    }
-  },
   created() {
     this.getOrderList()
-    this.cards = this.orderList
+      .then(result => {
+        console.log(result)
+        this.show = true
+      })
+      .catch(err => {
+        console.log(err)
+      })
   },
   computed: {
     ...mapGetters({
-      orderList: 'getOrderList'
+      cards: 'getOrderList'
     })
   },
   methods: {
-    ...mapActions(['getOrderList'])
+    ...mapActions(['getOrderList', 'patchOrderStatus']),
+    patchOrder(invoice) {
+      const data = {
+        invoice: invoice
+      }
+      this.patchOrderStatus(data)
+        .then(result => {
+          console.log(result)
+          this.getOrderList()
+          this.$forceUpdate()
+          this.successLogin(result.data.msg)
+        })
+        .catch(error => {
+          this.errorAlert(error.data.msg)
+        })
+    }
   }
 }
 </script>
+
+<style scoped>
+.arrow-nav {
+  margin-right: 20%;
+}
+
+.button-arrow {
+  border: unset;
+  background-color: transparent;
+  outline: unset;
+  padding: unset;
+}
+
+.arrow {
+  font-weight: 700;
+  font-size: 50px;
+}
+</style>
