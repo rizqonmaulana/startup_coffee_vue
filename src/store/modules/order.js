@@ -2,6 +2,7 @@ import axios from 'axios'
 
 export default {
   state: {
+    cart: [],
     orderList: [],
     orderDetailList: [],
     VUE_APP_ROOT_URL: process.env.VUE_APP_ROOT_URL,

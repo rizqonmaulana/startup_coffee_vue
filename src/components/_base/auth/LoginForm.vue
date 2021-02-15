@@ -75,6 +75,7 @@ export default {
     onSubmit() {
       this.login(this.form)
         .then(result => {
+          console.log(result)
           this.successLogin(result.data.msg)
         })
         .catch(error => {

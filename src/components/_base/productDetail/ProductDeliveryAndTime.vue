@@ -14,14 +14,12 @@
       <img
         v-if="detail.product_pic"
         :src="url + '/' + detail.product_pic"
-        class="rounded-circle mt-5 mb-4 mx-auto"
-        style="width: 250px;"
+        class="rounded-circle mx-auto product-img"
       />
       <img
         v-else
         src="../../../assets/cold_brew.png"
-        class="rounded-circle mt-5 mb-4 mx-auto"
-        style="width: 250px;"
+        class="rounded-circle mx-auto product-img"
       />
     </div>
     <div class="product-card mt-5">
@@ -111,6 +109,12 @@ export default {
 </script>
 
 <style scoped>
+.product-img {
+  width: 250px;
+  height: 250px;
+  margin-top: 55px;
+}
+
 .product-card {
   background-color: #fff;
   border-radius: 20px;
@@ -148,5 +152,12 @@ export default {
   width: 225px;
   font-size: 13px;
   color: #9f9f9f;
+}
+
+@media (max-width: 576px) {
+  .product-img {
+    width: 200px;
+    height: 200px;
+  }
 }
 </style>

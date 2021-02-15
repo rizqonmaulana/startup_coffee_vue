@@ -24,6 +24,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import Navbar from '../components/_base/Navbar'
 import Footer from '../components/_base/Footer'
 import OrderSummary from '../components/_base/productCheckout/OrderSummary'
@@ -47,12 +48,14 @@ export default {
       order: {
         orderPaymentMethod: '',
         orderTotal: 0,
-        customerId: 2,
         promoCode: ''
       },
       orderData: [],
       submitData: []
     }
+  },
+  computed: {
+    ...mapGetters({ userProfile: 'getUserProfile' })
   },
   created() {
     this.orderData = JSON.parse(localStorage.getItem('cart'))
@@ -61,7 +64,12 @@ export default {
   },
   methods: {
     getOrder() {
-      this.submitData = [this.order, ...this.orderData]
+      const order = { ...this.order, customerId: this.userProfile.user_id }
+      console.log('VVVV data order cuy')
+      console.log(order)
+      this.submitData = [order, ...this.orderData]
+      console.log('VVVV ini submitData')
+      console.log(this.submitData)
     },
     selectPaymentMethod(method) {
       this.order.orderPaymentMethod = method
