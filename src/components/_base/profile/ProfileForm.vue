@@ -28,7 +28,7 @@
             Mobile number:
           </label>
           <br />
-          <input type="text" v-model="profile.user_phone" name="phone" />
+          <input type="number" v-model="profile.user_phone" name="phone" />
         </div>
       </div>
       <div class="row mt-2">

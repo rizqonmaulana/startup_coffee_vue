@@ -4,12 +4,21 @@
       <p>
         <span style="color: #4F5665;">Favorite & Promo </span>
         <span style="color: #6a4029;"
-          ><strong class="text-lowercase"> > {{ productName }} </strong></span
+          ><strong class="text-lowercase">
+            > {{ detail.product_name }}
+          </strong></span
         >
       </p>
     </div>
     <div class="product-pic text-center">
       <img
+        v-if="detail.product_pic"
+        :src="url + '/' + detail.product_pic"
+        class="rounded-circle mt-5 mb-4 mx-auto"
+        style="width: 250px;"
+      />
+      <img
+        v-else
         src="../../../assets/cold_brew.png"
         class="rounded-circle mt-5 mb-4 mx-auto"
         style="width: 250px;"
@@ -20,7 +29,7 @@
         <h5>Delivery and Time</h5>
         <div class="delivery-btn-collection-1 mt-4">
           <button
-            v-if="deliveryDineIn != 0"
+            v-if="detail.delivery_dine_in != 0"
             @click="selectDelivery('Dine In')"
             :class="
               btnDelivery === 'Dine In' ? 'delivery-btn active' : 'delivery-btn'
@@ -29,7 +38,7 @@
             Dine In
           </button>
           <button
-            v-if="deliveryHome != 0"
+            v-if="detail.delivery_home != 0"
             @click="selectDelivery('Door Delivery')"
             :class="
               btnDelivery === 'Door Delivery'
@@ -40,7 +49,7 @@
             Door Deliver
           </button>
           <button
-            v-if="deliveryTakeAway != 0"
+            v-if="detail.delivery_take_away != 0"
             @click="selectDelivery('Pick Up')"
             :class="
               btnDelivery === 'Pick Up' ? 'delivery-btn active' : 'delivery-btn'
@@ -81,23 +90,18 @@
 
 <script>
 export default {
-  props: [
-    'productName',
-    'productPic',
-    'deliveryDineIn',
-    'deliveryHome',
-    'deliveryTakeAway'
-  ],
+  props: ['detail', 'orderData'],
   data() {
     return {
       btnDelivery: '',
-      btnNow: ''
+      btnNow: '',
+      url: process.env.VUE_APP_ROOT_URL
     }
   },
   methods: {
     selectDelivery(delivery) {
       this.btnDelivery = delivery
-      this.$emit('selectDelivery', delivery)
+      this.orderData.orderDetailDelivery = delivery
     },
     selectNow(now) {
       this.btnNow = now

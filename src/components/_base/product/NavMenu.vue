@@ -105,6 +105,7 @@ export default {
 .navbar-nav .nav-link {
   color: #4f5665;
   margin-right: 2vw;
+  cursor: pointer;
 }
 
 .navbar-nav .nav-link:hover {
@@ -125,6 +126,14 @@ export default {
   color: #6a4029;
   font-weight: 700;
   border-bottom: 3px solid #6a4029;
+}
+
+select {
+  cursor: pointer;
+  border: unset;
+  background: #fff;
+  color: #9f9f9f;
+  outline: unset;
 }
 
 @media (max-width: 576px) {

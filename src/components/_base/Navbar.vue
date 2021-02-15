@@ -47,21 +47,18 @@
                   >History</router-link
                 >
               </li>
-              <li v-if="user === 1" class="nav-item">
-                <p class="nav-link" @click="resetUser">
-                  Logout
-                </p>
-              </li>
             </ul>
           </div>
           <div class="nav-user ml-md-auto">
             <ul v-if="user === 0" class="navbar-nav mr-auto flex-row">
               <li class="nav-item ml-lg-auto">
-                <router-link class="nav-link" to="/login">Login</router-link>
+                <router-link class="nav-link no-wrapper" to="/login"
+                  >Login</router-link
+                >
               </li>
               <li class="nav-item pr-0">
                 <a class="nav-link" href="#">
-                  <button class="btn-signup">
+                  <button class="btn-signup text-nowrap">
                     Sign Up
                   </button>
                 </a>
@@ -90,19 +87,37 @@
                 </a>
               </li>
               <router-link to="/Profile" class="nav-item pr-0">
-                <a class="nav-link" href="#">
-                  <img
-                    v-if="!userPic"
-                    class="rounded-circle"
-                    src="../../assets/profile.png"
-                  />
+                <b-dropdown
+                  right
+                  variant="none"
+                  class="ml-auto profile-dropdown"
+                  no-caret
+                  ><template slot="button-content">
+                    <img
+                      v-if="!userPic"
+                      class="rounded-circle"
+                      src="../../assets/profile.png"
+                    />
 
-                  <img
-                    v-else
-                    :src="'http://localhost:3000/' + userPic"
-                    class="rounded-circle"
-                  />
-                </a>
+                    <img
+                      v-else
+                      :src="'http://localhost:3000/' + userPic"
+                      class="rounded-circle profile-img"
+                    />
+                  </template>
+
+                  <b-dropdown-item>
+                    <router-link to="/profile"
+                      ><p>My Profile</p>
+                    </router-link></b-dropdown-item
+                  >
+
+                  <b-dropdown-item v-if="user === 1">
+                    <p @click="resetUser">
+                      Logout
+                    </p></b-dropdown-item
+                  >
+                </b-dropdown>
               </router-link>
             </ul>
           </div>
@@ -184,6 +199,10 @@ export default {
 </script>
 
 <style scoped>
+p {
+  margin-bottom: unset;
+}
+
 nav.navbar-brand img {
   width: 30px;
   height: 33px;
@@ -250,5 +269,18 @@ nav.navbar-brand img {
   border-bottom: 1px solid grey;
   outline: unset;
   font-size: 14px;
+}
+
+.profile-img {
+  width: 35px;
+  height: 35px;
+}
+
+button {
+  padding: 0.375rem 0rem !important;
+}
+
+button.btn.dropdown-toggle {
+  padding-left: unset !important;
 }
 </style>

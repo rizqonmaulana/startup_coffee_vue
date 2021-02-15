@@ -121,6 +121,9 @@
             placeholder="Choose your photo"
           />
         </b-col>
+        <div v-if="error" class="error-warning text-center mt-3">
+          {{ error }}
+        </div>
         <button @click="postUser" class="btn-signup mt-5">
           Sign Up
         </button>
@@ -152,7 +155,8 @@ export default {
         userLastName: '',
         userDob: '',
         userGender: ''
-      }
+      },
+      error: ''
     }
   },
   methods: {
@@ -171,6 +175,20 @@ export default {
         userGender
       } = this.form
 
+      if (
+        !this.form.userName ||
+        !this.form.userEmail ||
+        !this.form.userPassword ||
+        !this.form.userPhone ||
+        !this.form.userAddress ||
+        !this.form.userFirstName ||
+        !this.form.userLastName ||
+        !this.form.userDob ||
+        !this.form.userGender
+      ) {
+        return (this.error = 'Please fill all form to sign up an account')
+      }
+
       const data = new FormData()
       data.append('userName', userName)
       data.append('userEmail', userEmail)
@@ -185,7 +203,9 @@ export default {
 
       this.registerUser(data)
         .then(result => {
+          this.error = ''
           this.successAlert(result.data.msg)
+          this.$router.push({ name: 'Login' })
         })
         .catch(error => {
           this.errorAlert(error.data.msg)
@@ -262,5 +282,12 @@ export default {
 .google-icon {
   width: 25px;
   margin-right: 5px;
+}
+
+.error-warning {
+  width: 100%;
+  background: red;
+  color: #fff;
+  border-radius: 5px;
 }
 </style>

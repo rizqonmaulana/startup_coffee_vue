@@ -1,11 +1,11 @@
 <template>
   <div>
     <div class="product-name pl-5 ml-lg-4 poppins">
-      <h1 class="text-uppercase">{{ productName }}</h1>
+      <h1 class="text-uppercase">{{ detail.product_name }}</h1>
     </div>
     <div class="product-desc mt-5 poppins">
       <p>
-        {{ productDesc }}
+        {{ detail.product_desc }}
       </p>
     </div>
     <div class="delivery-time poppins mt-5">
@@ -16,7 +16,10 @@
             Monday to friday
           </strong>
           at
-          <strong>{{ productStart }} - {{ productEnd }}</strong>
+          <strong
+            >{{ detail.product_start_hour }} -
+            {{ detail.product_end_hour }}</strong
+          >
         </span>
       </p>
     </div>
@@ -63,19 +66,19 @@
         Add to Cart
       </button>
       <br />
-      <button v-if="role === 0" class="btn-ask mt-3">
+      <button v-if="user.userRole === 0" class="btn-ask mt-3">
         Ask a Staff
       </button>
       <br />
       <router-link :to="{ name: 'ProductUpdate', params: { id: productId } }">
-        <button v-if="role === 1" class="btn-ask">
+        <button v-if="user.userRole === 1" class="btn-ask">
           Edit Product
         </button>
       </router-link>
       <br />
       <button
-        v-if="role === 1"
-        @click="deleteProduct(productId)"
+        v-if="user.userRole === 1"
+        @click="deleteProduct(detail.product_id)"
         onclick="confirm('are you sure want to delete this product ?')"
         class="btn-add mt-3"
         style="background-color: #000;"
@@ -87,10 +90,11 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
   props: [
+    'detail',
     'productId',
     'productName',
     'productDesc',
@@ -137,6 +141,9 @@ export default {
     }
   },
   computed: {
+    ...mapGetters({
+      user: 'getUser'
+    }),
     subTotal() {
       return this.productQty * this.productPrice
     }

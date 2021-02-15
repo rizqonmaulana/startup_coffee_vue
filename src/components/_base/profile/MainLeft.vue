@@ -3,13 +3,13 @@
     <img
       v-if="!profile.user_pic && !url"
       :src="'http://localhost:3000/assets/user_profile.png'"
-      style="width: 150px;"
+      style="width: 150px; height: 150px;"
     />
     <img
       v-if="profile.user_pic && url"
       class="rounded-circle"
       :src="url"
-      style="width: 150px;"
+      style="width: 150px; height: 150px;"
     />
     <img
       v-if="profile.user_pic && !url"
@@ -69,15 +69,18 @@
       Save Change
     </button>
     <br />
-    <button
-      class="btn-yellow-brown poppins mt-4 mb-3 py-3"
-      style="width: 100%;"
+    <router-link to="/product">
+      <button
+        class="btn-yellow-brown poppins mt-4 mb-3 py-3"
+        style="width: 100%;"
+      >
+        Cancel
+      </button></router-link
     >
-      Cancel
-    </button>
     <button
       class="btn-white-brown mt-5 py-3 poppins"
       style="width: 100%; border: 2px solid #9f9f9f;"
+      @click="resetUser"
     >
       Log out
     </button>
@@ -101,7 +104,11 @@ export default {
     ...mapGetters({ msg: 'getMsg' })
   },
   methods: {
-    ...mapActions(['patchUserProfile', 'patchUserPassword']),
+    ...mapActions(['patchUserProfile', 'patchUserPassword', 'logout']),
+    resetUser() {
+      this.user = 0
+      this.logout()
+    },
     updateUser() {
       const {
         user_address,

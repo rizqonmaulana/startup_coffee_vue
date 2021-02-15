@@ -31,7 +31,7 @@
               </p>
             </div>
             <router-link to="/coupon">
-              <button v-if="role === 1" class="btn-add btn-promo">
+              <button v-if="user.userRole === 1" class="btn-add btn-promo">
                 Add new promo
               </button>
             </router-link>
@@ -60,7 +60,9 @@
             >
             </b-pagination>
             <router-link to="/product/add">
-              <button v-if="role === 1" class="btn-add">Add new product</button>
+              <button v-if="user.userRole === 1" class="btn-add">
+                Add new product
+              </button>
             </router-link>
           </b-col>
         </b-row>
@@ -95,7 +97,8 @@ export default {
       page: 'getPageProduct',
       limit: 'getLimitProduct',
       rows: 'getTotalRowsProduct',
-      categoryName: 'getCategoryName'
+      categoryName: 'getCategoryName',
+      user: 'getUser'
     })
   },
   data() {

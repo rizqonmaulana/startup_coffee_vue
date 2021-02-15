@@ -11,7 +11,8 @@ export default {
     sortBy: 'product_name',
     sortType: 'ASC',
     searchKeyword: '',
-    productPrice: ''
+    productPrice: '',
+    productDetail: []
   },
   mutations: {
     setProduct(state, payload) {
@@ -44,13 +45,16 @@ export default {
     },
     setPrice(state, payload) {
       state.productPrice = payload
+    },
+    setProductDetail(state, payload) {
+      state.productDetail = payload
     }
   },
   actions: {
     getAllProduct(context) {
       return new Promise((resolve, reject) => {
         axios
-          .get('http://localhost:3000/product')
+          .get(process.env.VUE_APP_ROOT_URL + '/product')
           .then(response => {
             context.commit('setProduct', response.data)
             resolve(response)
@@ -63,7 +67,7 @@ export default {
     getProductPrice(context, payload) {
       return new Promise((resolve, reject) => {
         axios
-          .get(`http://localhost:3000/product?id=${payload}`)
+          .get(process.env.VUE_APP_ROOT_URL + `/product?id=${payload}`)
           .then(response => {
             context.commit('setPrice', response.data.data[0].product_price)
             resolve(response)
@@ -78,7 +82,8 @@ export default {
         context.commit('changeCategory', payload)
         axios
           .get(
-            `http://localhost:3000/category/${payload}?sortBy=${context.state.sortBy}&sortType=${context.state.sortType}&limit=${context.state.limit}&page=${context.state.page}`
+            process.env.VUE_APP_ROOT_URL +
+              `/category/${payload}?sortBy=${context.state.sortBy}&sortType=${context.state.sortType}&limit=${context.state.limit}&page=${context.state.page}`
           )
           .then(response => {
             context.commit('setProduct', response.data)
@@ -92,12 +97,10 @@ export default {
     getProductById(context, payload) {
       return new Promise((resolve, reject) => {
         axios
-          .get(`http://localhost:3000/product/detail/${payload}`)
+          .get(process.env.VUE_APP_ROOT_URL + `/product/detail/${payload}`)
           .then(result => {
+            context.commit('setProductDetail', result.data.data[0])
             resolve(result)
-            // context.state.categoryName = categoryName
-            // context.state.totalRows = response.data.pagination.totalData
-            // context.state.products = response.data.data
           })
           .catch(error => {
             reject(error.response)
@@ -117,7 +120,8 @@ export default {
       return new Promise((resolve, reject) => {
         axios
           .get(
-            `http://localhost:3000/category/${context.state.categoryName}?search=${context.state.searchKeyword}&sortBy=${context.state.sortBy}&sortType=${context.state.sortType}&limit=${context.state.limit}&page=${context.state.page}`
+            process.env.VUE_APP_ROOT_URL +
+              `/category/${context.state.categoryName}?search=${context.state.searchKeyword}&sortBy=${context.state.sortBy}&sortType=${context.state.sortType}&limit=${context.state.limit}&page=${context.state.page}`
           )
           .then(response => {
             context.commit('setProduct', response.data)
@@ -131,7 +135,7 @@ export default {
     postProduct(context, payload) {
       return new Promise((resolve, reject) => {
         axios
-          .post('http://localhost:3000/product', payload)
+          .post(process.env.VUE_APP_ROOT_URL + '/product', payload)
           .then(result => {
             resolve(result)
           })
@@ -143,7 +147,10 @@ export default {
     patchProduct(_context, payload) {
       return new Promise((resolve, reject) => {
         axios
-          .patch(`http://localhost:3000/product/${payload.id}`, payload.dataSet)
+          .patch(
+            process.env.VUE_APP_ROOT_URL + `/product/${payload.id}`,
+            payload.dataSet
+          )
           .then(result => {
             resolve(result)
           })
@@ -155,7 +162,7 @@ export default {
     deleteProduct(context, payload) {
       return new Promise((resolve, reject) => {
         axios
-          .delete(`http://localhost:3000/product/${payload}`)
+          .delete(process.env.VUE_APP_ROOT_URL + `/product/${payload}`)
           .then(result => {
             setTimeout(function() {
               router.push('/product')
@@ -186,6 +193,9 @@ export default {
     },
     getProductPrice(state) {
       return state.productPrice
+    },
+    getProductDetail(state) {
+      return state.productDetail
     }
   }
 }

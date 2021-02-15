@@ -10,12 +10,14 @@
         >
       </div>
       <div>
-        <button
-          class="btn-signup"
-          style="line-height: 30px; width: 100px; border-radius: 30px;"
+        <router-link to="/signup">
+          <button
+            class="btn-signup"
+            style="line-height: 30px; width: 100px; border-radius: 30px;"
+          >
+            Sign Up
+          </button></router-link
         >
-          Sign Up
-        </button>
       </div>
     </div>
     <h3 class="text-center header-text mb-3">

@@ -48,14 +48,18 @@
             <ul class="navbar-nav mr-auto flex-row">
               <li class="nav-item ml-lg-auto">
                 <a class="nav-link" href="#">
-                  <p class="login-text">Login</p>
+                  <router-link to="/login">
+                    <p class="login-text">Login</p>
+                  </router-link>
                 </a>
               </li>
               <li class="nav-item pr-0">
                 <a class="nav-link" href="#">
-                  <button class="btn-signup">
-                    Sign Up
-                  </button>
+                  <router-link to="/signup">
+                    <button class="btn-signup">
+                      Sign Up
+                    </button></router-link
+                  >
                 </a>
               </li>
             </ul>

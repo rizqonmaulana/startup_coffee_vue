@@ -6,17 +6,15 @@
         <b-row>
           <b-col col lg="6" sm="12">
             <MainLeftTop
-              :productName="product.product_name"
-              :productPic="product.product_pic"
-              :deliveryDineIn="product.delivery_dine_in"
-              :deliveryHome="product.delivery_home"
-              :deliveryTakeAway="product.delivery_take_away"
+              :detail="productDetail"
+              :orderData="orderData"
               @selectDelivery="selectDelivery"
             />
           </b-col>
           <b-col col lg="6" sm="12">
             <MainRightTop
               class="main-right-top"
+              :detail="productDetail"
               :productId="product.product_id"
               :productName="product.product_name"
               :productDesc="product.product_desc"
@@ -54,6 +52,7 @@
             />
           </b-col>
         </b-row>
+        {{ productDetail }}
       </b-container>
     </main>
     <Footer />
@@ -61,6 +60,7 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex'
 import Navbar from '../components/_base/Navbar'
 import Footer from '../components/_base/Footer'
 import MainLeftTop from '../components/_base/productDetail/ProductDeliveryAndTime'
@@ -93,9 +93,13 @@ export default {
       role: 1
     }
   },
+  computed: {
+    ...mapGetters({ productDetail: 'getProductDetail' })
+  },
   created() {
     this.productId = this.$route.params.id
     this.orderData.productId = this.$route.params.id
+    this.getProductById(this.productId)
     this.getProductDetail(this.productId)
     let getCart = localStorage.getItem('cart')
     getCart = JSON.parse(getCart)
@@ -106,6 +110,7 @@ export default {
     }
   },
   methods: {
+    ...mapActions(['getProductById']),
     getProductDetail(id) {
       axios
         .get(`http://localhost:3000/product/detail/${id}`)

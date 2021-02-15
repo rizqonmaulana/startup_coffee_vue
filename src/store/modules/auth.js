@@ -158,6 +158,9 @@ export default {
     },
     getMsg(state) {
       return state.msg
+    },
+    getUser(state) {
+      return state.user
     }
   }
 }

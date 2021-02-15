@@ -11,22 +11,19 @@
         <div class="pic" style="width: 30%">
           <img
             class="rounded-circle"
-            src="../../../assets/product-1.png"
+            src="../../../assets/icon-invoice.png"
             width="60px"
           />
         </div>
         <div class="desc" style="width: 70%">
           <div class="item-desc">
-            <h5>{{ productName }} (x{{ productOrderQty }})</h5>
-            <div class="d-flex flex-row justify-content-between">
-              <div>
-                <p>IDR {{ productPrice }}</p>
-                <p>Delivered</p>
-              </div>
-              <div>
-                <input type="checkbox" />
-              </div>
-            </div>
+            <p>Invoice : {{ history.order_invoice }}</p>
+            <p>Date : {{ formatTime(history.order_created_at) }}</p>
+            <p>Status : {{ history.order_status == 0 ? 'Process' : 'Done' }}</p>
+            <p>Payment Method : {{ history.order_payment_method }}</p>
+            <p>
+              Total : <strong>IDR {{ history.order_total }}</strong>
+            </p>
           </div>
         </div>
       </div>
@@ -35,28 +32,18 @@
 </template>
 
 <script>
-import axios from 'axios'
+import moment from 'moment'
 
 export default {
-  props: [
-    'productName',
-    'productOrderQty',
-    'productPic',
-    'productPrice',
-    'productInvoice',
-    'orderDetailId'
-  ],
+  props: ['history'],
+  data() {
+    return {
+      show: 1
+    }
+  },
   methods: {
-    deleteOrderHistory(orderDetailId) {
-      axios
-        .delete(`http://localhost:3000/order/history/${orderDetailId}`)
-        .then(response => {
-          console.log(response)
-          this.$emit('deleteOrderHistory')
-        })
-        .catch(error => {
-          console.log(error)
-        })
+    formatTime(value) {
+      return moment(String(value)).format('MMM Do YY, h:mm:ss a')
     }
   }
 }
@@ -86,7 +73,7 @@ export default {
   margin-top: 5px;
   color: #895537;
   line-height: 4px;
-  font-size: 14px;
+  font-size: 12px;
 }
 
 .btn-del {
@@ -96,6 +83,6 @@ export default {
   line-height: 20px;
   width: 23px;
   font-weight: bold;
-  margin: -60px 0px 0px -13px;
+  margin: -80px 0px 0px -13px;
 }
 </style>

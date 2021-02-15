@@ -5,29 +5,24 @@
       :cards="cards"
       :stack-width="300"
       :card-width="220"
+      v-if="getCards === 1"
     >
       <template v-slot:card="{ card }">
         <div
           style="width: 100%; height: 100%; border-radius: 20px; padding:0 10px; background-color: #d9a368; border: 2px solid #996731"
         >
-          <!-- <img
-            class="rounded-circle coupon-img"
-            :src="
-              card.product_pic === ''
-                ? require('../../../assets/cold_brew.png')
-                : 'http://localhost:3000/' + card.product_pic
-            "
-          /> -->
           <div
             class="edit-btn float-right"
             style="margin-top: -12px; margin-right:-10px;"
           >
             <router-link
+              v-if="user.user_role === 1"
               :to="{ name: 'CouponUpdate', params: { id: card.coupon_id } }"
             >
               <img src="../../../assets/edit-icon.png" style="width: 30px" />
             </router-link>
             <img
+              v-if="user.user_role === 1"
               class="btn-del"
               src="../../../assets/icon-delete.png"
               @click="destroyCoupon(card.coupon_id)"
@@ -110,8 +105,16 @@ export default {
   },
   computed: {
     ...mapGetters({
-      cards: 'getActiveCoupon'
-    })
+      cards: 'getActiveCoupon',
+      user: 'getUser'
+    }),
+    getCards() {
+      if (this.cards.length > 0) {
+        return 1
+      } else {
+        return 0
+      }
+    }
   },
   methods: {
     ...mapActions(['getActiveCoupon', 'deleteCoupon']),
