@@ -50,7 +50,8 @@ export default {
         promoCode: ''
       },
       orderData: [],
-      submitData: []
+      submitData: [],
+      url: process.env.VUE_APP_ROOT_URL
     }
   },
   created() {
@@ -71,7 +72,7 @@ export default {
     async postOrder() {
       await this.getOrder()
       await axios
-        .post('http://localhost:3000/order', this.submitData)
+        .post(this.url + '/order', this.submitData)
         .then(response => {
           console.log(response)
         })

@@ -6,10 +6,7 @@
         <h3>{{ data.currency }} {{ income }}</h3>
       </div>
       <div class="align-self-center ml-auto">
-        <img
-          :src="'http://localhost:3000/assets/' + data.image"
-          class="card-img"
-        />
+        <img :src="url + '/fileupload/assets/' + data.image" class="card-img" />
       </div>
     </div>
   </div>
@@ -18,7 +15,11 @@
 <script>
 export default {
   props: ['data', 'income'],
-  methods: {}
+  data() {
+    return {
+      url: process.env.VUE_APP_ROOT_URL
+    }
+  }
 }
 </script>
 

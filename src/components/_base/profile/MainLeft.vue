@@ -2,7 +2,7 @@
   <div class="main-left text-center">
     <img
       v-if="!profile.user_pic && !url"
-      :src="'http://localhost:3000/assets/user_profile.png'"
+      :src="urlBe + '/fileupload/assets/user_profile.png'"
       style="width: 150px; height: 150px;"
     />
     <img
@@ -14,7 +14,7 @@
     <img
       v-if="profile.user_pic && !url"
       class="rounded-circle"
-      :src="'http://localhost:3000/' + profile.user_pic"
+      :src="urlBe + '/fileupload/' + profile.user_pic"
       style="width: 150px; height: 150px;"
     />
     <h5 class="mt-3">{{ profile.user_name }}</h5>
@@ -97,7 +97,8 @@ export default {
   data() {
     return {
       url: '',
-      userPassword: ''
+      userPassword: '',
+      urlBe: process.env.VUE_APP_ROOT_URL
     }
   },
   computed: {

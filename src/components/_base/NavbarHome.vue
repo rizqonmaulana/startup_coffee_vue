@@ -37,29 +37,29 @@
                   >History</router-link
                 >
               </li>
-              <li class="nav-item">
-                <router-link class="nav-link" to="/history"
-                  ><p @click="logout">Logout</p></router-link
-                >
-              </li>
             </ul>
           </div>
           <div class="nav-user ml-md-auto">
             <ul class="navbar-nav mr-auto flex-row">
-              <li class="nav-item ml-lg-auto">
+              <li v-if="!user.userId" class="nav-item ml-lg-auto">
                 <a class="nav-link" href="#">
                   <router-link to="/login">
                     <p class="login-text">Login</p>
                   </router-link>
                 </a>
               </li>
-              <li class="nav-item pr-0">
+              <li v-if="!user.userId" class="nav-item pr-0">
                 <a class="nav-link" href="#">
                   <router-link to="/signup">
                     <button class="btn-signup">
                       Sign Up
                     </button></router-link
                   >
+                </a>
+              </li>
+              <li v-if="user.userId" class="nav-item pr-0 ml-auto">
+                <a class="nav-link" href="#">
+                  <p @click="logout" class="login-text">Logout</p>
                 </a>
               </li>
             </ul>
@@ -94,10 +94,13 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
   name: 'Navbar',
+  computed: {
+    ...mapGetters({ user: 'getUser' })
+  },
   methods: {
     ...mapActions(['logout'])
     // logout() {

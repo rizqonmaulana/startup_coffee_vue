@@ -101,7 +101,7 @@
 
                     <img
                       v-else
-                      :src="'http://localhost:3000/' + userPic"
+                      :src="url + '/fileupload/' + userPic"
                       class="rounded-circle profile-img"
                     />
                   </template>
@@ -162,7 +162,8 @@ export default {
       userPic: '',
       userRole: 0,
       searchKeyword: '',
-      searchInput: 0
+      searchInput: 0,
+      url: process.env.VUE_APP_ROOT_URL
     }
   },
   methods: {

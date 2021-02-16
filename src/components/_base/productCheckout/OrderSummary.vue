@@ -22,7 +22,7 @@
         <div class="pic" style="width: 25%;">
           <img
             v-if="item.productPic"
-            :src="url + '/' + item.productPic"
+            :src="url + '/fileupload/' + item.productPic"
             style="height: 70px; width: 62px; border-radius: 20px;"
           />
           <img

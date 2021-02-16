@@ -5,7 +5,7 @@
         <div class="p-2 pic" style="width:30%">
           <img
             v-if="productPic"
-            :src="url + '/' + productPic"
+            :src="url + '/fileupload/' + productPic"
             class="rounded-circle mx-auto product-img"
           />
           <img

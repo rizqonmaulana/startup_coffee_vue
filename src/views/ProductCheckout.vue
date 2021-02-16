@@ -51,7 +51,8 @@ export default {
         promoCode: ''
       },
       orderData: [],
-      submitData: []
+      submitData: [],
+      url: process.env.VUE_APP_ROOT_URL
     }
   },
   computed: {
@@ -80,7 +81,7 @@ export default {
     async postOrder() {
       await this.getOrder()
       await axios
-        .post('http://localhost:3000/order', this.submitData)
+        .post(this.url + '/order', this.submitData)
         .then(result => {
           this.successLogin(result.data.msg)
         })

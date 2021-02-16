@@ -13,7 +13,7 @@
     <div class="product-pic text-center">
       <img
         v-if="detail.product_pic"
-        :src="url + '/' + detail.product_pic"
+        :src="url + '/fileupload/' + detail.product_pic"
         class="rounded-circle mx-auto product-img"
       />
       <img

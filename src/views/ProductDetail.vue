@@ -89,7 +89,8 @@ export default {
         orderDetailQty: 1,
         orderDetailPrice: 0
       },
-      role: 1
+      role: 1,
+      url: process.env.VUE_APP_ROOT_URL
     }
   },
   computed: {
@@ -112,7 +113,7 @@ export default {
     ...mapActions(['getProductById']),
     getProductDetail(id) {
       axios
-        .get(`http://localhost:3000/product/detail/${id}`)
+        .get(this.url + `/product/detail/${id}`)
         .then(response => {
           const productDetail = response.data.data[0]
           this.product = productDetail

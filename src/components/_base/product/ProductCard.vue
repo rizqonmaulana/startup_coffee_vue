@@ -9,8 +9,8 @@
           class="card-img-top rounded-circle product-item mx-auto"
           :src="
             productPic === null
-              ? 'http://localhost:3000/cold_brew.png'
-              : 'http://localhost:3000/' + productPic
+              ? url + '/fileupload/cold_brew.png'
+              : url + '/fileupload/' + productPic
           "
           alt="Card image cap"
         />
@@ -28,7 +28,12 @@
 
 <script>
 export default {
-  props: ['productId', 'productName', 'productPrice', 'productPic']
+  props: ['productId', 'productName', 'productPrice', 'productPic'],
+  data() {
+    return {
+      url: process.env.VUE_APP_ROOT_URL
+    }
+  }
 }
 </script>
 

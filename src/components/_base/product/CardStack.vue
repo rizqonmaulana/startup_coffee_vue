@@ -39,7 +39,7 @@
           <img
             v-else
             class="rounded-circle coupon-img"
-            :src="'http://localhost:3000/' + card.product_pic"
+            :src="url + '/fileupload/' + card.product_pic"
           />
           <h5
             class="card-title mt-2"
@@ -106,7 +106,8 @@ export default {
   computed: {
     ...mapGetters({
       cards: 'getActiveCoupon',
-      user: 'getUser'
+      user: 'getUser',
+      url: process.env.VUE_APP_ROOT_URL
     }),
     getCards() {
       if (this.cards.length > 0) {
