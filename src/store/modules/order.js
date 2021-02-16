@@ -7,7 +7,8 @@ export default {
     orderDetailList: [],
     VUE_APP_ROOT_URL: process.env.VUE_APP_ROOT_URL,
     history: [],
-    orderDetail: []
+    orderDetail: [],
+    chart: []
   },
   mutations: {
     setOrderList(state, payload) {
@@ -21,6 +22,9 @@ export default {
     },
     setOrderDetail(state, payload) {
       state.orderDetail = payload
+    },
+    setChart(state, payload) {
+      state.chart = payload
     }
   },
   actions: {
@@ -101,6 +105,19 @@ export default {
             reject(error)
           })
       })
+    },
+    getChart(context) {
+      return new Promise((resolve, reject) => {
+        axios
+          .get(`${context.state.VUE_APP_ROOT_URL}/order/admin/chart`)
+          .then(result => {
+            context.commit('setChart', result.data.data)
+            resolve(result)
+          })
+          .catch(error => {
+            reject(error)
+          })
+      })
     }
   },
   getters: {
@@ -115,6 +132,9 @@ export default {
     },
     getOrderDetail(state) {
       return state.orderDetail
+    },
+    getChart(state) {
+      return state.chart
     }
   }
 }

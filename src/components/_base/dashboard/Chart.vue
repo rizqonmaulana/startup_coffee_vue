@@ -1,46 +1,60 @@
 <script>
+import { mapActions, mapGetters } from 'vuex'
 import { Line } from 'vue-chartjs'
 
 export default {
   extends: Line,
+  data() {
+    return {
+      chartData: []
+    }
+  },
+  computed: {
+    ...mapGetters({ chart: 'getChart' })
+  },
+  methods: {
+    ...mapActions(['getChart'])
+  },
   mounted() {
-    // Overwriting base render method with actual data.
-    this.renderChart(
-      {
-        labels: [
-          'January',
-          'February',
-          'March',
-          'April',
-          'May',
-          'June',
-          'July',
-          'August',
-          'September',
-          'October',
-          'November',
-          'December'
-        ],
-        datasets: [
-          {
-            label: '2019',
-            backgroundColor: 'transparent',
-            borderColor: '#fcd68d',
-            data: [40, 20, 12, 39, 10, 40, 39, 80, 40, 20, 12, 11]
-          },
-          {
-            label: '2020',
-            backgroundColor: 'transparent',
-            borderColor: '#abe0ed',
-            data: [60, 30, 8, 79, 20, 50, 19, 50, 20, 60, 72, 81]
-          }
-        ]
-      },
-      {
-        responsive: true,
-        maintainAspectRatio: false
+    this.getChart()
+    setTimeout(() => {
+      for (let i = 0; i <= this.chart.length; i++) {
+        this.chartData.push(this.chart[i].total)
       }
-    )
+    }, 1000)
+
+    setTimeout(() => {
+      this.renderChart(
+        {
+          labels: [
+            'January',
+            'February',
+            'March',
+            'April',
+            'May',
+            'June',
+            'July',
+            'August',
+            'September',
+            'October',
+            'November',
+            'December'
+          ],
+          datasets: [
+            {
+              label: '2020',
+              backgroundColor: 'transparent',
+              borderColor: '#abe0ed',
+              data: this.chartData
+            }
+          ]
+        },
+        {
+          responsive: true,
+          maintainAspectRatio: false
+        }
+      )
+    }, 1500)
   }
 }
 </script>
