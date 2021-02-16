@@ -103,11 +103,15 @@ export default {
   components: {
     VueCardStack
   },
+  data() {
+    return {
+      url: process.env.VUE_APP_ROOT_URL
+    }
+  },
   computed: {
     ...mapGetters({
       cards: 'getActiveCoupon',
-      user: 'getUser',
-      url: process.env.VUE_APP_ROOT_URL
+      user: 'getUser'
     }),
     getCards() {
       if (this.cards.length > 0) {
@@ -126,6 +130,7 @@ export default {
   },
   created() {
     this.getActiveCoupon()
+    console.log('ini url ' + this.url)
   }
 }
 </script>

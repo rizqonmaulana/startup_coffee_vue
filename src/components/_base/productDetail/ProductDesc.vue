@@ -56,13 +56,7 @@
       </b-row>
     </div>
     <div class="btn-add-n-ask poppins">
-      <button
-        @click="
-          addToCart()
-          showAlert()
-        "
-        class="btn-add mt-3"
-      >
+      <button @click="addToCart()" class="btn-add mt-3">
         Add to Cart
       </button>
       <br />
@@ -91,8 +85,10 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
+import { alertMixin } from '../../../mixins/alertMixin'
 
 export default {
+  mixins: [alertMixin],
   props: [
     'detail',
     'productId',
@@ -110,7 +106,7 @@ export default {
   },
   created() {
     this.counterUp()
-    this.subTotal
+    this.subTotal()
   },
   methods: {
     ...mapActions(['deleteProduct']),
@@ -131,7 +127,9 @@ export default {
       this.$emit('getSubTotal', subTotal)
     },
     addToCart() {
+      this.getSubTotal(this.subTotal)
       this.$emit('addToCart')
+      this.successAlert('product added to cart')
     },
     countDownChanged(dismissCountDown) {
       this.dismissCountDown = dismissCountDown

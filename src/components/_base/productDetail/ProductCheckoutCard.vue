@@ -51,8 +51,8 @@ export default {
 
 <style scoped>
 img.product-img {
-  max-width: 100px;
-  max-height: 100px;
+  width: 120px;
+  height: 120px;
 }
 
 .checkout-card {

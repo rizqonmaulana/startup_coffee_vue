@@ -10,9 +10,6 @@
           <MainRight :form="form" />
         </b-col>
       </b-row>
-      <!-- test upload file -->
-
-      <!-- test upload file -->
     </b-container>
     <Footer />
   </div>
@@ -23,7 +20,6 @@ import Navbar from '../components/_base/Navbar'
 import Footer from '../components/_base/Footer'
 import MainLeft from '../components/_base/productInsert/MainLeft'
 import MainRight from '../components/_base/productInsert/MainRight'
-// import axios from 'axios'
 
 export default {
   components: {

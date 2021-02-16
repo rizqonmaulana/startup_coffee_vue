@@ -177,8 +177,10 @@ export default {
       if (!this.form.productPrice) {
         this.errors.push('Price required.')
       }
-      if (!this.form.image) {
-        this.errors.push('Product image required.')
+      if (!this.id) {
+        if (!this.form.image) {
+          this.errors.push('Product image required.')
+        }
       }
       if (!this.form.productDesc) {
         this.errors.push('Product description required.')
@@ -260,7 +262,6 @@ export default {
               this.errorAlert(error.data.msg)
             })
         }
-        this.form = []
       }
     },
     getHomeDelivery() {
