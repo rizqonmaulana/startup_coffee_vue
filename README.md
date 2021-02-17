@@ -2,16 +2,16 @@
   <p align="center">
     <a href="https://startupcoffee.netlify.app/">View Demo</a>
     ·
-    <a href="https://github.com/rizqonmaulana/backend_startup_coffee/issues">Report Bug</a>
+    <a href="https://github.com/rizqonmaulana/startup_coffee_vue/issues">Report Bug</a>
     ·
-    <a href="https://github.com/rizqonmaulana/backend_startup_coffee/issues">Request Feature</a>
+    <a href="https://github.com/rizqonmaulana/startup_coffee_vue/issues">Request Feature</a>
   </p>
 
 ![Image Banner](https://i.ibb.co/N6s1WF5/smartmockups-kl8ywyq0.jpg)
 
 ## About The Project
 
-Startup coffee is a website that was built for coffee shop or caffee owners to handle orders in their shop, you can manage orders easily and quickly, because everything is handled by the system automatically. coffee startup is built with javascript, express js, vue js and mysql.
+Startup coffee is a website that was built for coffee shop or caffee owners to handle orders in their shop, as an owner you can add product, add promo, manage orders, get daily order profit, weeks order amount and anual sales data in a chart. you can manage orders easily and quickly, because everything is handled by the system automatically. coffee startup is built with javascript, express js, vue js and mysql.
 
 ## Built With
 
