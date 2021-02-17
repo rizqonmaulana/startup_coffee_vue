@@ -1,17 +1,17 @@
 <h1 align='center'>Vue JS - StartUp Coffee</h1>
   <p align="center">
-    <a href="link_deploy">View Demo</a>
+    <a href="https://startupcoffee.netlify.app/">View Demo</a>
     ·
-    <a href="https://github.com/rizqonmaulana/startup_coffee_vue">Report Bug</a>
+    <a href="https://github.com/rizqonmaulana/backend_startup_coffee/issues">Report Bug</a>
     ·
-    <a href="https://github.com/rizqonmaulana/startup_coffee_vue">Request Feature</a>
+    <a href="https://github.com/rizqonmaulana/backend_startup_coffee/issues">Request Feature</a>
   </p>
 
-![Image Banner](https://i.ibb.co/gWmZGx5/Screenshot-from-2021-01-12-09-06-23.png)
+![Image Banner](https://i.ibb.co/N6s1WF5/smartmockups-kl8ywyq0.jpg)
 
 ## About The Project
 
-StartUp Coffee is a website for handle online coffee shop order.
+Startup coffee is a website that was built for coffee shop or caffee owners to handle orders in their shop, you can manage orders easily and quickly, because everything is handled by the system automatically. coffee startup is built with javascript, express js, vue js and mysql.
 
 ## Built With
 
@@ -26,13 +26,13 @@ StartUp Coffee is a website for handle online coffee shop order.
 
 ## Getting Started
 
-1. Download this Project or you can type `git clone #link_git`
+1. Download this Project or you can type `git clone https://github.com/rizqonmaulana/startup_coffee_vue.git`
 2. Open app's directory in CMD or Terminal
 3. Type `npm install` or `yarn install`
 4. Add .env file at root folder project
 
 ```sh
-VUE_APP_ENDPOINT = [Backend API]
+VUE_APP_ROOT_URL=https://backend-rizqon.fwebdev.online/apicoffeeshop
 ```
 
 5. Type `npm run serve`
