@@ -42,7 +42,7 @@ export default {
           ],
           datasets: [
             {
-              label: '2020',
+              label: '2021',
               backgroundColor: 'transparent',
               borderColor: '#abe0ed',
               data: this.chartData
